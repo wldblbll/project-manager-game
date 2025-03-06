@@ -80,14 +80,16 @@ const AnimatedButton = ({
         />
       ))}
 
-      <style jsx>{`
-        @keyframes ripple {
-          to {
-            transform: translate(-50%, -50%) scale(3);
-            opacity: 0;
+      <style>
+        {`
+          @keyframes ripple {
+            to {
+              transform: translate(-50%, -50%) scale(3);
+              opacity: 0;
+            }
           }
-        }
-      `}</style>
+        `}
+      </style>
     </button>
   );
 };
