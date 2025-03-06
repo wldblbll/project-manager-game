@@ -1,0 +1,103 @@
+
+[
+  {
+    "id": "E001",
+    "title": "Départ inattendu",
+    "description": "Votre développeur senior quitte le projet sans préavis.",
+    "phase": "execution",
+    "domain": "resources",
+    "effect": {
+      "budget": -10,
+      "time": -2,
+      "value": -5
+    },
+    "riskCategory": "human_resources",
+    "mitigationEffect": {
+      "budget": -5,
+      "time": -1,
+      "value": -2
+    },
+    "flavor": "La connaissance parti en fumée... avec sa lettre de démission.",
+    "image": "developer_leaving.svg"
+  },
+  {
+    "id": "E002",
+    "title": "Opportunité technologique",
+    "description": "Une nouvelle technologie pourrait améliorer significativement votre produit.",
+    "phase": "planning",
+    "domain": "technology",
+    "effect": {
+      "budget": -15,
+      "time": -3,
+      "value": 20
+    },
+    "riskCategory": "technology",
+    "mitigationEffect": {
+      "budget": -10,
+      "time": -2,
+      "value": 15
+    },
+    "flavor": "Parfois, l'innovation exige un détour stratégique.",
+    "image": "tech_opportunity.svg"
+  },
+  {
+    "id": "E003",
+    "title": "Budget supplémentaire",
+    "description": "Le sponsor vous accorde des ressources supplémentaires.",
+    "phase": "initiation",
+    "domain": "finance",
+    "effect": {
+      "budget": 20,
+      "time": 0,
+      "value": 5
+    },
+    "riskCategory": "finance",
+    "mitigationEffect": {
+      "budget": 20,
+      "time": 0,
+      "value": 5
+    },
+    "flavor": "Une rare bénédiction budgétaire venue d'en haut.",
+    "image": "budget_increase.svg"
+  },
+  {
+    "id": "E004",
+    "title": "Erreur technique majeure",
+    "description": "Une faille critique est découverte dans le produit.",
+    "phase": "execution",
+    "domain": "quality",
+    "effect": {
+      "budget": -15,
+      "time": -5,
+      "value": -15
+    },
+    "riskCategory": "technical",
+    "mitigationEffect": {
+      "budget": -10,
+      "time": -3,
+      "value": -5
+    },
+    "flavor": "Le diable se cache dans les détails... et le code.",
+    "image": "technical_error.svg"
+  },
+  {
+    "id": "E005",
+    "title": "Changement de priorités",
+    "description": "Le client modifie ses exigences principales.",
+    "phase": "planning",
+    "domain": "scope",
+    "effect": {
+      "budget": -10,
+      "time": -8,
+      "value": 0
+    },
+    "riskCategory": "requirements",
+    "mitigationEffect": {
+      "budget": -5,
+      "time": -4,
+      "value": 5
+    },
+    "flavor": "Ce qui était urgent hier est désormais secondaire aujourd'hui.",
+    "image": "changing_priorities.svg"
+  }
+]

@@ -1,0 +1,123 @@
+
+[
+  {
+    "id": "A001",
+    "name": "Charte de projet",
+    "phase": "initiation",
+    "domain": "integration",
+    "cost": {
+      "budget": 10,
+      "time": 2
+    },
+    "value": 15,
+    "description": "Document qui autorise formellement le projet et donne au chef de projet l'autorité nécessaire.",
+    "abilities": [
+      {
+        "name": "Autorité formelle",
+        "effect": "Réduit le coût des actions de coordination de 1 point de temps"
+      }
+    ],
+    "educationalTip": "Dans la réalité, une charte bien rédigée clarifie les objectifs et évite les malentendus ultérieurs.",
+    "image": "project_charter.svg"
+  },
+  {
+    "id": "A002",
+    "name": "Registre des parties prenantes",
+    "phase": "initiation",
+    "domain": "stakeholders",
+    "cost": {
+      "budget": 5,
+      "time": 3
+    },
+    "value": 10,
+    "description": "Document identifiant toutes les personnes ou organisations impactées par le projet.",
+    "abilities": [
+      {
+        "name": "Réseau d'influence",
+        "effect": "Augmente de 20% l'impact positif des événements liés aux parties prenantes"
+      }
+    ],
+    "educationalTip": "Identifier les parties prenantes tôt permet d'adapter la stratégie de communication et de gestion.",
+    "image": "stakeholder_register.svg"
+  },
+  {
+    "id": "A003",
+    "name": "Plan de management du projet",
+    "phase": "planning",
+    "domain": "integration",
+    "cost": {
+      "budget": 15,
+      "time": 4
+    },
+    "value": 20,
+    "description": "Document définissant comment le projet sera exécuté, suivi, contrôlé et clos.",
+    "abilities": [
+      {
+        "name": "Vision globale",
+        "effect": "Permet de voir les 3 prochaines cartes événement"
+      }
+    ],
+    "educationalTip": "Ce document est le point de référence central pour toute la gestion du projet.",
+    "image": "project_management_plan.svg"
+  },
+  {
+    "id": "A004",
+    "name": "Plan de gestion des risques",
+    "phase": "planning",
+    "domain": "risk",
+    "cost": {
+      "budget": 12,
+      "time": 3
+    },
+    "value": 15,
+    "description": "Document définissant comment identifier et gérer les risques du projet.",
+    "abilities": [
+      {
+        "name": "Anticipation",
+        "effect": "Réduit de 30% l'impact négatif du prochain événement risque"
+      }
+    ],
+    "educationalTip": "La gestion proactive des risques est l'un des facteurs clés de succès d'un projet.",
+    "image": "risk_management_plan.svg"
+  },
+  {
+    "id": "A005",
+    "name": "WBS (Structure de découpage)",
+    "phase": "planning",
+    "domain": "scope",
+    "cost": {
+      "budget": 8,
+      "time": 5
+    },
+    "value": 18,
+    "description": "Décomposition hiérarchique du travail à réaliser pour atteindre les objectifs du projet.",
+    "abilities": [
+      {
+        "name": "Clarté du périmètre",
+        "effect": "Augmente de 15% la valeur générée par les fonctionnalités"
+      }
+    ],
+    "educationalTip": "Une WBS bien construite permet d'identifier tout le travail nécessaire sans oublier d'éléments essentiels.",
+    "image": "wbs.svg"
+  },
+  {
+    "id": "A006",
+    "name": "Rapports d'avancement",
+    "phase": "execution",
+    "domain": "communication",
+    "cost": {
+      "budget": 5,
+      "time": 1
+    },
+    "value": 8,
+    "description": "Documents réguliers informant les parties prenantes de l'état du projet.",
+    "abilities": [
+      {
+        "name": "Transparence",
+        "effect": "Annule le prochain événement négatif lié aux parties prenantes"
+      }
+    ],
+    "educationalTip": "La communication régulière maintient la confiance et permet d'ajuster rapidement les attentes.",
+    "image": "progress_reports.svg"
+  }
+]

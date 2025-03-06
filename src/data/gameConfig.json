@@ -1,0 +1,96 @@
+
+{
+  "difficulties": {
+    "beginner": {
+      "startingBudget": 120,
+      "startingTime": 20,
+      "eventFrequency": "low",
+      "forgiveness": "high"
+    },
+    "intermediate": {
+      "startingBudget": 100,
+      "startingTime": 15,
+      "eventFrequency": "medium",
+      "forgiveness": "medium"
+    },
+    "expert": {
+      "startingBudget": 80,
+      "startingTime": 12,
+      "eventFrequency": "high",
+      "forgiveness": "low"
+    }
+  },
+  "phases": {
+    "initiation": {
+      "requiredArtifacts": ["A001", "A002"],
+      "milestonePoints": 15,
+      "milestoneFailPenalty": -10
+    },
+    "planning": {
+      "requiredArtifacts": ["A003", "A004", "A005"],
+      "milestonePoints": 20,
+      "milestoneFailPenalty": -15
+    },
+    "execution": {
+      "requiredArtifacts": ["A006", "A007"],
+      "milestonePoints": 25,
+      "milestoneFailPenalty": -20
+    },
+    "monitoring": {
+      "requiredArtifacts": ["A008", "A009"],
+      "milestonePoints": 20,
+      "milestoneFailPenalty": -15
+    },
+    "closing": {
+      "requiredArtifacts": ["A010"],
+      "milestonePoints": 15,
+      "milestoneFailPenalty": -10
+    }
+  },
+  "projectTypes": [
+    {
+      "id": "software",
+      "name": "Développement Logiciel",
+      "description": "Création d'une application informatique",
+      "icon": "code"
+    },
+    {
+      "id": "infrastructure",
+      "name": "Infrastructure IT",
+      "description": "Mise en place d'une infrastructure technologique",
+      "icon": "server"
+    },
+    {
+      "id": "marketing",
+      "name": "Campagne Marketing",
+      "description": "Lancement d'une campagne promotionnelle",
+      "icon": "megaphone"
+    },
+    {
+      "id": "event",
+      "name": "Organisation d'Événement",
+      "description": "Planification et exécution d'un événement",
+      "icon": "calendar"
+    }
+  ],
+  "durations": [
+    {
+      "id": "short",
+      "name": "Court",
+      "description": "30 minutes environ",
+      "turnsCount": 10
+    },
+    {
+      "id": "medium",
+      "name": "Moyen",
+      "description": "1 heure environ",
+      "turnsCount": 15
+    },
+    {
+      "id": "long",
+      "name": "Long",
+      "description": "1h30 ou plus",
+      "turnsCount": 20
+    }
+  ]
+}
