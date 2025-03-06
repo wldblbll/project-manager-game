@@ -89,6 +89,11 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Define our custom utility for backface visibility */
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
 }
 
 @layer components {
@@ -115,8 +120,8 @@
   }
   
   .card-front, .card-back {
-    @apply absolute w-full h-full rounded-xl backface-visibility-hidden;
-    backface-visibility: hidden;
+    @apply absolute w-full h-full rounded-xl backface-hidden;
+    /* backface-visibility property is now applied through the custom class above */
   }
   
   .card-back {
