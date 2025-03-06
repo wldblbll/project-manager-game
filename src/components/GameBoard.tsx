@@ -46,18 +46,18 @@ const GameBoard = ({
             <h3 className="text-lg font-medium mb-3">Artefacts</h3>
             <div className="space-y-2">
               <GameCard
+                id="charter"
                 title="Charte de projet"
                 description="Document qui autorise formellement le projet"
-                icon="📄"
-                variant="artifact"
-                status="available"
+                type="artifact"
+                image="📄"
               />
               <GameCard
+                id="stakeholders"
                 title="Registre des parties prenantes"
                 description="Liste des personnes impliquées dans le projet"
-                icon="👥"
-                variant="artifact"
-                status="locked"
+                type="artifact"
+                image="👥"
               />
             </div>
           </div>
@@ -66,17 +66,19 @@ const GameBoard = ({
             <h3 className="text-lg font-medium mb-3">Actions</h3>
             <div className="space-y-2">
               <GameCard
+                id="acquire"
                 title="Acquisition d'artefact"
                 description="Investir du temps et du budget pour obtenir un artefact"
-                icon="🛒"
-                variant="action"
+                type="event"
+                image="🛒"
                 onClick={() => console.log('Acquisition action')}
               />
               <GameCard
+                id="plan"
                 title="Planifier une tâche"
                 description="Ajouter une tâche au planning du projet"
-                icon="📅"
-                variant="action"
+                type="event"
+                image="📅"
                 onClick={() => console.log('Planning action')}
               />
             </div>
