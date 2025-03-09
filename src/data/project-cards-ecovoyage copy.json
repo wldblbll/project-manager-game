@@ -1,0 +1,496 @@
+[
+  {
+    "id": "0",
+    "title": "Initier la charte projet !",
+    "description": "Charte du projet ÉcoVoyage :\n- Objectif : Réduire l'empreinte carbone des trajets pour répondre aux enjeux environnementaux en proposant des alternatives de transport écoresponsables\n- Livrables : Application mobile avec recherche de trajets optimisés, suivi en temps réel et gamification\n- Parties prenantes clés : Ministère de l'Écologie, opérateurs de transport, utilisateurs\n- Contraintes : Respect des réglementations RGPD, intégration avec les API des transports existants\n- Critères de succès : Adoption par au moins 100 000 utilisateurs dans la première année, réduction mesurable des émissions de CO2 liées aux déplacements",
+    "domain": "Gestion du contenu",
+    "meta-description": "La charte du projet est un document clé qui officialise son existence et fixe ses objectifs. Elle permet d'autoriser formellement le projet et documente les exigences initiales pour répondre aux besoins des parties prenantes. Ce document doit inclure la justification du projet, ses objectifs, les principaux livrables, les parties prenantes impliquées, les contraintes et hypothèses, ainsi que les critères de succès.", 
+    "phase": ["Initiation"],
+    "impactDelai": "+5 jours"
+  },
+    {
+    "id": "1",
+    "title": "Initier la charte projet",
+    "description": "Charte du projet ÉcoVoyage :\n- Objectif : Réduire l'empreinte carbone des trajets pour répondre aux enjeux environnementaux en proposant des alternatives de transport écoresponsables\n- Livrables : Application mobile avec recherche de trajets optimisés, suivi en temps réel et gamification\n- Parties prenantes clés : Ministère de l'Écologie, opérateurs de transport, utilisateurs\n- Contraintes : Respect des réglementations RGPD, intégration avec les API des transports existants\n- Critères de succès : Adoption par au moins 100 000 utilisateurs dans la première année, réduction mesurable des émissions de CO2 liées aux déplacements",
+    "domain": "Gestion du contenu",
+    "meta-description": "La charte du projet est un document clé qui officialise son existence et fixe ses objectifs. Elle permet d'autoriser formellement le projet et documente les exigences initiales pour répondre aux besoins des parties prenantes. Ce document doit inclure la justification du projet, ses objectifs, les principaux livrables, les parties prenantes impliquées, les contraintes et hypothèses, ainsi que les critères de succès.", 
+    "phase": ["Initiation"],
+    "impactDelai": "+5 jours"
+  },
+  {
+    "id": "2",
+    "title": "Identifier les parties prenantes clés",
+    "description": "Lister et cartographier les acteurs impliqués : ministère de l'Écologie, agences de voyage écoresponsables, associations environnementales, développeurs et UX designers.",
+    "domain": "Gestion des parties prenantes",
+    "meta": "Une bonne identification des parties prenantes permet d'anticiper les attentes et de structurer les collaborations.",
+    "phase": ["Initiation"],
+    "impactDelai": "+3 jours"
+  },
+  {
+    "id": "3",
+    "title": "Définir les fonctionnalités principales",
+    "description": "Recenser les fonctionnalités clés : recommandations de voyages bas-carbone, calculateur d'empreinte carbone, suggestions d'activités et gamification.",
+    "domain": "Gestion des exigences",
+    "meta": "Un périmètre fonctionnel clair permet d'éviter les dérives et d'optimiser le développement.",
+    "phase": ["Initiation"],
+    "impactDelai": "+4 jours"
+  },
+  {
+    "id": "6",
+    "title": "Élaborer un macro-planning",
+    "description": "Définir les grandes phases du projet : conception, développement, tests, lancement. Identifier les jalons critiques et interdépendances.",
+    "domain": "Planification",
+    "meta": "Une planification efficace évite les blocages et fluidifie le développement.",
+    "phase": ["Initiation"],
+    "impactDelai": "+4 jours"
+  },
+  {
+    "id": "7",
+    "title": "Définir la gouvernance du projet",
+    "description": "Attribuer les rôles et responsabilités, définir les outils de suivi, organiser les rituels de pilotage (comités, revues de projet).",
+    "domain": "Gestion de projet",
+    "meta": "Une gouvernance claire garantit un pilotage efficace et une bonne coordination.",
+    "phase": ["Initiation"],
+    "impactDelai": "+3 jours"
+  },
+  {
+    "id": "1",
+    "title": "Élaborer charte de projet EcoVoyage",
+    "description": "Atelier interactif avec les parties prenantes pour co-créer la charte EcoVoyage, définissant objectifs écologiques et commerciaux de manière ludique et collaborative.",
+    "domain": "Gestion du contenu",
+    "meta": "La co-création interactive renforce l'engagement et assure une compréhension commune des attentes.",
+    "phase": ["Initiation"]
+  },
+  {
+    "id": "2",
+    "title": "Événement de lancement : Parties prenantes clés",
+    "description": "Organiser un événement dynamique réunissant ONG environnementales (Greenpeace, WWF) et voyagistes durables (TerraVoyages, EcoTrek) pour officialiser les partenariats et présenter les objectifs du projet.",
+    "domain": "Gestion des parties prenantes",
+    "meta": "Un événement de lancement crée une dynamique positive et renforce les relations dès le début du projet.",
+    "phase": ["Initiation"]
+  },
+  {
+    "id": "3",
+    "title": "Atelier créatif : Brainstorming écologique",
+    "description": "Organiser un atelier ludique avec des jeux de créativité pour générer des idées innovantes sur les fonctionnalités écologiques de l'application.",
+    "domain": "Gestion du contenu",
+    "meta": "Stimuler la créativité collective permet d'identifier des solutions originales et engageantes dès le début du projet.",
+    "phase": ["Initiation"]
+  },
+  {
+    "id": "4",
+    "title": "Concours de pitch : Présentation du projet",
+    "description": "Organiser un concours interne où chaque membre de l'équipe présente sa vision du projet en 2 minutes, avec récompenses symboliques pour les meilleures idées.",
+    "domain": "Gestion de la communication",
+    "meta": "Un concours de pitch renforce l'engagement de l'équipe et clarifie la vision commune du projet.",
+    "phase": ["Initiation"]
+  },
+  {
+    "id": "5",
+    "title": "Jeu de rôle : Simulation des utilisateurs",
+    "description": "Mettre en place une session de jeu de rôle où l'équipe incarne différents profils d'utilisateurs pour mieux comprendre leurs attentes et besoins.",
+    "domain": "Gestion des parties prenantes",
+    "meta": "Le jeu de rôle permet une empathie accrue envers les utilisateurs finaux et améliore la pertinence des fonctionnalités développées.",
+    "phase": ["Initiation"]
+  },
+  {
+    "id": "6",
+    "title": "Escape Game : Identification des risques",
+    "description": "Concevoir un escape game interne où l'équipe doit identifier et résoudre des risques potentiels liés au projet dans un temps limité.",
+    "domain": "Gestion des risques",
+    "meta": "L'approche ludique de l'identification des risques favorise une meilleure mémorisation et une prise de conscience proactive.",
+    "phase": ["Initiation"]
+  },
+  {
+    "id": "7",
+    "title": "Identifier parties prenantes: ONG environnementales",
+    "description": "Collaboration établie avec Greenpeace et WWF comme conseillers experts pour valider les critères écologiques d'EcoVoyage. Ces ONG fourniront des données sur l'impact environnemental et certifieront les partenaires touristiques selon des standards rigoureux de développement durable.",
+    "domain": "Gestion des parties prenantes",
+    "meta": "L'identification précoce des parties prenantes permet d'anticiper leurs attentes et de planifier leur engagement, réduisant les risques d'opposition et maximisant le soutien au projet.",
+    "phase": ["Initiation"]
+  },
+  {
+    "id": "8",
+    "title": "Identifier parties prenantes: Voyagistes durables",
+    "description": "Partenariats confirmés avec 'TerraVoyages' et 'EcoTrek', agences spécialisées qui fourniront des données sur 150+ hébergements écologiques et 75 activités à faible empreinte carbone. Ces contenus exclusifs constitueront un avantage concurrentiel majeur pour l'application EcoVoyage.",
+    "domain": "Gestion des parties prenantes",
+    "meta": "Les partenaires commerciaux peuvent fournir une expertise précieuse et des canaux de distribution, créant une relation mutuellement bénéfique qui renforce la pertinence et la viabilité commerciale du projet.",
+    "phase": ["Initiation"]
+  },
+  {
+    "id": "9",
+    "title": "Éliciter besoin: Certification carbone",
+    "description": "Fonctionnalité clé d'EcoVoyage: algorithme propriétaire calculant l'empreinte carbone des itinéraires avec précision de ±5%. L'application proposera des options de compensation via des projets certifiés Gold Standard, permettant aux utilisateurs de neutraliser leur impact avec un coût moyen de 15€ par tonne de CO2.",
+    "domain": "Gestion du contenu",
+    "meta": "L'élicitation des besoins est un processus qui identifie les exigences des parties prenantes. Un besoin bien défini oriente le développement vers une solution qui apporte une valeur réelle aux utilisateurs.",
+    "phase": ["Initiation", "Planification"]
+  },
+  {
+    "id": "10",
+    "title": "Éliciter besoin: Comparatif d'itinéraires écologiques",
+    "description": "Interface interactive d'EcoVoyage affichant côte à côte jusqu'à 3 options de voyage avec visualisation graphique des émissions CO2, consommation d'eau, et impact sur la biodiversité. Chaque option sera notée sur une échelle de 1-100 selon l'indice EcoScore développé spécifiquement pour l'application.",
+    "domain": "Gestion du contenu",
+    "meta": "Les fonctionnalités différenciantes répondent aux besoins spécifiques du public cible et créent un avantage concurrentiel. L'analyse comparative aide les utilisateurs à prendre des décisions éclairées.",
+    "phase": ["Initiation", "Planification"]
+  },
+  {
+    "id": "11",
+    "title": "Définir critères d'acceptation: Empreinte carbone",
+    "description": "Critères définis pour le module d'empreinte carbone d'EcoVoyage: calculs vérifiés à ±5% par rapport aux standards ISO 14067, temps de réponse <1,5s, intégration de données pour 15+ modes de transport et 8 catégories d'hébergement, et mise à jour trimestrielle des facteurs d'émission.",
+    "domain": "Gestion de la qualité",
+    "meta": "Les critères d'acceptation définissent clairement quand une fonctionnalité est considérée comme terminée. Ils servent de référence pour les tests et la validation, garantissant l'alignement entre attentes et livraisons.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "12",
+    "title": "Planifier le travail: Structure de découpage du projet",
+    "description": "WBS d'EcoVoyage comprenant 5 livrables majeurs: (1) Backend API avec calcul d'empreinte carbone, (2) Base de données partenaires éco-responsables, (3) Interface utilisateur mobile, (4) Système de recommandations personnalisées, et (5) Module de certification et compensation carbone. 125 tâches identifiées sur 15 sprints.",
+    "domain": "Gestion du contenu",
+    "meta": "La WBS (Work Breakdown Structure) organise hiérarchiquement le travail à effectuer, facilitant l'estimation des ressources, l'établissement du calendrier et la définition claire des responsabilités.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "13",
+    "title": "Établir échéancier: Diagramme de Gantt",
+    "description": "Échéancier EcoVoyage sur 6 mois: M1-M2 pour conception et architecture, M2-M4 pour développement du backend et APIs, M3-M5 pour l'interface utilisateur, M5 pour les tests d'intégration, et M6 pour déploiement et lancement marketing. Chemin critique identifié: développement de l'algorithme de calcul d'empreinte carbone.",
+    "domain": "Gestion du calendrier",
+    "meta": "Le diagramme de Gantt permet de visualiser la chronologie du projet, les dépendances entre tâches et le chemin critique. Il facilite la surveillance des progrès et la communication sur l'avancement.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "14",
+    "title": "Allouer ressources: Constitution équipe développement",
+    "description": "Équipe EcoVoyage constituée: Maria (lead dev, spécialiste React Native), Carlos (backend/API, expert Python), Aisha (data scientist, spécialiste en analyses environnementales), Thomas (UX/UI, expérience en applications de voyage) et Léa (QA, certification ISO 14001). Budget personnel: 180K€ sur 6 mois (60% du budget total).",
+    "domain": "Gestion des ressources",
+    "meta": "Une allocation efficace des ressources humaines consiste à affecter les bonnes personnes aux bonnes tâches au bon moment. Cela maximise la productivité et la qualité des livrables.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "15",
+    "title": "Planifier la communication: Matrice RACI",
+    "description": "Matrice RACI d'EcoVoyage: CEO responsable des décisions stratégiques, Chef de projet approbateur des livrables techniques, ONG environnementales consultées sur les critères écologiques, équipe marketing informée des fonctionnalités. Communication hebdomadaire par standup meetings et rapports d'avancement mensuels aux investisseurs.",
+    "domain": "Gestion de la communication",
+    "meta": "La matrice RACI (Responsable, Approbateur, Consulté, Informé) clarifie les responsabilités et circuit de décision, réduisant les conflits et améliorant l'efficacité de la communication.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "16",
+    "title": "Élaborer budget: Prévisions financières",
+    "description": "Développer un budget détaillé avec coûts de développement, marketing et maintenance pour EcoVoyage.",
+    "domain": "Gestion des coûts",
+    "meta": "Un budget bien planifié est essentiel pour la viabilité du projet. Il définit clairement les limites financières et permet de suivre les dépenses par rapport aux prévisions.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "17",
+    "title": "Identifier risque: Manque de données environnementales",
+    "description": "Analyser le risque d'insuffisance de données précises sur l'impact environnemental des options de voyage.",
+    "domain": "Gestion des risques",
+    "meta": "L'identification précoce des risques permet d'élaborer des stratégies de mitigation avant qu'ils n'impactent le projet. Une analyse factuelle des risques réduit les incertitudes.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "18",
+    "title": "Élaborer plan de qualité: Tests utilisateurs écologistes",
+    "description": "Planifier des sessions de test avec des utilisateurs experts en écologie pour valider la pertinence des fonctionnalités.",
+    "domain": "Gestion de la qualité",
+    "meta": "Un plan de qualité définit comment la conformité aux exigences sera vérifiée. Les tests avec des utilisateurs réels garantissent l'adéquation de la solution avec leurs besoins spécifiques.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "19",
+    "title": "Mettre en place méthodologie: Sprints agiles",
+    "description": "Établir une structure de sprints de 2 semaines avec rituels agiles adaptés au contexte d'EcoVoyage.",
+    "domain": "Gestion du calendrier",
+    "meta": "Une méthodologie agile permet de s'adapter rapidement aux changements, favorise la collaboration et livre de la valeur de façon incrémentale. Les sprints courts maintiennent la dynamique et la motivation.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "20",
+    "title": "Planifier approvisionnement: API partenaires voyagistes",
+    "description": "Négocier et contractualiser l'accès aux API des voyagistes partenaires pour les données d'itinéraires.",
+    "domain": "Gestion des ressources",
+    "meta": "La planification des approvisionnements identifie les ressources externes nécessaires et établit des stratégies d'acquisition. Une négociation efficace sécurise des conditions avantageuses pour le projet.",
+    "phase": ["Planification"]
+  },
+  {
+    "id": "21",
+    "title": "Développer architecture: API services écologiques",
+    "description": "Concevoir l'architecture technique intégrant les APIs de calcul d'empreinte carbone et données climatiques.",
+    "domain": "Gestion du contenu",
+    "meta": "Une architecture bien conçue constitue la fondation technique du projet. Elle guide les décisions techniques, définit les interactions entre composants et influence la performance du système.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "22",
+    "title": "Créer prototype: Interface comparaison d'itinéraires",
+    "description": "Développer un prototype fonctionnel de la comparaison des options de voyage selon critères environnementaux.",
+    "domain": "Gestion du contenu",
+    "meta": "Le prototypage permet de valider les concepts rapidement avec les utilisateurs réels. Il génère des retours précieux pour améliorer le produit avant un développement complet.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "23",
+    "title": "Conduire tests: Précision calcul empreinte carbone",
+    "description": "Vérifier l'exactitude des calculs d'empreinte carbone contre des données de référence scientifiques.",
+    "domain": "Gestion de la qualité",
+    "meta": "Les tests de précision garantissent la fiabilité des fonctionnalités critiques. Pour une application à vocation environnementale, la rigueur scientifique est essentielle à la crédibilité.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "24",
+    "title": "Gérer demande changement: Ajout hébergements écologiques",
+    "description": "Évaluer l'impact d'ajouter une fonctionnalité de recherche d'hébergements écologiques certifiés.",
+    "domain": "Gestion du contenu",
+    "meta": "Un processus formel de gestion des changements permet d'évaluer l'impact des modifications demandées sur le périmètre, le calendrier et le budget avant approbation.",
+    "phase": ["Exécution", "Surveillance & Contrôle"]
+  },
+  {
+    "id": "25",
+    "title": "Animer réunion: Revue de sprint avec parties prenantes",
+    "description": "Organiser et faciliter une démonstration des fonctionnalités développées aux parties prenantes clés.",
+    "domain": "Gestion de la communication",
+    "meta": "Les revues de sprint permettent de démontrer la valeur livrée, recueillir des retours et réaligner les priorités. Une facilitation efficace garantit que toutes les voix sont entendues.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "26",
+    "title": "Résoudre conflit: Désaccord sur priorités écologiques",
+    "description": "Faciliter la résolution d'un désaccord entre experts écologiques et équipe marketing sur les priorités.",
+    "domain": "Gestion de la communication",
+    "meta": "La résolution de conflits transforme les désaccords en opportunités d'innovation. Une médiation habile cherche une solution gagnant-gagnant qui intègre les perspectives diverses.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "27",
+    "title": "Optimiser performance: Temps réponse calcul itinéraires",
+    "description": "Améliorer les algorithmes de calcul d'itinéraires pour réduire le temps de réponse sous 2 secondes.",
+    "domain": "Gestion de la qualité",
+    "meta": "L'optimisation des performances est critique pour l'expérience utilisateur. Des temps de réponse rapides augmentent la satisfaction et l'engagement des utilisateurs.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "28",
+    "title": "Développer fonctionnalité: Badges écologiques",
+    "description": "Implémenter un système de badges récompensant les choix de voyage à faible impact environnemental.",
+    "domain": "Gestion du contenu",
+    "meta": "La gamification augmente l'engagement des utilisateurs et encourage les comportements souhaités. Les mécanismes de récompense renforcent positivement les actions vertueuses.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "29",
+    "title": "Piloter équipe: Revue de code collaboratif",
+    "description": "Établir et animer un processus de revue de code collaborative pour maintenir la qualité du développement.",
+    "domain": "Gestion des ressources",
+    "meta": "Les revues de code améliorent la qualité, partagent les connaissances et renforcent la cohésion d'équipe. Un leadership efficace crée un environnement de feedback constructif.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "30",
+    "title": "Gérer crise: Faille sécurité données utilisateurs",
+    "description": "Répondre à une découverte de vulnérabilité potentielle dans la protection des données utilisateurs.",
+    "domain": "Gestion des risques",
+    "meta": "La gestion de crise requiert une réponse rapide, transparente et méthodique. La protection des données est une responsabilité éthique et légale fondamentale.",
+    "phase": ["Exécution", "Surveillance & Contrôle"]
+  },
+  {
+    "id": "31",
+    "title": "Mesurer avancement: Vélocité équipe de développement",
+    "description": "Analyser la vélocité de l'équipe sur 3 sprints pour affiner les prévisions de livraison.",
+    "domain": "Gestion du calendrier",
+    "meta": "La mesure objective de la vélocité permet d'affiner les estimations futures. Elle donne des indications précieuses sur la capacité réelle de l'équipe à livrer.",
+    "phase": ["Surveillance & Contrôle"]
+  },
+  {
+    "id": "32",
+    "title": "Contrôler qualité: Audit accessibilité application",
+    "description": "Vérifier la conformité de l'application aux standards d'accessibilité WCAG pour tous les utilisateurs.",
+    "domain": "Gestion de la qualité",
+    "meta": "L'accessibilité élargit l'audience potentielle et reflète une approche inclusive. Les audits systématiques identifient les non-conformités avant qu'elles n'atteignent les utilisateurs.",
+    "phase": ["Surveillance & Contrôle"]
+  },
+  {
+    "id": "33",
+    "title": "Suivre budget: Analyse de la valeur acquise",
+    "description": "Calculer les indicateurs de performance (CPI, SPI) pour évaluer l'efficacité de l'utilisation du budget.",
+    "domain": "Gestion des coûts",
+    "meta": "L'analyse de la valeur acquise compare le travail accompli aux coûts engagés. Elle permet de détecter précocement les déviations et d'ajuster les prévisions en conséquence.",
+    "phase": ["Surveillance & Contrôle"]
+  },
+  {
+    "id": "34",
+    "title": "Gérer risque: Réduction financements écologiques",
+    "description": "Élaborer un plan de contingence face à la réduction potentielle des subventions environnementales.",
+    "domain": "Gestion des risques",
+    "meta": "La planification de contingence prépare le projet à faire face aux risques identifiés. Elle définit des actions spécifiques à mettre en œuvre si le risque se matérialise.",
+    "phase": ["Surveillance & Contrôle"]
+  },
+  {
+    "id": "35",
+    "title": "Communiquer avancement: Tableau de bord projet",
+    "description": "Développer un tableau de bord visuel présentant l'avancement du projet aux parties prenantes.",
+    "domain": "Gestion de la communication",
+    "meta": "Un tableau de bord efficace transforme les données en informations actionnables. Il facilite la communication de l'état du projet et la prise de décision basée sur des faits.",
+    "phase": ["Surveillance & Contrôle"]
+  },
+  {
+    "id": "36",
+    "title": "Réaliser tests utilisateurs: Touristes écologiques",
+    "description": "Organiser des sessions de test avec le public cible pour évaluer l'expérience utilisateur réelle.",
+    "domain": "Gestion de la qualité",
+    "meta": "Les tests avec des utilisateurs réels révèlent des problèmes impossibles à anticiper. Ils fournissent des insights qualitatifs précieux sur l'utilité et l'utilisabilité du produit.",
+    "phase": ["Exécution", "Surveillance & Contrôle"]
+  },
+  {
+    "id": "37",
+    "title": "Gérer risque: Incompatibilité API partenaires",
+    "description": "Analyser et atténuer les risques d'incompatibilité avec les API des fournisseurs de données de transport.",
+    "domain": "Gestion des risques",
+    "meta": "La dépendance à des systèmes externes crée des vulnérabilités. Une stratégie de mitigation robuste inclut des adaptateurs, des tests d'intégration et des alternatives en cas d'échec.",
+    "phase": ["Planification", "Exécution"]
+  },
+  {
+    "id": "38",
+    "title": "Saisir opportunité: Partenariat calculateur carbone",
+    "description": "Établir un partenariat avec une startup spécialisée dans le calcul précis d'empreinte carbone.",
+    "domain": "Gestion des ressources",
+    "meta": "Les partenariats stratégiques peuvent apporter expertise, crédibilité et ressources supplémentaires. Ils créent une synergie qui renforce la proposition de valeur du projet.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "39",
+    "title": "Identifier risque: Résistance changement voyageurs",
+    "description": "Analyser la réticence potentielle des voyageurs à modifier leurs habitudes pour des options plus écologiques.",
+    "domain": "Gestion des risques",
+    "meta": "La résistance au changement est un obstacle courant à l'adoption de nouvelles solutions. Une analyse des comportements utilisateurs aide à concevoir des stratégies d'adoption efficaces.",
+    "phase": ["Initiation", "Planification"]
+  },
+  {
+    "id": "40",
+    "title": "Développer fonctionnalité: Visualisation impact environnemental",
+    "description": "Créer une interface de visualisation intuitive de l'impact environnemental des choix de voyage.",
+    "domain": "Gestion du contenu",
+    "meta": "La visualisation de données complexes facilite la compréhension et la prise de décision. Une représentation claire de l'impact environnemental sensibilise et motive l'action.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "41",
+    "title": "Réaliser rétrospective: Amélioration processus développement",
+    "description": "Animer une session d'analyse critique du processus de développement après trois sprints.",
+    "domain": "Gestion de la qualité",
+    "meta": "Les rétrospectives favorisent l'amélioration continue en identifiant ce qui fonctionne bien et ce qui peut être amélioré. Une culture d'apprentissage renforce l'efficacité de l'équipe.",
+    "phase": ["Surveillance & Contrôle"]
+  },
+  {
+    "id": "42",
+    "title": "Saisir opportunité: Intégration données météo",
+    "description": "Exploiter une nouvelle API météorologique pour optimiser les suggestions d'itinéraires selon conditions climatiques.",
+    "domain": "Gestion du contenu",
+    "meta": "L'intégration de données contextuelles enrichit l'expérience utilisateur. Les conditions météorologiques influencent les décisions de voyage et l'empreinte environnementale.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "43",
+    "title": "Former équipe: Développement durable et technologie",
+    "description": "Organiser un atelier sur les principes de développement durable appliqués aux applications mobiles.",
+    "domain": "Gestion des ressources",
+    "meta": "Le développement des compétences de l'équipe est un investissement dans la qualité du projet. Une formation ciblée améliore la compréhension du contexte spécifique.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "44",
+    "title": "Préparer lancement: Campagne sensibilisation écologique",
+    "description": "Concevoir une stratégie de lancement axée sur la sensibilisation à l'impact environnemental du tourisme.",
+    "domain": "Gestion de la communication",
+    "meta": "Une stratégie de lancement efficace prépare le marché et crée de l'anticipation. Aligner le lancement avec des valeurs environnementales renforce la cohérence du message.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "45",
+    "title": "Documenter système: Guide intégration partenaires",
+    "description": "Créer une documentation technique détaillée pour l'intégration des partenaires à l'écosystème EcoVoyage.",
+    "domain": "Gestion de la communication",
+    "meta": "Une documentation claire facilite l'adoption et réduit le support technique. Elle constitue un actif durable qui favorise l'extensibilité et la maintenance du système.",
+    "phase": ["Exécution", "Clôture"]
+  },
+  {
+    "id": "46",
+    "title": "Réaliser transition: Transfert vers équipe support",
+    "description": "Planifier et exécuter le transfert de connaissances et responsabilités vers l'équipe de support client.",
+    "domain": "Gestion des ressources",
+    "meta": "Une transition planifiée assure la continuité du service après le projet. Le transfert de connaissances réduit les risques liés à la dépendance aux personnes clés.",
+    "phase": ["Clôture"]
+  },
+  {
+    "id": "47",
+    "title": "Évaluer succès: Mesure impact environnemental",
+    "description": "Analyser l'impact réel de l'application sur la réduction de l'empreinte carbone des utilisateurs.",
+    "domain": "Gestion de la qualité",
+    "meta": "L'évaluation du succès compare les résultats aux objectifs initiaux. Pour un projet environnemental, l'impact réel sur l'écologie est un indicateur clé de réussite.",
+    "phase": ["Clôture"]
+  },
+  {
+    "id": "48",
+    "title": "Célébrer réussite: Reconnaissance équipe projet",
+    "description": "Organiser un événement de reconnaissance pour célébrer les contributions de l'équipe au projet EcoVoyage.",
+    "domain": "Gestion des ressources",
+    "meta": "La reconnaissance formelle valorise les contributions et renforce la motivation. Célébrer les réussites collectives consolide la cohésion d'équipe et crée des souvenirs positifs.",
+    "phase": ["Clôture"]
+  },
+  {
+    "id": "49",
+    "title": "Capitaliser connaissances: Leçons apprises EcoVoyage",
+    "description": "Documenter systématiquement les défis rencontrés et solutions trouvées pendant le projet.",
+    "domain": "Gestion de la communication",
+    "meta": "La capitalisation des connaissances transforme l'expérience en apprentissage organisationnel. Les leçons apprises évitent de répéter les erreurs et amplifient les succès.",
+    "phase": ["Clôture"]
+  },
+  {
+    "id": "50",
+    "title": "Planifier évolution: Feuille de route version 2",
+    "description": "Élaborer une vision et planification pour les évolutions futures d'EcoVoyage basées sur retours utilisateurs.",
+    "domain": "Gestion du contenu",
+    "meta": "La planification des évolutions futures transforme la fin du projet en transition. Une feuille de route claire maintient l'élan et guide les investissements futurs.",
+    "phase": ["Clôture"]
+  },
+  {
+    "id": "51",
+    "title": "Saisir opportunité: Gamification compensation carbone",
+    "description": "Développer un système ludique encourageant les utilisateurs à compenser leur empreinte carbone.",
+    "domain": "Gestion du contenu",
+    "meta": "La gamification peut transformer des comportements vertueux en expériences engageantes. Les mécaniques de jeu motivent des actions qui pourraient autrement sembler contraignantes.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "52",
+    "title": "Identifier risque: Obsolescence données environnementales",
+    "description": "Anticiper l'évolution des standards et mesures d'impact environnemental dans le secteur touristique.",
+    "domain": "Gestion des risques",
+    "meta": "L'anticipation des évolutions normatives et scientifiques est essentielle dans un domaine en rapide évolution. Une veille active permet d'adapter le produit proactivement.",
+    "phase": ["Planification", "Surveillance & Contrôle"]
+  },
+  {
+    "id": "53",
+    "title": "Saisir opportunité: Communauté utilisateurs écologistes",
+    "description": "Créer une plateforme d'échange entre utilisateurs partageant conseils et retours d'expérience écologiques.",
+    "domain": "Gestion de la communication",
+    "meta": "Une communauté active génère du contenu, augmente l'engagement et favorise la fidélisation. Les utilisateurs deviennent ambassadeurs et contributeurs au projet.",
+    "phase": ["Exécution"]
+  },
+  {
+    "id": "54",
+    "title": "Gérer risque: Évolution réglementaire environnementale",
+    "description": "Anticiper et planifier l'adaptation à de nouvelles réglementations sur la mesure d'impact écologique.",
+    "domain": "Gestion des risques",
+    "meta": "La conformité réglementaire est non négociable pour un projet environnemental. Une veille juridique permet d'anticiper les changements et de s'y adapter proactivement.",
+    "phase": ["Planification", "Surveillance & Contrôle"]
+  },
+  {
+    "id": "55",
+    "title": "Saisir opportunité: Données open source environnementales",
+    "description": "Intégrer des sources de données environnementales en libre accès pour enrichir les calculs d'impact.",
+    "domain": "Gestion des ressources",
+    "meta": "L'utilisation de données open source peut réduire les coûts et augmenter la précision. La contribution à des initiatives collaboratives renforce la mission environnementale du projet.",
+    "phase": ["Exécution"]
+  }
+] 

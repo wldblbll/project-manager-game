@@ -1,0 +1,98 @@
+{
+  "gameSettings": {
+    "initialBudget": 200,
+    "initialTime": 24,
+    "cardWidth": 180,
+    "cardHeight": 120,
+    "cardMargin": 20,
+    "cardsPerRow": 5,
+    "boardTopMargin": 100
+  },
+  "phases": [
+    {
+      "name": "Initiation",
+      "order": 1,
+      "requiredCards": ["Développer la charte du projet"],
+      "cardLimits": {
+        "action": 3,
+        "event": 2,
+        "quiz": 2
+      },
+      "penalties": {
+        "time": 2,
+        "budget": 20,
+        "message": "La charte du projet n'a pas été définie correctement. Cela entraîne des retards et des coûts supplémentaires."
+      }
+    },
+    {
+      "name": "Planification",
+      "order": 2,
+      "requiredCards": ["Créer la WBS", "Développer l'échéancier"],
+      "cardLimits": {
+        "action": 4,
+        "event": 2,
+        "quiz": 1
+      },
+      "penalties": {
+        "time": 3,
+        "budget": 50,
+        "message": "La planification a été incomplète. Le projet manque de structure et de calendrier clair."
+      }
+    },
+    {
+      "name": "Exécution",
+      "order": 3,
+      "requiredCards": ["Développer le module de recherche de trajet"],
+      "cardLimits": {
+        "action": 5,
+        "event": 3,
+        "quiz": 2
+      },
+      "penalties": {
+        "time": 4,
+        "budget": 100,
+        "message": "Des fonctionnalités essentielles n'ont pas été développées, nécessitant des ajustements coûteux."
+      }
+    },
+    {
+      "name": "Surveillance et maîtrise",
+      "order": 4,
+      "requiredCards": ["Contrôler la qualité"],
+      "cardLimits": {
+        "action": 3,
+        "event": 2,
+        "quiz": 3
+      },
+      "penalties": {
+        "time": 2,
+        "budget": 40,
+        "message": "Le manque de contrôle qualité a entraîné des défauts qui doivent être corrigés."
+      }
+    },
+    {
+      "name": "Clôture",
+      "order": 5,
+      "requiredCards": ["Obtenir l'acceptation formelle"],
+      "cardLimits": {
+        "action": 2,
+        "event": 1,
+        "quiz": 2
+      },
+      "penalties": {
+        "time": 1,
+        "budget": 30,
+        "message": "Le projet n'a pas été formellement accepté, nécessitant des travaux supplémentaires."
+      }
+    }
+  ],
+  "cardValueRules": [
+    {
+      "condition": "default",
+      "points": 10
+    },
+    {
+      "condition": "requiredCard",
+      "points": 20
+    }
+  ]
+} 

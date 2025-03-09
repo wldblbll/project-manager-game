@@ -1,0 +1,342 @@
+[
+  {
+    "id": "0",
+    "type": "action",
+    "title": "Initier la charte projet",
+    "description": "Charte du projet ÉcoVoyage :\n- Objectif : Réduire l'empreinte carbone des trajets pour répondre aux enjeux environnementaux en proposant des alternatives de transport écoresponsables\n- Livrables : Application mobile avec recherche de trajets optimisés, suivi en temps réel et gamification\n- Parties prenantes clés : Ministère de l'Écologie, opérateurs de transport, utilisateurs\n- Contraintes : Respect des réglementations RGPD, intégration avec les API des transports existants\n- Critères de succès : Adoption par au moins 100 000 utilisateurs dans la première année, réduction mesurable des émissions de CO2 liées aux déplacements",
+    "domain": "Gestion du contenu",
+    "info": "La charte du projet est un document clé qui officialise son existence et fixe ses objectifs. Elle permet d'autoriser formellement le projet et documente les exigences initiales pour répondre aux besoins des parties prenantes. Ce document doit inclure la justification du projet, ses objectifs, les principaux livrables, les parties prenantes impliquées, les contraintes et hypothèses, ainsi que les critères de succès.", 
+    "phase": ["Initiation"],
+    "délai": "-0.25"
+  },
+  {
+    "id": "2",
+    "type": "action",
+    "title": "Identifier les parties prenantes",
+    "description": "Identifier les parties prenantes du projet GreenTrip Finder :\n- Voyageurs : Utilisateurs finaux de l'application\n- Partenaires écologiques : Hébergements et activités écologiques\n- Équipe de développement : Développeurs, designers, testeurs\n- Investisseurs et sponsors : Financeurs du projet\n- Organisations environnementales : ONG et associations écologiques\n- Objectif : Comprendre les attentes et les besoins de chaque partie prenante pour assurer le succès du projet",
+    "domain": "Gestion des parties prenantes",
+    "info": "L'identification des parties prenantes est cruciale pour comprendre leurs attentes et leurs influences sur le projet. Cela permet de gérer efficacement les communications et d'assurer que les besoins de chacun sont pris en compte tout au long du projet.",
+    "phase": ["Initiation"],
+    "délai": "-0.25"
+  },
+  {
+    "id": "3",
+    "type": "action",
+    "title": "Définir les critères de succès",
+    "description": "Définir les critères de succès pour le projet GreenTrip Finder :\n- Nombre d'utilisateurs actifs : Atteindre 50 000 utilisateurs dans les six premiers mois\n- Taux de satisfaction des utilisateurs : Maintenir un taux de satisfaction de 80% ou plus\n- Impact environnemental positif : Réduire les émissions de CO2 liées aux voyages de 10%\n- Partenariats établis : Collaborer avec au moins 20 partenaires écologiques\n- Objectif : Mesurer l'efficacité du projet et s'assurer qu'il répond aux objectifs fixés",
+    "domain": "Gestion de la qualité",
+    "info": "Les critères de succès permettent de mesurer l'efficacité du projet et de s'assurer qu'il atteint ses objectifs. Ils doivent être spécifiques, mesurables, atteignables, pertinents et temporellement définis (SMART).",
+    "phase": ["Initiation"],
+    "délai": "-0.25"
+  },
+  {
+    "id": "4",
+    "type": "action",
+    "title": "Définir le périmètre du projet",
+    "description": "Définir le périmètre du projet GreenTrip Finder :\n- Ce qui fait partie du périmètre :\n  - Développement de l'application mobile et web\n  - Création d'une base de données des destinations écologiques\n  - Intégration d'un système de notation écologique\n  - Fonctionnalités de réservation et de recommandation\n  - Communauté d'utilisateurs pour partager des expériences\n- Ce qui ne fait pas partie du périmètre :\n  - Organisation de voyages ou d'événements physiques\n  - Gestion directe des hébergements ou des activités\n  - Développement de fonctionnalités non liées au tourisme écologique\n- Objectif : Clarifier les limites du projet pour éviter la dérive de l'objectif et concentrer les efforts sur les livrables essentiels",
+    "domain": "Gestion de la portée",
+    "info": "La définition du périmètre du projet permet de clarifier ce qui est inclus et ce qui ne l'est pas. Cela aide à gérer les attentes des parties prenantes et à éviter les dérives de l'objectif initial.",
+    "phase": ["Initiation"],
+    "délai": "-0.25"
+  },
+  {
+    "id": "5",
+    "type": "event",
+    "title": "Subvention gouvernementale inattendue",
+    "description": "Événement : Le projet reçoit une subvention inattendue du gouvernement pour promouvoir le tourisme durable.\n- Impact : Augmentation du budget disponible, permettant d'améliorer les fonctionnalités de l'application ou d'étendre la portée du projet.\n- Action : Réévaluer le plan de développement pour intégrer les ressources supplémentaires et maximiser l'impact positif.",
+    "domain": "Gestion financière",
+    "info": "Une subvention inattendue peut offrir des opportunités pour améliorer le projet, mais nécessite une gestion prudente pour s'assurer que les fonds sont utilisés efficacement.",
+    "phase": ["Initiation"],
+    "délai": "Variable",
+    "coût": "Variable",
+    "conditions": [
+      {
+        "cardId": "2",
+        "present": true,
+        "effects": {
+          "budget": 50,
+          "time": 0,
+          "message": "Grâce à votre identification des parties prenantes, Vous avez pu bénéficier de cette subvention gouvernementale de +50k€"
+        }
+      },
+      {
+        "cardId": "2",
+        "present": false,
+        "effects": {
+          "budget": 0,
+          "time": 0,
+          "message": "Malheureusement vous n'avez pas encore identifié les parties prenantes, Un ministère publique était prêt à vous donner une subvention de 50k€ si vous l'aviez identifié."
+        }
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "type": "event",
+    "title": "Réduction du financement par un investisseur",
+    "description": "Événement : Un investisseur est mécontent car il pensait que l'application allait organiser des voyages avec sa chaîne d'hôtels, ce qui n'était pas prévu.\n\nSi vous avez identifié les parties prenantes (carte 'Identifier les parties prenantes'), l'impact sera limité car les attentes ont été mieux gérées. Sinon, l'impact sera plus important.",
+    "domain": "Gestion des parties prenantes",
+    "info": "La gestion proactive des attentes des investisseurs est cruciale pour éviter les malentendus et les réductions de financement.",
+    "phase": ["Initiation"],
+    "délai": "Variable",
+    "coût": "Variable",
+    "conditions": [
+      {
+        "cardId": "2",
+        "present": true,
+        "effects": {
+          "budget": -10,
+          "time": -1,
+          "message": "Grâce à votre identification des parties prenantes, l'impact financier a été limité à -10K€ et le délai à -1 mois."
+        }
+      },
+      {
+        "cardId": "2",
+        "present": false,
+        "effects": {
+          "budget": -20,
+          "time": -3,
+          "message": "Sans avoir identifié les parties prenantes, l'impact est majeur: -20K€ de budget et -3 mois de délai."
+        }
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "type": "question",
+    "phase": ["Initiation"],
+    "title": "Quel est l'objectif principal du projet GreenTrip Finder ?",
+    "options": [
+      "A. Organiser des voyages en groupe",
+      "B. Promouvoir le tourisme responsable",
+      "C. Créer une plateforme de réservation d'hôtels",
+      "D. Développer un réseau social pour voyageurs"
+    ],
+    "correct_answer": "B",
+    "comment": "L'objectif principal du projet GreenTrip Finder est de promouvoir le tourisme responsable en aidant les utilisateurs à trouver des destinations de voyage écologiques en fonction de leurs intérêts."
+  },
+  {
+    "id": "8",
+    "type": "question",
+    "phase": ["Initiation"],
+    "title": "Pourquoi est-il important de créer une charte de projet ?",
+    "options": [
+      "A. Pour définir les tâches quotidiennes de l'équipe",
+      "B. Pour officialiser le projet et fixer ses objectifs",
+      "C. Pour planifier les réunions hebdomadaires",
+      "D. Pour définir le budget détaillé du projet"
+    ],
+    "correct_answer": "B",
+    "comment": "La charte de projet est essentielle pour officialiser le projet et fixer ses objectifs. Elle autorise formellement le projet et documente les exigences initiales pour répondre aux besoins des parties prenantes."
+  },
+  {
+    "id": "9",
+    "type": "question",
+    "phase": ["Initiation"],
+    "title": "Qui sont les parties prenantes clés dans le projet GreenTrip Finder ?",
+    "options": [
+      "A. Les développeurs et les investisseurs",
+      "B. Les voyageurs et les partenaires écologiques",
+      "C. Les agences de voyage et les hôtels",
+      "D. Les influenceurs et les blogueurs"
+    ],
+    "correct_answer": "B",
+    "comment": "Les parties prenantes clés dans le projet GreenTrip Finder incluent les voyageurs, qui sont les utilisateurs finaux de l'application, et les partenaires écologiques, qui fournissent des hébergements et des activités durables."
+  },
+  {
+    "id": "10",
+    "type": "question",
+    "phase": ["Initiation"],
+    "title": "Quel est le principal objectif de la phase d'initiation d'un projet ?",
+    "options": [
+      "A. Définir le budget détaillé",
+      "B. Autoriser formellement le projet",
+      "C. Planifier les activités quotidiennes",
+      "D. Réaliser une analyse des risques"
+    ],
+    "correct_answer": "B",
+    "comment": "Le principal objectif de la phase d'initiation est d'autoriser formellement le projet. Cela inclut la création de la charte de projet, qui définit les objectifs, les livrables principaux, et les parties prenantes clés."
+  },
+  {
+    "id": "11",
+    "type": "question",
+    "phase": ["Initiation"],
+    "title": "Quel document est crucial pour officialiser un projet et fixer ses objectifs ?",
+    "options": [
+      "A. Le plan de gestion de projet",
+      "B. La charte de projet",
+      "C. Le registre des risques",
+      "D. Le plan de communication"
+    ],
+    "correct_answer": "B",
+    "description": "La charte de projet est cruciale pour officialiser un projet et fixer ses objectifs. Elle documente les exigences initiales et autorise formellement le projet."
+  },
+  {
+    "id": "12",
+    "type": "question",
+    "phase": ["Initiation"],
+    "title": "Pourquoi est-il important d'identifier les parties prenantes dès la phase d'initiation ?",
+    "options": [
+      "A. Pour définir le budget du projet",
+      "B. Pour comprendre leurs attentes et besoins",
+      "C. Pour planifier les réunions de l'équipe",
+      "D. Pour réaliser une analyse des risques"
+    ],
+    "correct_answer": "B",
+    "comment": "Identifier les parties prenantes dès la phase d'initiation est important pour comprendre leurs attentes et besoins. Cela permet de gérer efficacement les communications et d'assurer que le projet répond aux besoins de chacun."
+  },
+  {
+    "id": "13",
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Initiation"],
+    "nom": "Élaborer le cas d'affaires",
+    "info": "Le cas d'affaires (business case) est un document qui justifie l'investissement dans un projet en détaillant sa valeur pour l'organisation et les parties prenantes. Il présente l'analyse coûts-bénéfices, le retour sur investissement attendu et les alternatives considérées. Ce document est crucial car il aide les décideurs à comprendre pourquoi le projet devrait être approuvé et financé, et sert de référence pour évaluer le succès du projet.",
+    "description": "Le cas d'affaires d'ÉcoVoyage démontre sa viabilité sur plusieurs dimensions :\n\nJustification économique :\n- Coût total de développement : 1,2M€\n- Revenus attendus : partenariats avec opérateurs (600K€/an) + abonnements premium (800K€/an)\n- ROI attendu : rentabilité à 18 mois, VAN positive de 3,5M€ sur 5 ans\n\nJustification environnementale :\n- Réduction estimée de 85 000 tonnes de CO2 par an\n- Contribution aux objectifs nationaux de réduction d'émissions\n- Création d'un référentiel de données environnementales sur les transports\n\nAlternatives écartées :\n- Subventionner directement les opérateurs de transport (impact plus limité)\n- Campagne de sensibilisation traditionnelle (moins mesurable)\n- Réglementation plus stricte (résistance des acteurs économiques)",
+    "délai": "3 semaines",
+    "coût": "20 K€"
+  },
+  {
+    "id": "100",
+    "type": "action",
+    "title": "Développer la fonction EcoTrip Planner",
+    "description": "La fonction EcoTrip Planner permet aux utilisateurs de saisir leurs intérêts et de recevoir des suggestions de voyages écologiques. Elle nécessite le développement de trois sous-fonctions : Saisie des Intérêts Utilisateur, Génération de Suggestions de Voyages, et Évaluation de l'Impact Écologique.\n- Total généré quand les 3 sous-fonctions sont développées : 45 K€",
+    "domain": "Gestion du contenu",
+    "info": "L'EcoTrip Planner est une fonction clé qui aide les utilisateurs à planifier des voyages écologiques en fonction de leurs intérêts. Elle nécessite le développement de plusieurs sous-fonctions pour être complète.",
+    "phase": ["Planification"],
+    "valeur": "45 K€"
+  },
+  {
+    "id": "101",
+    "type": "action",
+    "title": "Saisie des Intérêts Utilisateur",
+    "description": "Permet aux utilisateurs de spécifier leurs préférences et intérêts en matière de voyage.\n- Objectif : Collecter des données pour personnaliser les recommandations de voyage.",
+    "domain": "Gestion du contenu",
+    "info": "La saisie des intérêts utilisateur est essentielle pour fournir des recommandations personnalisées et pertinentes.",
+    "phase": ["Planification"],
+    "délai": "+10 jours",
+    "coût": "10 K€"
+  },
+  {
+    "id": "102",
+    "type": "action",
+    "title": "Génération de Suggestions de Voyages",
+    "description": "Propose plusieurs idées de voyages basées sur les intérêts de l'utilisateur, en mettant l'accent sur des destinations et activités écologiques.\n- Objectif : Fournir une liste diversifiée de destinations potentielles.",
+    "domain": "Gestion du contenu",
+    "info": "La génération de suggestions de voyages permet de proposer des options variées et écologiques aux utilisateurs.",
+    "phase": ["Planification"],
+    "délai": "+10 jours",
+    "coût": "15 K€"
+  },
+  {
+    "id": "103",
+    "type": "action",
+    "title": "Évaluation de l'Impact Écologique",
+    "description": "Utilise un algorithme pour calculer l'impact écologique de chaque scénario de voyage proposé.\n- Objectif : Quantifier l'impact environnemental de chaque option de voyage.",
+    "domain": "Gestion du contenu",
+    "info": "L'évaluation de l'impact écologique permet de comparer les options de voyage en fonction de leur durabilité.",
+    "phase": ["Planification"],
+    "délai": "+10 jours",
+    "coût": "20 K€"
+  },
+  {
+    "id": "104",
+    "type": "action",
+    "title": "Système de Réservation",
+    "description": "Développer un système de réservation fluide et sécurisé pour les hébergements et activités écologiques. Imaginez la satisfaction de vos utilisateurs lorsqu'ils pourront réserver en un clin d'œil des expériences uniques et durables !\n- Objectif : Offrir une expérience utilisateur sans faille et augmenter l'engagement avec des réservations simplifiées.",
+    "domain": "Gestion du contenu",
+    "info": "Éliciter le besoin pour un système de réservation efficace est crucial en gestion de projet. Cela permet de comprendre les attentes des utilisateurs et de concevoir une solution qui répond précisément à leurs besoins. Astuce : Impliquez les utilisateurs finaux dès le début pour recueillir des retours précieux et ajuster le système en conséquence.",
+    "phase": ["Planification"],
+    "délai": "+20 jours",
+    "coût": "25 K€",
+    "valeur": "100 K€"
+  },
+  {
+    "id": "105",
+    "type": "action",
+    "title": "Gestion des Notations",
+    "description": "Mettre en place un système de notation permettant aux utilisateurs d'évaluer les destinations et activités écologiques. Encouragez une communauté active où chaque avis compte et influence les futurs voyageurs !\n- Objectif : Renforcer la confiance des utilisateurs grâce à des évaluations transparentes et fiables.",
+    "domain": "Gestion du contenu",
+    "info": "La gestion des notations est un excellent moyen d'engager les utilisateurs et de recueillir des retours constructifs. En gestion de projet, cela permet d'identifier les points forts et les axes d'amélioration de votre produit. Astuce : Utilisez les notations pour mettre en avant les destinations les mieux évaluées et améliorer continuellement l'offre.",
+    "phase": ["Planification"],
+    "délai": "+15 jours",
+    "coût": "10 K€",
+    "valeur": "20 K€"
+  },
+  {
+    "id": "20",
+    "type": "event",
+    "title": "Audit de sécurité des données",
+    "description": "Événement : Un audit de sécurité révèle des vulnérabilités potentielles dans la protection des données utilisateurs.\n\nL'impact dépend de vos actions précédentes. Si vous avez à la fois défini le périmètre du projet et élaboré la charte, vous serez bien préparé. Si vous avez fait l'un des deux, l'impact sera modéré. Sans ces préparations, l'impact sera sévère.",
+    "domain": "Gestion des risques",
+    "info": "La sécurité des données est un aspect critique des applications modernes, particulièrement pour celles qui traitent des informations personnelles comme les itinéraires de voyage.",
+    "phase": ["Planification", "Exécution"],
+    "délai": "Variable",
+    "coût": "Variable",
+    "conditions": [
+      {
+        "operator": "AND",
+        "checks": [
+          {"cardId": "1", "present": true},
+          {"cardId": "8", "present": true}
+        ],
+        "effects": {
+          "budget": -5,
+          "time": -1,
+          "message": "Grâce à votre charte de projet et à la définition claire du périmètre, vous aviez anticipé les exigences de sécurité. Impact minimal: -5K€ et -1 mois."
+        }
+      },
+      {
+        "operator": "OR",
+        "checks": [
+          {"cardId": "1", "present": true},
+          {"cardId": "8", "present": true}
+        ],
+        "effects": {
+          "budget": -15,
+          "time": -2,
+          "message": "L'une de vos mesures préventives a permis de limiter l'impact: -15K€ et -2 mois."
+        }
+      },
+      {
+        "default": true,
+        "effects": {
+          "budget": -30,
+          "time": -4,
+          "message": "Sans préparation adéquate, l'audit de sécurité a révélé des problèmes majeurs: -30K€ et -4 mois pour les corrections."
+        }
+      }
+    ]
+  },
+  {
+    "id": "21",
+    "type": "event",
+    "title": "Test d'événement conditionnel",
+    "description": "Ceci est un test d'événement conditionnel pour vérifier que le système fonctionne correctement.\n\nSi vous avez la carte 'Identifier les parties prenantes' sur le plateau, l'impact sera positif. Sinon, l'impact sera négatif.",
+    "domain": "Test",
+    "info": "Carte de test pour vérifier le fonctionnement des conditions.",
+    "phase": ["Initiation", "Planification", "Exécution"],
+    "délai": "Variable",
+    "coût": "Variable",
+    "conditions": [
+      {
+        "cardId": "2",
+        "present": true,
+        "effects": {
+          "budget": 50,
+          "time": 2,
+          "message": "TEST POSITIF: Vous avez la carte 'Identifier les parties prenantes', donc l'impact est positif."
+        }
+      },
+      {
+        "cardId": "2",
+        "present": false,
+        "effects": {
+          "budget": -50,
+          "time": -2,
+          "message": "TEST NÉGATIF: Vous n'avez pas la carte 'Identifier les parties prenantes', donc l'impact est négatif."
+        }
+      }
+    ]
+  }
+] 
