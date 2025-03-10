@@ -3,58 +3,41 @@ import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
-    <div className="bg-indigo-700">
-      <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
-        <div className="relative isolate overflow-hidden bg-gray-900 px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
-          <svg
-            viewBox="0 0 1024 1024"
-            className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
-            aria-hidden="true"
-          >
-            <circle
-              cx={512}
-              cy={512}
-              r={512}
-              fill="url(#759c1415-0410-454c-8f7c-9a820de03641)"
-              fillOpacity="0.7"
-            />
-            <defs>
-              <radialGradient id="759c1415-0410-454c-8f7c-9a820de03641">
-                <stop stopColor="#7775D6" />
-                <stop offset={1} stopColor="#E935C1" />
-              </radialGradient>
-            </defs>
-          </svg>
-          <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Ready to master project management?
+    <div className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-red-500 to-purple-500">
+      <div className="mx-auto max-w-7xl py-24 px-6 sm:py-32 lg:px-8">
+        <div className="relative isolate px-6 py-12 text-center sm:px-16">
+          <div className="mx-auto max-w-2xl">
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+              Prêt à devenir un
               <br />
-              Start playing today.
+              Super Chef de Projet ? 🦸‍♂️
             </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
-              Put your project management skills to the test in our interactive card game. 
-              Learn PMBOK principles while making strategic decisions to maximize project value.
+            
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-white/80">
+              Lance-toi dans l'aventure et apprends la gestion de projet 
+              en relevant des défis passionnants !
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
+            
+            <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
                 to="/game"
-                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="rounded-full bg-white px-8 py-4 text-lg font-semibold text-purple-600 
+                         shadow-lg hover:bg-purple-50 transition-all duration-300 
+                         transform hover:scale-105 hover:shadow-xl"
               >
-                Play Now
+                Commencer l'Aventure 🚀
               </Link>
-              <a href="#features" className="text-sm font-semibold leading-6 text-white">
-                Learn more <span aria-hidden="true">→</span>
-              </a>
+            </div>
+
+            <div className="mt-8 animate-bounce">
+              <span className="text-4xl">⬇️</span>
             </div>
           </div>
-          <div className="relative mt-16 h-80 lg:mt-8">
-            <img
-              className="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
-              src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-              alt="Project management board with sticky notes"
-              width={1824}
-              height={1080}
-            />
+
+          {/* Animated background elements */}
+          <div className="absolute -top-4 -left-4 -right-4 -bottom-4 bg-gradient-to-r from-purple-500/30 to-pink-500/30 blur-3xl" />
+          <div className="absolute inset-0">
+            <div className="h-full w-full bg-white/5 backdrop-blur-sm" />
           </div>
         </div>
       </div>

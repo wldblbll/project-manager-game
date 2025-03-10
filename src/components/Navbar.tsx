@@ -1,6 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { cn } from "@/lib/utils";
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -26,33 +26,39 @@ const Navbar = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 transition-all duration-300",
         scrolled 
-          ? "py-4 bg-white/80 backdrop-blur-md shadow-sm" 
-          : "py-6 bg-transparent"
+          ? "py-2 bg-white/80 backdrop-blur-md shadow-sm" 
+          : "py-4 bg-transparent"
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <a href="#" className="font-semibold text-xl">
-          Elegant<span className="text-gray-500">World</span>
-        </a>
+        <Link to="/" className="flex items-center space-x-2">
+          <img 
+            src="/logo.png" 
+            alt="PM Cards Logo" 
+            className={cn(
+              "h-8 w-8 transition-all duration-300 hover:rotate-12",
+              scrolled ? "filter-none" : "brightness-110"
+            )} 
+          />
+          <span className={cn(
+            "font-bold text-xl transition-all duration-300",
+            scrolled ? "text-indigo-600" : "text-white"
+          )}>PM Cards</span>
+        </Link>
         
-        <div className="hidden md:flex items-center space-x-8">
-          <a href="#features" className="text-sm font-medium hover:text-gray-600 transition-colors">
-            Features
-          </a>
-          <a href="#about" className="text-sm font-medium hover:text-gray-600 transition-colors">
-            About
-          </a>
-          <a href="#contact" className="text-sm font-medium hover:text-gray-600 transition-colors">
-            Contact
-          </a>
+        <div className="flex items-center space-x-4">
+          <Link 
+            to="/game" 
+            className={cn(
+              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
+              scrolled 
+                ? "bg-indigo-500 hover:bg-indigo-600 text-white" 
+                : "bg-white/10 backdrop-blur hover:bg-white/20 text-white"
+            )}
+          >
+            Jouer 🎲
+          </Link>
         </div>
-        
-        <a 
-          href="#cta" 
-          className="hidden md:inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all bg-black text-white hover:bg-black/90 shadow-sm"
-        >
-          Get Started
-        </a>
       </div>
     </nav>
   );

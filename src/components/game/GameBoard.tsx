@@ -38,8 +38,8 @@ type CardType = 'action' | 'event' | 'quiz';
 const DEBUG_MODE = false;
 
 // Constantes pour les dimensions des cartes
-const CARD_WIDTH = 150;
-const CARD_MIN_HEIGHT = 36; // Hauteur minimale seulement
+const CARD_WIDTH = 180;
+const CARD_MIN_HEIGHT = 100;
 const CARD_MARGIN = 4;
 const BOARD_PADDING = 8;
 
@@ -76,6 +76,35 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // Ajout d'un état pour suivre la position de départ de la souris
   const [mouseStartPosition, setMouseStartPosition] = useState({ x: 0, y: 0 });
   const [cardStartPosition, setCardStartPosition] = useState({ x: 0, y: 0 });
+  
+  // États pour le sélecteur de cartes
+  const [selectedActionCards, setSelectedActionCards] = useState<Card[]>([]);
+  
+  // États pour le composant
+  const [altKeyPressed, setAltKeyPressed] = useState(false);
+  
+  // Surveiller la touche Alt pour le mode de débogage
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Alt') {
+        setAltKeyPressed(true);
+      }
+    };
+    
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === 'Alt') {
+        setAltKeyPressed(false);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
   
   // Function to log debug information
   const debugLog = (...args: any[]) => {
@@ -268,12 +297,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   // Determine container classes based on full-screen mode
   const containerClasses = isFullScreen
-    ? "fixed inset-0 z-50 bg-white"
-    : "bg-white border border-gray-300 rounded-lg shadow-sm p-4 mt-4";
+    ? "fixed inset-0 z-50 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500"
+    : "bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-xl shadow-xl p-4 mt-4";
 
   // Determine board container styles based on full-screen mode
   const boardContainerStyle = isFullScreen
-    ? { height: '100vh' }
+    ? { height: 'calc(100vh - 64px)' }
     : { height: '600px', minHeight: '600px' };
 
   // Completely redesigned function to check if a card is already on the project board
@@ -363,7 +392,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
     animation.style.zIndex = '9999';
     animation.style.opacity = '0';
     animation.style.transform = 'translateX(20px)';
-    animation.style.transition = 'all 0.3s ease-out';
+    animation.style.transition = 'all 0.5s ease-out';
     
     // Ajouter l'animation au DOM
     document.body.appendChild(animation);
@@ -374,76 +403,90 @@ const GameBoard: React.FC<GameBoardProps> = ({
       animation.style.transform = 'translateX(0)';
     }, 100);
     
-    // Supprimer l'animation après un délai
+    // Supprimer l'animation après un délai plus long (5 secondes)
     setTimeout(() => {
       animation.style.opacity = '0';
       animation.style.transform = 'translateX(20px)';
       
       setTimeout(() => {
         document.body.removeChild(animation);
-      }, 300);
-    }, 2000);
+      }, 500);
+    }, 5000); // Augmenté de 2000 à 5000 ms
   };
 
   // Fonction pour ajouter une carte au tableau
   const handleAddCard = (card: Card) => {
     // Vérifier si la carte est déjà sur le tableau
-    if (isCardOnBoard(card.id)) {
-      debugLog(`La carte ${card.id} est déjà sur le tableau.`);
+    if (isCardOnBoard(card.id) && !altKeyPressed) {
+      debugLog(`Card ${card.id} is already on the board. Skipping.`);
       return;
     }
-
-    // Générer un ID aléatoire si la carte n'en a pas
-    const cardId = card.id || `card-${Math.random().toString(36).substr(2, 9)}`;
     
-    // Créer une nouvelle carte avec un ID et une position
-    const position = { 
-      x: Math.max(50, Math.min(boardRef.current?.clientWidth || 800, Math.random() * (boardRef.current?.clientWidth || 800) - 100)), 
-      y: Math.max(50, Math.min(boardRef.current?.clientHeight || 600, Math.random() * (boardRef.current?.clientHeight || 600) - 100))
+    // Vérifier les limites de cartes par type
+    const cardType = getCardType(card);
+    if (cardType && cardLimits && cardUsage) {
+      if (cardUsage[cardType] >= cardLimits[cardType]) {
+        debugLog(`Card limit reached for type ${cardType}. Current: ${cardUsage[cardType]}, Limit: ${cardLimits[cardType]}`);
+        showImpactNotification(`Limite de cartes ${cardType} atteinte (${cardUsage[cardType]}/${cardLimits[cardType]})`);
+        return;
+      }
+    }
+    
+    // Générer une position aléatoire pour la nouvelle carte
+    const position = getNextAvailablePosition();
+    
+    // Créer une copie de la carte avec la nouvelle position
+    const newCard = {
+      ...card,
+      position
     };
     
-    const newCard = { ...card, id: cardId, position };
-    
-    // Appliquer les impacts sur le coût et le délai pour les cartes action
-    if (getCardType(card) === 'action') {
-      // Appliquer l'impact sur le coût
-      if (card.coût && onModifyBudget) {
-        // Extraire la valeur numérique du coût (peut être positif ou négatif)
-        const costMatch = card.coût.match(/([+-]?\d+)/);
-        if (costMatch && costMatch[1]) {
-          const costImpact = parseInt(costMatch[1], 10);
-          debugLog(`Applying cost impact from action card: ${costImpact}K€`);
-          onModifyBudget(costImpact);
-          
-          // Afficher une animation pour l'impact sur le coût
-          showCounterAnimation('budget', costImpact);
-        }
-      }
-      
-      // Appliquer l'impact sur le délai
-      if (card.délai && onModifyTime) {
-        // Extraire la valeur numérique du délai (peut être positif ou négatif)
-        const timeMatch = card.délai.match(/([+-]?\d+)/);
-        if (timeMatch && timeMatch[1]) {
-          const timeImpact = parseInt(timeMatch[1], 10);
-          debugLog(`Applying time impact from action card: ${timeImpact} days/months`);
-          onModifyTime(timeImpact);
-          
-          // Afficher une animation pour l'impact sur le délai
-          showCounterAnimation('time', timeImpact);
-        }
-      }
-    }
-    
-    // Appeler le callback pour ajouter la carte
+    // Ajouter la carte au tableau
     if (onSelectCard) {
       onSelectCard(newCard);
+      
+      // Mettre à jour le compteur de cartes utilisées
+      if (cardType && cardUsage) {
+        debugLog(`Incrementing card usage for type ${cardType}. Before: ${cardUsage[cardType]}`);
+      }
     }
     
-    // Fermer le sélecteur de cartes
-    setShowCardSelector(false);
+    // Fermer le sélecteur de cartes si ce n'est pas une carte action ou si la touche Alt n'est pas enfoncée
+    if (cardType !== 'action' || altKeyPressed) {
+      setShowCardSelector(false);
+    }
   };
   
+  // Fonction pour ajouter toutes les cartes action sélectionnées
+  const handleAddSelectedActionCards = () => {
+    if (selectedActionCards.length === 0) {
+      showImpactNotification("Aucune carte action sélectionnée");
+      return;
+    }
+    
+    // Vérifier les limites de cartes
+    const remainingActionSlots = cardLimits.action - cardUsage.action;
+    if (selectedActionCards.length > remainingActionSlots) {
+      showImpactNotification(`Vous ne pouvez ajouter que ${remainingActionSlots} cartes action supplémentaires`);
+      return;
+    }
+    
+    // Ajouter chaque carte sélectionnée
+    selectedActionCards.forEach(card => {
+      if (!isCardOnBoard(card.id)) {
+        const position = getNextAvailablePosition();
+        const newCard = { ...card, position };
+        if (onSelectCard) {
+          onSelectCard(newCard);
+        }
+      }
+    });
+    
+    // Réinitialiser la sélection et fermer le sélecteur
+    setSelectedActionCards([]);
+    setShowCardSelector(false);
+  };
+
   // Card Selector Component
   const CardSelectorPanel = () => {
     if (!showCardSelector) return null;
@@ -552,6 +595,31 @@ const GameBoard: React.FC<GameBoardProps> = ({
       });
     }
     
+    // Fonction pour gérer la sélection d'une carte
+    const handleCardSelection = (card: Card) => {
+      const cardType = getCardType(card);
+      
+      if (cardType === 'action') {
+        // Pour les cartes action, ajouter/retirer de la sélection
+        setSelectedActionCards(prev => {
+          const isAlreadySelected = prev.some(c => c.id === card.id);
+          if (isAlreadySelected) {
+            return prev.filter(c => c.id !== card.id);
+          } else {
+            return [...prev, card];
+          }
+        });
+      } else {
+        // Pour les autres types, ajouter directement au tableau
+        handleAddCard(card);
+      }
+    };
+    
+    // Vérifier si une carte est sélectionnée
+    const isCardSelected = (cardId: string) => {
+      return selectedActionCards.some(card => card.id === cardId);
+    };
+    
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg shadow-xl p-6 max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto">
@@ -578,7 +646,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
               
               {/* Close button */}
               <button
-                onClick={() => setShowCardSelector(false)}
+                onClick={() => {
+                  setSelectedActionCards([]);
+                  setShowCardSelector(false);
+                }}
                 className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700"
                 aria-label="Fermer"
               >
@@ -656,96 +727,80 @@ const GameBoard: React.FC<GameBoardProps> = ({
             </div>
           </div>
           
+          {/* Afficher le nombre de cartes sélectionnées et le bouton d'ajout pour les cartes action */}
+          {localSelectedType === 'action' && selectedActionCards.length > 0 && (
+            <div className="mt-4 p-3 bg-blue-50 rounded-lg flex justify-between items-center">
+              <span className="text-blue-700 font-medium">
+                {selectedActionCards.length} carte{selectedActionCards.length > 1 ? 's' : ''} sélectionnée{selectedActionCards.length > 1 ? 's' : ''}
+              </span>
+              <button
+                onClick={handleAddSelectedActionCards}
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium"
+              >
+                Ajouter les cartes sélectionnées
+              </button>
+            </div>
+          )}
+          
           {/* Results count */}
           <div className="mb-4 text-sm text-gray-500">
             {filteredCards.length} carte{filteredCards.length !== 1 ? 's' : ''} trouvée{filteredCards.length !== 1 ? 's' : ''}
             {searchQuery && <span> pour "<strong>{searchQuery}</strong>"</span>}
           </div>
           
-          {/* Card list */}
-          {Object.keys(groupedCards).length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-gray-500 mb-4">
-                {searchQuery ? (
-                  `Aucune carte ne correspond à votre recherche "${searchQuery}"`
-                ) : showCurrentPhaseOnly && currentPhase ? (
-                  `Aucune carte ${localSelectedType === 'action' ? 'action' : 
-                    localSelectedType === 'event' ? 'événement' : 
-                    'quiz'} disponible pour la phase ${currentPhase}`
-                ) : (
-                  `Aucune carte ${localSelectedType === 'action' ? 'action' : 
-                    localSelectedType === 'event' ? 'événement' : 
-                    'quiz'} disponible`
-                )}
-              </p>
-              {showCurrentPhaseOnly && !searchQuery && (
-                <button
-                  onClick={() => setShowCurrentPhaseOnly(false)}
-                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium"
-                >
-                  Afficher toutes les phases
-                </button>
-              )}
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {Object.entries(groupedCards).map(([domain, domainCards]) => (
-                <div key={domain} className="border border-gray-200 rounded-lg p-4">
-                  <h4 className="font-bold text-lg mb-3 text-gray-700">
-                    {domain} 
-                    {debugMode && <span className="text-sm text-gray-500 ml-2">({domainCards.length} cards)</span>}
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {domainCards.map(card => {
-                      const colors = getCardColors(getCardDomain(card) || "");
-                      const isOnBoard = isCardOnBoard(card.id);
-                      
-                      return (
-                        <button
-                          key={card.id || `card-${Math.random()}`}
-                          onClick={() => !isOnBoard && handleAddCard(card)}
-                          className={`p-3 rounded-lg text-left transition-all ${colors.bg} ${colors.text} ${
-                            isOnBoard 
-                              ? 'opacity-50 cursor-not-allowed border border-gray-300' 
-                              : 'hover:shadow-md'
-                          }`}
-                          disabled={isOnBoard}
-                          title={isOnBoard ? "Cette carte est déjà sur le tableau" : ""}
-                          data-card-id={card.id || 'no-id'}
-                          data-on-board={isOnBoard}
-                        >
-                          <div className="font-medium flex items-center justify-between">
+          {/* Card grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+            {Object.entries(groupedCards).map(([domain, domainCards]) => (
+              <div key={domain} className="space-y-3">
+                <h4 className="font-semibold text-gray-700 border-b pb-1">
+                  {domain || 'Sans domaine'} ({domainCards.length})
+                </h4>
+                
+                <div className="space-y-2">
+                  {domainCards.map(card => {
+                    const colors = getCardColors(domain);
+                    const isOnBoard = isCardOnBoard(card.id);
+                    const isSelected = isCardSelected(card.id);
+                    
+                    return (
+                      <div
+                        key={card.id}
+                        onClick={() => handleCardSelection(card)}
+                        className={`p-3 rounded-lg cursor-pointer transition-all ${
+                          isOnBoard ? 'opacity-50' : 'hover:shadow-md'
+                        } ${
+                          isSelected ? 'ring-2 ring-blue-500 bg-blue-50' : colors.bg
+                        }`}
+                      >
+                        <div className="flex justify-between items-start">
+                          <h5 className={`font-medium ${isSelected ? 'text-blue-700' : colors.text}`}>
                             {getCardTitle(card)}
-                            {isOnBoard && (
-                              <span className="ml-2 text-xs bg-gray-200 text-gray-700 px-1 py-0.5 rounded">
-                                Déjà ajoutée
-                              </span>
-                            )}
-                            {debugMode && <span className="text-xs ml-1">({(card.id && card.id.slice(0,4)) || 'no-id'})</span>}
-                          </div>
+                            {isOnBoard && <span className="ml-2 text-xs">(déjà sur le tableau)</span>}
+                          </h5>
                           
-                          <div className="text-xs mt-1 line-clamp-2 text-gray-600">
-                            {getCardDescription(card)}
-                          </div>
-                          
-                          {card.phase && (
-                            <div className="mt-1 text-xs opacity-75">
-                              Phase: {Array.isArray(card.phase) ? card.phase.filter(p => p).join(', ') : card.phase}
+                          {localSelectedType === 'action' && (
+                            <div className={`w-5 h-5 rounded-full border ${
+                              isSelected ? 'bg-blue-500 border-blue-500' : 'border-gray-300'
+                            } flex items-center justify-center`}>
+                              {isSelected && (
+                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              )}
                             </div>
                           )}
-                          {debugMode && (
-                            <div className="mt-1 text-xs text-gray-500 italic">
-                              Status: {isOnBoard ? 'Already on board' : 'Available'}
-                            </div>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
+                        </div>
+                        
+                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                          {getCardDescription(card)}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -1014,6 +1069,21 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   };
 
+  // Fonction pour obtenir la prochaine position disponible pour une carte
+  const getNextAvailablePosition = () => {
+    const boardWidth = boardRef.current?.clientWidth || 800;
+    const boardHeight = boardRef.current?.clientHeight || 600;
+    
+    // Marge pour éviter de placer les cartes trop près des bords
+    const margin = 50;
+    
+    // Générer une position aléatoire dans les limites du tableau
+    return {
+      x: Math.max(margin, Math.min(boardWidth - CARD_WIDTH - margin, Math.random() * (boardWidth - CARD_WIDTH - 2 * margin) + margin)),
+      y: Math.max(margin, Math.min(boardHeight - CARD_MIN_HEIGHT - margin, Math.random() * (boardHeight - CARD_MIN_HEIGHT - 2 * margin) + margin))
+    };
+  };
+
   return (
     <div className="h-full flex flex-col">
       <div 
@@ -1025,21 +1095,50 @@ const GameBoard: React.FC<GameBoardProps> = ({
         {/* Board header */}
         <div className="flex justify-between items-center mb-4">
           <div>
-            <h2 className="text-xl font-bold text-gray-800">
+            <h2 className="text-2xl font-bold text-white">
               Tableau de Projet
               {debugMode && <span className="text-xs text-red-500 ml-2">[DEBUG MODE]</span>}
             </h2>
-            <div className="flex items-center gap-2 mt-2">
-              <button
-                onClick={() => setShowCardSelector(true)}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center shadow-sm"
-              >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                Carte Action
-              </button>
-                            
+            <div className="flex items-center gap-3 mt-3">
+              {/* Boutons d'ajout de cartes */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => {
+                    setSelectedCardType('action');
+                    setShowCardSelector(true);
+                  }}
+                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg 
+                           text-sm font-medium transition-all duration-200 flex items-center shadow-md"
+                >
+                  <span className="mr-2">🛠️</span>
+                  Actions ({cardUsage.action}/{cardLimits.action})
+                </button>
+                
+                <button
+                  onClick={() => {
+                    setSelectedCardType('event');
+                    setShowCardSelector(true);
+                  }}
+                  className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg 
+                           text-sm font-medium transition-all duration-200 flex items-center shadow-md"
+                >
+                  <span className="mr-2">🎭</span>
+                  Événements ({cardUsage.event}/{cardLimits.event})
+                </button>
+                
+                <button
+                  onClick={() => {
+                    setSelectedCardType('quiz');
+                    setShowCardSelector(true);
+                  }}
+                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg 
+                           text-sm font-medium transition-all duration-200 flex items-center shadow-md"
+                >
+                  <span className="mr-2">❓</span>
+                  Quiz ({cardUsage.quiz}/{cardLimits.quiz})
+                </button>
+              </div>
+              
               {/* Roue de cartes aléatoires */}
               <RandomCardWheel 
                 cards={allCards} 
@@ -1051,58 +1150,13 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 cardLimits={cardLimits}
                 cardUsage={cardUsage}
               />
-
-              {/* Card limits display */}
-              <div className="flex gap-3 px-4 py-2 bg-gray-100 rounded-lg">
-                <div className="flex items-center gap-1">
-                  <span className="text-sm font-medium text-blue-600">Actions:</span>
-                  <span className="text-sm">{cardUsage.action}/{cardLimits.action}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-sm font-medium text-purple-600">Événements:</span>
-                  <span className="text-sm">{cardUsage.event}/{cardLimits.event}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-sm font-medium text-green-600">Quiz:</span>
-                  <span className="text-sm">{cardUsage.quiz}/{cardLimits.quiz}</span>
-                </div>
-              </div>
-              {debugMode && (
-                <button
-                  onClick={() => setDebugMode(false)}
-                  className="ml-auto px-2 py-1 bg-red-100 text-red-700 text-xs rounded"
-                >
-                  Disable Debug
-                </button>
-              )}
             </div>
           </div>
-          <button
-            onClick={onToggleFullScreen}
-            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg flex items-center gap-2 transition-colors"
-          >
-            {isFullScreen ? (
-              <>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9L4 4m0 0l5 5m-5-5v5m16-5l-5 5m5-5v5M4 20l5-5m-5 5v-5m16 5l-5-5m5 5v-5" />
-                </svg>
-                Quitter plein écran
-              </>
-            ) : (
-              <>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0-4l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                </svg>
-                Plein écran
-              </>
-            )}
-          </button>
         </div>
         
-        {/* Board area */}
+        {/* Board area - Updated to keep it white */}
         <div
-          className="relative border border-dashed border-gray-300 rounded-lg h-full p-4 overflow-hidden"
-          style={{ backgroundColor: '#f8fafc' }}
+          className="relative bg-white/90 backdrop-blur-sm rounded-xl h-full p-4 overflow-hidden shadow-lg"
         >
           {/* Board cards */}
           {cards.map((card) => {
@@ -1112,18 +1166,19 @@ const GameBoard: React.FC<GameBoardProps> = ({
               <div
                 key={card.id}
                 data-card-id={card.id}
-                className={`absolute p-2 rounded-lg shadow transition-all cursor-move ${colors.bg} ${colors.text} ${
-                  activeCardId === card.id ? 'ring-2 ring-blue-500' : ''
-                }`}
+                className={`absolute p-3 rounded-xl shadow-lg transition-all cursor-move backdrop-blur-sm
+                          ${colors.bg} ${colors.text} 
+                          ${activeCardId === card.id ? 'ring-2 ring-white' : ''}
+                          hover:shadow-xl transform hover:scale-105`}
                 style={{
                   width: `${CARD_WIDTH}px`,
-                  minHeight: `${CARD_MIN_HEIGHT}px`, // Hauteur minimale
-                  height: 'auto', // Hauteur adaptative selon le contenu
+                  minHeight: `${CARD_MIN_HEIGHT}px`,
+                  height: 'auto',
                   left: card.position?.x || 0,
                   top: card.position?.y || 0,
                   zIndex: draggingCard === card.id ? 10 : 1,
                   transform: draggingCard === card.id ? 'scale(1.05)' : 'scale(1)',
-                  transition: draggingCard === card.id ? 'none' : 'transform 0.15s, box-shadow 0.15s'
+                  transition: draggingCard === card.id ? 'none' : 'all 0.2s ease-in-out'
                 }}
                 onMouseDown={(e) => handleCardMouseDown(e, card.id)}
                 onMouseEnter={() => setHoveredCard(card)}
@@ -1133,65 +1188,50 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 <div className="text-sm font-medium text-center whitespace-normal break-words">
                   {getCardTitle(card)}
                 </div>
-                {debugMode && <div className="text-xs text-gray-500 truncate">ID: {card.id.substring(0, 4)}</div>}
+                {debugMode && <div className="text-xs text-white/50 truncate">ID: {card.id.substring(0, 4)}</div>}
               </div>
             );
           })}
           
-          {/* Simplified tooltip - shows only on hover, not when clicked */}
+          {/* Tooltip */}
           {hoveredCard && !draggingCard && activeCardId !== hoveredCard.id && (
             <div 
-              className="absolute z-20 w-64 p-3 bg-white rounded-lg shadow-xl border border-gray-200"
+              className="absolute z-20 w-64 p-4 bg-gray-800 backdrop-blur-md rounded-xl shadow-xl border border-gray-700 text-white"
               style={{
-                left: (hoveredCard.position?.x || 0) + 210,
-                top: (hoveredCard.position?.y || 0),
-                maxWidth: '250px'
+                left: `${hoveredCard.position?.x || 0}px`,
+                top: `${(hoveredCard.position?.y || 0) - 120}px`,
               }}
             >
-              <h4 className="font-bold text-gray-800">{getCardTitle(hoveredCard) || 'Carte sans titre'}</h4>
-              <p className="text-sm text-gray-600 mt-1">{getCardDescription(hoveredCard) || 'Aucune description'}</p>
-              
-              <div className="flex justify-between mt-3">
-                {hoveredCard.coût && (
-                  <div className="text-sm">
-                    <span className="font-semibold text-gray-700">Coût:</span> {hoveredCard.coût}
-                  </div>
-                )}
-                
-                {hoveredCard.délai && (
-                  <div className="text-sm">
-                    <span className="font-semibold text-gray-700">Délai:</span> {hoveredCard.délai}
-                  </div>
-                )}
-              </div>
+              <h3 className="font-bold mb-1">{getCardTitle(hoveredCard)}</h3>
+              <p className="text-sm opacity-80">{getCardDescription(hoveredCard).substring(0, 100)}...</p>
             </div>
           )}
           
           {/* Empty state */}
           {cards.length === 0 && (
-            <div className="flex items-center justify-center h-full">
-              <div className="text-center">
-                <p className="text-gray-400 text-lg mb-4">Votre tableau de projet est vide</p>
-                <button
-                  onClick={() => setShowCardSelector(true)}
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center mx-auto shadow-md"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                  </svg>
-                  Ajouter votre première carte
-                </button>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-white/60">
+                <div className="text-4xl mb-2">🎴</div>
+                <p className="text-lg font-medium">Ajoutez des cartes pour commencer</p>
+                <p className="text-sm mt-1">Utilisez le bouton "Ajouter une Carte" ci-dessus</p>
               </div>
             </div>
           )}
         </div>
       </div>
 
-      {/* Card selector panel */}
-      <CardSelectorPanel />
+      {/* Card selector modal */}
+      {showCardSelector && <CardSelectorPanel />}
       
       {/* Detail side panel */}
-      {renderDetailSidePanel()}
+      {activeCardId && (
+        <DetailSidePanel
+          activeCardId={activeCardId}
+          cards={cards}
+          getCardColors={getCardColors}
+          onClose={() => setActiveCardId(null)}
+        />
+      )}
     </div>
   );
 };

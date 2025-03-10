@@ -994,32 +994,32 @@ const GamePage = () => {
 
   // Normal view with all components
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Fixed header section */}
-      <div className="sticky top-0 z-30 bg-white shadow-md">
-        <GameHeader
-          budget={gameState.budget}
-          time={gameState.time} 
-          valuePoints={gameState.valuePoints}
-          currentPhase={gameState.currentPhase}
-          remainingTurns={gameState.remainingTurns}
-          isFullScreen={isFullScreen}
-          onToggleFullScreen={handleToggleFullScreen}
-          projectName={projectName}
-        />
-        
-        {/* Ne rendre Timeline que si les phases sont chargées */}
-        {gameState.phases.length > 0 && (
+    <div className="h-screen flex flex-col overflow-hidden">
+      <GameHeader 
+        budget={gameState.budget} 
+        time={gameState.time} 
+        valuePoints={gameState.valuePoints}
+        currentPhase={gameState.currentPhase}
+        remainingTurns={gameState.remainingTurns}
+        isFullScreen={isFullScreen}
+        onToggleFullScreen={handleToggleFullScreen}
+        projectName={selectedProject?.name || "PM Cards"}
+        onMilestoneStep={handlePhaseMilestone}
+      />
+      
+      {/* Ne rendre Timeline que si les phases sont chargées */}
+      {gameState.phases.length > 0 && (
+        <div className="bg-white shadow-md">
           <Timeline 
             phases={gameState.phases} 
             currentPhase={gameState.currentPhase} 
             remainingTurns={gameState.remainingTurns}
             turnsPerPhase={turnsPerPhase}
           />
-        )}
-      </div>
+        </div>
+      )}
       
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4 flex-grow overflow-auto">
         {gameState.showMilestone ? (
           <MilestoneDialog />
         ) : (
@@ -1056,7 +1056,8 @@ const GamePage = () => {
             remainingTurns={gameState.remainingTurns}
             isFullScreen={true}
             onToggleFullScreen={handleToggleFullScreen}
-            projectName={projectName}
+            projectName={selectedProject?.name || "PM Cards"}
+            onMilestoneStep={handlePhaseMilestone}
           />
           
           <GameBoard

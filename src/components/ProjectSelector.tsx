@@ -81,7 +81,6 @@ const ProjectSelector = ({ onSelectProject, standalone = false }: ProjectSelecto
             )}
             <CardHeader>
               <CardTitle>{project.name}</CardTitle>
-              <CardDescription>Fichier: {project.dataFile}</CardDescription>
             </CardHeader>
             <CardContent>
               <p>{project.description}</p>

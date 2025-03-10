@@ -28,6 +28,16 @@ const Footer = () => {
   return (
     <footer className="bg-white">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
+        {/* Logo et nom */}
+        <div className="flex justify-center items-center mb-10">
+          <img 
+            src="/logo.png" 
+            alt="PM Cards Logo" 
+            className="h-10 w-10 mr-2 hover:rotate-12 transition-transform duration-300" 
+          />
+          <span className="text-xl font-bold text-indigo-600">PM Cards</span>
+        </div>
+        
         <nav
           className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
           aria-label="Footer"
@@ -65,7 +75,7 @@ const Footer = () => {
           ))}
         </div>
         <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-          &copy; {new Date().getFullYear()} Project Management Game. All rights reserved.
+          &copy; {new Date().getFullYear()} PM Cards. All rights reserved.
         </p>
       </div>
     </footer>
