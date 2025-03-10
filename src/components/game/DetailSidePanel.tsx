@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import { Card } from '@/pages/GamePage';
 import { 
   getCardTitle, 
@@ -49,7 +50,9 @@ const DetailSidePanel: React.FC<DetailSidePanelProps> = ({
         <p className="text-sm text-gray-500 mb-4">
           {getCardDomain(activeCard)}
         </p>
-        <p className="text-gray-700 whitespace-pre-line">{getCardDescription(activeCard)}</p>
+        <div className="prose prose-sm max-w-none text-gray-700">
+          <ReactMarkdown>{getCardDescription(activeCard)}</ReactMarkdown>
+        </div>
         
         {/* Informations sur le coût et le délai */}
         {(getCardCost(activeCard) || getCardTime(activeCard)) && (
@@ -71,7 +74,9 @@ const DetailSidePanel: React.FC<DetailSidePanelProps> = ({
         {getCardInfo(activeCard) && (
           <div className="mt-4 p-3 bg-gray-100 rounded-md">
             <h5 className="font-semibold mb-2">Infos</h5>
-            <p className="text-sm text-gray-600">{getCardInfo(activeCard)}</p>
+            <div className="prose prose-sm max-w-none text-gray-600">
+              <ReactMarkdown>{getCardInfo(activeCard)}</ReactMarkdown>
+            </div>
           </div>
         )}
       </div>
