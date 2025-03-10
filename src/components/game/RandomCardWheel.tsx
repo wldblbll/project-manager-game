@@ -57,7 +57,7 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
   const [open, setOpen] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [showResult, setShowResult] = useState(false);
-  const [cardType, setCardType] = useState<'event' | 'question' | null>(null);
+  const [cardType, setCardType] = useState<'event' | 'quiz' | null>(null);
   const [pointsAwarded, setPointsAwarded] = useState(false);
   const [valuePointsCounter, setValuePointsCounter] = useState(0);
   
@@ -65,12 +65,12 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
   const [drawnEventCards, setDrawnEventCards] = useState<string[]>([]);
   const [drawnQuizCards, setDrawnQuizCards] = useState<string[]>([]);
   
-  // État pour les messages d'alerte
+  // État pour les alertes
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
 
   // Filtrer les cartes par phase actuelle et type, en excluant celles déjà tirées
-  const getFilteredCards = (type: 'event' | 'question') => {
+  const getFilteredCards = (type: 'event' | 'quiz') => {
     const drawnCardIds = type === 'event' ? drawnEventCards : drawnQuizCards;
     
     const filtered = cards.filter(card => {
@@ -89,7 +89,7 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
   };
 
   const eventCards = getFilteredCards('event');
-  const quizCards = getFilteredCards('question');
+  const quizCards = getFilteredCards('quiz');
   
   // Log pour déboguer les cartes quiz (uniquement en mode debug)
   if (debugMode) {
@@ -100,16 +100,15 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
   }
 
   // Fonction pour vérifier si une limite de carte est atteinte
-  const isCardLimitReached = (type: 'event' | 'question') => {
-    const cardType = type === 'event' ? 'event' : 'quiz';
-    return cardUsage[cardType] >= cardLimits[cardType];
+  const isCardLimitReached = (type: 'event' | 'quiz') => {
+    return cardUsage[type] >= cardLimits[type];
   };
 
-  const handleSpin = (type: 'event' | 'question') => {
+  const handleSpin = (type: 'event' | 'quiz') => {
     // Vérifier si la limite de cartes est atteinte
     if (isCardLimitReached(type)) {
-      const cardType = type === 'event' ? 'événement' : 'quiz';
-      const message = `Limite de cartes ${cardType} atteinte pour cette phase ! (${cardUsage[type === 'event' ? 'event' : 'quiz']}/${cardLimits[type === 'event' ? 'event' : 'quiz']})`;
+      const typeDisplay = type === 'event' ? 'événement' : 'quiz';
+      const message = `Limite de cartes ${typeDisplay} atteinte pour cette phase ! (${cardUsage[type]}/${cardLimits[type]})`;
       setAlertMessage(message);
       setShowAlert(true);
       
@@ -125,7 +124,8 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
     
     if (filteredCards.length === 0) {
       // Afficher un message si toutes les cartes ont été tirées
-      const message = `Toutes les cartes ${type === 'event' ? 'événement' : 'quiz'} disponibles ont déjà été tirées. Essayez un autre type de carte.`;
+      const typeDisplay = type === 'event' ? 'événement' : 'quiz';
+      const message = `Toutes les cartes ${typeDisplay} disponibles ont déjà été tirées. Essayez un autre type de carte.`;
       setAlertMessage(message);
       setShowAlert(true);
       
@@ -175,19 +175,6 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
         onCardSelected(card);
       }
       
-      // Log pour déboguer la carte sélectionnée (uniquement en mode debug)
-      if (debugMode) {
-        console.log("Carte sélectionnée:", card);
-        console.log("Type de la carte:", getCardType(card));
-        console.log("ID de la carte:", card.id);
-        
-        if (getCardType(card) === 'question') {
-          console.log("Options de la carte:", getCardOptions(card));
-          console.log("Bonne réponse:", getCardCorrectAnswer(card));
-          console.log("Commentaire explicatif:", getCardComment(card));
-        }
-      }
-      
       setOpen(true);
       setIsSpinning(false);
 
@@ -210,7 +197,7 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
   };
 
   const handleSubmitAnswer = () => {
-    if (selectedCard && getCardType(selectedCard) === 'question') {
+    if (selectedCard && getCardType(selectedCard) === 'quiz') {
       setShowResult(true);
       
       // Si la réponse est correcte et que les points n'ont pas encore été attribués
@@ -234,7 +221,7 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
   };
 
   // Obtenir la couleur de fond en fonction du type de carte
-  const getCardBackgroundColor = (type: 'event' | 'question' | null) => {
+  const getCardBackgroundColor = (type: 'event' | 'quiz' | null) => {
     return type === 'event' ? 'linear-gradient(135deg, #4f46e5, #7c3aed)' : 'linear-gradient(135deg, #0ea5e9, #3b82f6)';
   };
 
@@ -245,16 +232,21 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
     }
   }, [valuePointsCounter, debugMode]);
 
-  // Fonction pour réinitialiser les cartes tirées
-  const handleResetDrawnCards = (type: 'event' | 'question' | 'all') => {
+  // Fonction pour réinitialiser les cartes déjà tirées
+  const handleResetDrawnCards = (type: 'event' | 'quiz' | 'all') => {
     if (type === 'event' || type === 'all') {
       setDrawnEventCards([]);
     }
-    if (type === 'question' || type === 'all') {
+    if (type === 'quiz' || type === 'all') {
       setDrawnQuizCards([]);
     }
     
-    setAlertMessage(`Les cartes ${type === 'all' ? 'événement et quiz' : type} ont été réinitialisées.`);
+    // Afficher un message de confirmation
+    const message = type === 'all' 
+      ? "Toutes les cartes ont été réinitialisées et peuvent être tirées à nouveau."
+      : `Les cartes ${type === 'event' ? 'événement' : 'quiz'} ont été réinitialisées et peuvent être tirées à nouveau.`;
+    
+    setAlertMessage(message);
     setShowAlert(true);
     
     // Masquer l'alerte après 3 secondes
@@ -280,7 +272,7 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
 
         {/* Bouton pour les quiz */}
         <button
-          onClick={() => handleSpin('question')}
+          onClick={() => handleSpin('quiz')}
           disabled={isSpinning || quizCards.length === 0}
           className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center shadow-sm"
         >
@@ -302,7 +294,7 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
             Réinitialiser événements
           </button>
           <button
-            onClick={() => handleResetDrawnCards('question')}
+            onClick={() => handleResetDrawnCards('quiz')}
             disabled={drawnQuizCards.length === 0}
             className="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded text-xs font-medium transition-colors"
           >
@@ -594,7 +586,7 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
                   </>
                 )}
 
-                {getCardType(selectedCard) === 'question' && (
+                {getCardType(selectedCard) === 'quiz' && (
                   <>
                     <Typography variant="body1" sx={{ mb: 3, fontWeight: 'medium' }}>
                       {getCardDescription(selectedCard)}

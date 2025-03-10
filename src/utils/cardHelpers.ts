@@ -44,9 +44,30 @@ export const getCardTime = (card: Card): string => {
 
 /**
  * Helper function to get the type of a card regardless of format
+ * Standardizes card types to 'action', 'event', or 'quiz'
  */
 export const getCardType = (card: Card): string => {
-  return card.type || "";
+  if (!card.type) return "action"; // Default to action if no type is specified
+  
+  const type = card.type.toLowerCase();
+  
+  // Standardize to 'action'
+  if (type.includes('action')) {
+    return "action";
+  }
+  
+  // Standardize to 'event'
+  if (type.includes('event') || type.includes('événement') || type.includes('evenement')) {
+    return "event";
+  }
+  
+  // Standardize to 'quiz'
+  if (type.includes('quiz') || type.includes('question')) {
+    return "quiz";
+  }
+  
+  // Default to original type if no match
+  return card.type;
 };
 
 /**

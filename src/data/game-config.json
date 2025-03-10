@@ -14,9 +14,9 @@
       "order": 1,
       "requiredCards": ["Développer la charte du projet"],
       "cardLimits": {
-        "action": 3,
-        "event": 2,
-        "quiz": 2
+        "action": 1,
+        "event": 1,
+        "quiz": 1
       },
       "penalties": {
         "time": 2,
@@ -29,8 +29,8 @@
       "order": 2,
       "requiredCards": ["Créer la WBS", "Développer l'échéancier"],
       "cardLimits": {
-        "action": 4,
-        "event": 2,
+        "action": 1,
+        "event": 1,
         "quiz": 1
       },
       "penalties": {
@@ -44,9 +44,9 @@
       "order": 3,
       "requiredCards": ["Développer le module de recherche de trajet"],
       "cardLimits": {
-        "action": 5,
-        "event": 3,
-        "quiz": 2
+        "action": 1,
+        "event": 1,
+        "quiz": 1
       },
       "penalties": {
         "time": 4,
@@ -59,9 +59,9 @@
       "order": 4,
       "requiredCards": ["Contrôler la qualité"],
       "cardLimits": {
-        "action": 3,
-        "event": 2,
-        "quiz": 3
+        "action": 1,
+        "event": 1,
+        "quiz": 1
       },
       "penalties": {
         "time": 2,
@@ -74,9 +74,9 @@
       "order": 5,
       "requiredCards": ["Obtenir l'acceptation formelle"],
       "cardLimits": {
-        "action": 2,
+        "action": 1,
         "event": 1,
-        "quiz": 2
+        "quiz": 1
       },
       "penalties": {
         "time": 1,

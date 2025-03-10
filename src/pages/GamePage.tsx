@@ -7,7 +7,7 @@ import defaultProjectCards from "@/data/project-cards.json";
 import ecovoyageProjectCards from "@/data/project-cards-ecovoyage.json";
 import gameConfig from "@/data/game-config.json";
 import { Project } from "@/components/ProjectSelector";
-import { getCardTitle, getCardDomain } from "@/utils/cardHelpers";
+import { getCardTitle, getCardDomain, getCardType } from "@/utils/cardHelpers";
 
 // Define types for our game
 export type Card = {
@@ -609,122 +609,62 @@ const GamePage = () => {
       showTurnsNotification();
       
       // Pour les cartes action, ajouter au board si pas déjà présente
+      let newState;
       if (cardType === 'action' && !prevState.boardCards.some(c => c.id === card.id)) {
         const position = getNextAvailablePosition();
         const cardWithPosition = { ...card, position };
         
-        return {
+        newState = {
           ...prevState,
           boardCards: [...prevState.boardCards, cardWithPosition],
           remainingTurns: newRemainingTurns,
           cardUsage: newCardUsage
         };
+      } else {
+        // Pour toutes les cartes (event, quiz, et action déjà sur le board)
+        newState = {
+          ...prevState,
+          remainingTurns: newRemainingTurns,
+          cardUsage: newCardUsage
+        };
       }
-      
-      // Pour toutes les cartes (event, quiz, et action déjà sur le board)
-      return {
-        ...prevState,
-        remainingTurns: newRemainingTurns,
-        cardUsage: newCardUsage
-      };
+
+      // Si le nombre de tours restants est 0, déclencher automatiquement le jalon
+      if (newRemainingTurns === 0) {
+        const currentPhase = newState.currentPhase;
+        const penalties = applyPhasePenalties(currentPhase);
+        
+        // Get the next phase
+        const currentPhaseIndex = newState.phases.indexOf(currentPhase);
+        const nextPhase = currentPhaseIndex < newState.phases.length - 1 
+          ? newState.phases[currentPhaseIndex + 1] 
+          : null;
+        
+        // Mettre à jour l'état avec le jalon
+        return {
+          ...newState,
+          showMilestone: true,
+          milestoneMessage: penalties.message,
+          pendingNextPhase: nextPhase,
+          pendingPenalties: { time: penalties.time, budget: penalties.budget }
+        };
+      }
+
+      return newState;
     });
   };
 
-  // Ajouter cette fonction pour gérer les cartes aléatoires
-  const handleRandomCardSelected = (card: Card) => {
-    console.log("Carte aléatoire sélectionnée:", card);
-    const cardType = card.type?.toLowerCase() || 'action';
+  // Handle random card selection
+  const handleRandomCardSelected = useCallback((card: Card) => {
+    const cardType = getCardType(card);
+    const { newCardUsage, newRemainingTurns } = updateCardUsageAndTurns(cardType, gameState);
     
-    // Vérifier les limites de cartes
-    if (!canAddCardOfType(cardType)) {
-      // Afficher une notification d'erreur
-      const animation = document.createElement('div');
-      animation.textContent = `Limite de cartes ${cardType} atteinte pour cette phase !`;
-      animation.style.position = 'fixed';
-      animation.style.top = '170px';
-      animation.style.right = '20px';
-      animation.style.backgroundColor = '#ef4444';
-      animation.style.color = 'white';
-      animation.style.padding = '8px 16px';
-      animation.style.borderRadius = '20px';
-      animation.style.fontWeight = 'bold';
-      animation.style.zIndex = '9999';
-      animation.style.opacity = '0';
-      animation.style.transform = 'translateX(20px)';
-      animation.style.transition = 'all 0.3s ease-out';
-      
-      document.body.appendChild(animation);
-      
-      setTimeout(() => {
-        animation.style.opacity = '1';
-        animation.style.transform = 'translateX(0)';
-      }, 100);
-      
-      setTimeout(() => {
-        animation.style.opacity = '0';
-        animation.style.transform = 'translateX(20px)';
-        setTimeout(() => {
-          document.body.removeChild(animation);
-        }, 300);
-      }, 3000);
-      
-      return;
-    }
-
-    // Mettre à jour le compteur de cartes et les tours restants
-    setGameState(prevState => {
-      const { newCardUsage, newRemainingTurns } = updateCardUsageAndTurns(cardType, prevState);
-      
-      // Créer la notification pour les tours restants
-      const showTurnsNotification = () => {
-        const animation = document.createElement('div');
-        if (newRemainingTurns > 0) {
-          animation.textContent = `${newRemainingTurns} tour${newRemainingTurns > 1 ? 's' : ''} restant${newRemainingTurns > 1 ? 's' : ''}`;
-          animation.style.backgroundColor = newRemainingTurns <= 2 ? '#ff9800' : '#2196f3';
-        } else {
-          animation.textContent = "Dernier tour de la phase !";
-          animation.style.backgroundColor = '#f44336';
-        }
-        
-        animation.style.position = 'fixed';
-        animation.style.top = '170px';
-        animation.style.right = '20px';
-        animation.style.color = 'white';
-        animation.style.padding = '8px 16px';
-        animation.style.borderRadius = '20px';
-        animation.style.fontWeight = 'bold';
-        animation.style.zIndex = '9999';
-        animation.style.opacity = '0';
-        animation.style.transform = 'translateX(20px)';
-        animation.style.transition = 'all 0.3s ease-out';
-        
-        document.body.appendChild(animation);
-        
-        setTimeout(() => {
-          animation.style.opacity = '1';
-          animation.style.transform = 'translateX(0)';
-        }, 100);
-        
-        setTimeout(() => {
-          animation.style.opacity = '0';
-          animation.style.transform = 'translateX(20px)';
-          setTimeout(() => {
-            document.body.removeChild(animation);
-          }, 300);
-        }, 2000);
-      };
-
-      // Afficher la notification
-      showTurnsNotification();
-      
-      // Retourner le nouvel état
-      return {
-        ...prevState,
-        remainingTurns: newRemainingTurns,
-        cardUsage: newCardUsage
-      };
-    });
-  };
+    setGameState(prev => ({
+      ...prev,
+      cardUsage: newCardUsage,
+      remainingTurns: newRemainingTurns
+    }));
+  }, [gameState, updateCardUsageAndTurns]);
 
   // Helper function to convert time strings to months
   const parseTimeToMonths = (timeString: string): number => {

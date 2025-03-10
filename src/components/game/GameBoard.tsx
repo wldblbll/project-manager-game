@@ -462,36 +462,19 @@ const GameBoard: React.FC<GameBoardProps> = ({
     // Filter cards by type
     const getFilteredCardsByType = () => {
       if (localSelectedType === 'action') {
-        const filtered = allCards.filter(card => 
-          card.type === 'action' || 
-          !card.type || 
-          (typeof card.type === 'string' && card.type.toLowerCase().includes('action'))
-        );
+        const filtered = allCards.filter(card => getCardType(card) === 'action');
         debugLog(`Filtered action cards: ${filtered.length}/${allCards.length}`);
         return filtered;
       } else if (localSelectedType === 'event') {
-        const filtered = allCards.filter(card => 
-          card.type === 'event' || 
-          (typeof card.type === 'string' && (
-            card.type.toLowerCase().includes('event') || 
-            card.type.toLowerCase().includes('événement') ||
-            card.type.toLowerCase().includes('evenement')
-          ))
-        );
+        const filtered = allCards.filter(card => getCardType(card) === 'event');
         debugLog(`Filtered event cards: ${filtered.length}/${allCards.length}`);
         return filtered;
       } else if (localSelectedType === 'quiz') {
-        const filtered = allCards.filter(card => 
-          card.type === 'quiz' || 
-          (typeof card.type === 'string' && (
-            card.type.toLowerCase().includes('quiz') || 
-            card.type.toLowerCase().includes('question')
-          ))
-        );
+        const filtered = allCards.filter(card => getCardType(card) === 'quiz');
         debugLog(`Filtered quiz cards: ${filtered.length}/${allCards.length}`);
         return filtered;
       }
-      return [];
+      return allCards;
     };
     
     // Filter cards by search query
