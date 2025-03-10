@@ -441,29 +441,58 @@ const GamePage = () => {
     };
   };
 
-  // Apply penalties for missing required cards
+  // Générer des messages positifs et engageants pour les jalons
+  const generatePositiveMessage = (phase: string, fulfilled: boolean, missingCards: string[]) => {
+    if (fulfilled) {
+      const messages = [
+        `🌟 Félicitations ! Vous avez brillamment complété la phase ${phase} !`,
+        `🎯 Excellent travail ! La phase ${phase} est un véritable succès !`,
+        `🚀 Phase ${phase} validée avec brio ! Continuez sur cette lancée !`,
+        `✨ Superbe performance ! La phase ${phase} est un franc succès !`
+      ];
+      return messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    // Messages pour les phases incomplètes
+    let message = `🎮 La phase ${phase} présente encore quelques défis à relever ! `;
+    
+    if (missingCards.length > 0) {
+      const opportunities = [
+        `Voici une opportunité d'amélioration : ${missingCards.join(", ")}`,
+        `Pour optimiser votre score, pensez à : ${missingCards.join(", ")}`,
+        `Conseil stratégique : considérez d'ajouter ${missingCards.join(", ")}`,
+      ];
+      message += opportunities[Math.floor(Math.random() * opportunities.length)];
+    }
+
+    const encouragements = [
+      "\n💪 Chaque défi est une opportunité d'apprentissage !",
+      "\n🌟 Vous avez les capacités pour surmonter ces obstacles !",
+      "\n✨ C'est en relevant ces défis que vous deviendrez un meilleur chef de projet !",
+      "\n🎯 Voyez ces ajustements comme une chance de perfectionner votre stratégie !"
+    ];
+    
+    return message + encouragements[Math.floor(Math.random() * encouragements.length)];
+  };
+
   const applyPhasePenalties = (phase: string) => {
     const { fulfilled, missingCards } = checkPhaseRequirements(phase);
+    const positiveMessage = generatePositiveMessage(phase, fulfilled, missingCards);
     
     if (fulfilled) {
       return {
         time: 0,
         budget: 0,
-        message: `Phase ${phase} complétée avec succès ! Toutes les exigences ont été satisfaites.`
+        message: positiveMessage
       };
     }
     
     const penalties = phasePenalties[phase] || { time: 0, budget: 0, message: "" };
-    const customMessage = `Phase ${phase} incomplète. ${
-      missingCards.length > 0 
-        ? `Cartes manquantes: ${missingCards.join(", ")}. ` 
-        : ""
-    }${penalties.message}`;
     
     return {
       time: penalties.time,
       budget: penalties.budget,
-      message: customMessage
+      message: positiveMessage
     };
   };
 
@@ -562,10 +591,39 @@ const GamePage = () => {
       return;
     }
 
-    // Mettre à jour le compteur de cartes et les tours restants en une seule mise à jour
+    // Mettre à jour le compteur de cartes et les tours restants
     setGameState(prevState => {
       const { newCardUsage, newRemainingTurns } = updateCardUsageAndTurns(cardType, prevState);
       
+      // Vérifier d'abord si on doit passer à la phase suivante
+      if (newRemainingTurns <= 0) {
+        const currentPhase = prevState.currentPhase;
+        const penalties = applyPhasePenalties(currentPhase);
+        
+        // Get the next phase
+        const currentPhaseIndex = prevState.phases.indexOf(currentPhase);
+        const nextPhase = currentPhaseIndex < prevState.phases.length - 1 
+          ? prevState.phases[currentPhaseIndex + 1] 
+          : null;
+        
+        console.log("Forcing milestone transition:", {
+          currentPhase,
+          nextPhase,
+          remainingTurns: newRemainingTurns
+        });
+        
+        // Forcer le passage au jalon
+        return {
+          ...prevState,
+          showMilestone: true,
+          milestoneMessage: penalties.message,
+          pendingNextPhase: nextPhase,
+          pendingPenalties: { time: penalties.time, budget: penalties.budget },
+          remainingTurns: 0,
+          cardUsage: newCardUsage
+        };
+      }
+
       // Créer la notification pour les tours restants
       const showTurnsNotification = () => {
         const animation = document.createElement('div');
@@ -608,9 +666,9 @@ const GamePage = () => {
       // Afficher la notification
       showTurnsNotification();
       
-      // Pour les cartes action, ajouter au board si pas déjà présente
       let newState;
       if (cardType === 'action' && !prevState.boardCards.some(c => c.id === card.id)) {
+        // Gestion des cartes action
         const position = getNextAvailablePosition();
         const cardWithPosition = { ...card, position };
         
@@ -620,8 +678,54 @@ const GamePage = () => {
           remainingTurns: newRemainingTurns,
           cardUsage: newCardUsage
         };
+      } else if (cardType === 'quiz') {
+        // Gestion spécifique des cartes quiz
+        console.log("Processing quiz card:", card);
+        // Assurez-vous que la carte a les propriétés nécessaires
+        if (card.options && card.correct_answer) {
+          // Afficher une notification pour la carte quiz
+          const quizNotification = document.createElement('div');
+          quizNotification.textContent = "🎯 Question quiz : " + card.title;
+          quizNotification.style.position = 'fixed';
+          quizNotification.style.top = '220px';
+          quizNotification.style.right = '20px';
+          quizNotification.style.backgroundColor = '#4CAF50';
+          quizNotification.style.color = 'white';
+          quizNotification.style.padding = '8px 16px';
+          quizNotification.style.borderRadius = '20px';
+          quizNotification.style.fontWeight = 'bold';
+          quizNotification.style.zIndex = '9999';
+          quizNotification.style.opacity = '0';
+          quizNotification.style.transform = 'translateX(20px)';
+          quizNotification.style.transition = 'all 0.3s ease-out';
+          
+          document.body.appendChild(quizNotification);
+          
+          setTimeout(() => {
+            quizNotification.style.opacity = '1';
+            quizNotification.style.transform = 'translateX(0)';
+          }, 100);
+          
+          setTimeout(() => {
+            quizNotification.style.opacity = '0';
+            quizNotification.style.transform = 'translateX(20px)';
+            setTimeout(() => {
+              document.body.removeChild(quizNotification);
+            }, 300);
+          }, 3000);
+
+          newState = {
+            ...prevState,
+            remainingTurns: newRemainingTurns,
+            cardUsage: newCardUsage,
+            selectedCards: [...prevState.selectedCards, card]
+          };
+        } else {
+          console.error("Quiz card missing required properties:", card);
+          return prevState;
+        }
       } else {
-        // Pour toutes les cartes (event, quiz, et action déjà sur le board)
+        // Pour les autres types de cartes (event)
         newState = {
           ...prevState,
           remainingTurns: newRemainingTurns,
@@ -639,6 +743,12 @@ const GamePage = () => {
         const nextPhase = currentPhaseIndex < newState.phases.length - 1 
           ? newState.phases[currentPhaseIndex + 1] 
           : null;
+        
+        console.log("Triggering milestone transition:", {
+          currentPhase,
+          nextPhase,
+          remainingTurns: newRemainingTurns
+        });
         
         // Mettre à jour l'état avec le jalon
         return {
@@ -748,7 +858,7 @@ const GamePage = () => {
     });
   };
 
-  // Milestone dialog component
+  // Mise à jour du composant MilestoneDialog pour un style plus positif
   const MilestoneDialog = () => {
     if (!gameState.showMilestone) return null;
     
@@ -757,38 +867,46 @@ const GamePage = () => {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
-          <h2 className="text-xl font-bold mb-4">
-            {isGameOver ? "Fin du Projet" : `Jalon de Phase: ${gameState.currentPhase}`}
+          <h2 className="text-xl font-bold mb-4 text-center">
+            {isGameOver ? "🏆 Fin de l'Aventure !" : `🎯 Point d'Étape : ${gameState.currentPhase}`}
           </h2>
           
-          <p className="mb-4">{gameState.milestoneMessage}</p>
+          <p className="mb-4 text-center">{gameState.milestoneMessage}</p>
           
           {gameState.pendingPenalties && (gameState.pendingPenalties.time > 0 || gameState.pendingPenalties.budget > 0) && (
-            <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-              <h3 className="font-semibold text-yellow-700 mb-1">Conséquences:</h3>
-              <ul className="list-disc pl-5 text-yellow-700">
+            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+              <h3 className="font-semibold text-blue-700 mb-1">Ajustements Nécessaires :</h3>
+              <ul className="list-disc pl-5 text-blue-700">
                 {gameState.pendingPenalties.time > 0 && (
-                  <li>Retard de {gameState.pendingPenalties.time} mois</li>
+                  <li>Adaptation du planning : {gameState.pendingPenalties.time} mois supplémentaires pour assurer la qualité</li>
                 )}
                 {gameState.pendingPenalties.budget > 0 && (
-                  <li>Surcoût de {gameState.pendingPenalties.budget} K€</li>
+                  <li>Investissement additionnel : {gameState.pendingPenalties.budget} K€ pour optimiser les résultats</li>
                 )}
               </ul>
             </div>
           )}
           
-          {gameState.pendingNextPhase && (
-            <p className="mb-4 text-blue-600">
-              Phase suivante: <span className="font-bold">{gameState.pendingNextPhase}</span>
-            </p>
+          {gameState.pendingNextPhase ? (
+            <div className="flex justify-center">
+              <button
+                onClick={handleAdvanceToNextPhase}
+                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105"
+              >
+                Continuer l'Aventure ! 🚀
+              </button>
+            </div>
+          ) : (
+            <div className="text-center">
+              <p className="text-lg font-semibold mb-2">🌟 Score Final : {gameState.valuePoints} points</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
+              >
+                Démarrer une Nouvelle Aventure ! 🎮
+              </button>
+            </div>
           )}
-          
-          <button 
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            onClick={handleAdvanceToNextPhase}
-          >
-            {isGameOver ? "Terminer le projet" : "Passer à la phase suivante"}
-          </button>
         </div>
       </div>
     );

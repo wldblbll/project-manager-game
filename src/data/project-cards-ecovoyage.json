@@ -118,7 +118,7 @@
   {
     "id": "8",
     "type": "question",
-    "phase": ["Initiation"],
+    "phase": ["Initiation", "Planification"],
     "title": "Pourquoi est-il important de créer une charte de projet ?",
     "options": [
       "A. Pour définir les tâches quotidiennes de l'équipe",
