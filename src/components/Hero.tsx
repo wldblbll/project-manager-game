@@ -37,7 +37,7 @@ const Hero = () => {
           onClick={() => navigate('/game')}
           className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
                    shadow-lg hover:shadow-xl transform transition-all duration-300 
-                   hover:scale-105 hover:bg-indigo-50 animate-pulse"
+                   hover:scale-105 hover:bg-indigo-50"
         >
           Commencer à jouer 🎮
         </button>

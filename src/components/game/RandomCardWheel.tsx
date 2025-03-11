@@ -40,6 +40,7 @@ interface RandomCardWheelProps {
   onCardSelected?: (card: Card) => void; // Nouvelle prop pour informer quand une carte est tirée
   cardLimits?: { action: number; event: number; quiz: number }; // Limites de cartes
   cardUsage?: { action: number; event: number; quiz: number }; // Utilisation actuelle des cartes
+  usedCards?: string[]; // Liste des cartes utilisées (placées sur le plateau)
 }
 
 const RandomCardWheel: React.FC<RandomCardWheelProps> = ({ 
@@ -50,7 +51,8 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
   debugMode = DEFAULT_DEBUG_MODE,
   onCardSelected,
   cardLimits = { action: 0, event: 0, quiz: 0 },
-  cardUsage = { action: 0, event: 0, quiz: 0 }
+  cardUsage = { action: 0, event: 0, quiz: 0 },
+  usedCards = []
 }) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
@@ -261,25 +263,37 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
         {/* Bouton pour les événements */}
         <button
           onClick={() => handleSpin('event')}
-          disabled={isSpinning || eventCards.length === 0}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center shadow-sm"
+          disabled={isSpinning || eventCards.length === 0 || cardUsage.event >= cardLimits.event}
+          className={`px-4 py-2 text-white rounded-lg text-sm font-medium transition-colors flex items-center shadow-sm ${
+            cardUsage.event >= cardLimits.event 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : eventCards.length === 0
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-purple-600 hover:bg-purple-700'
+          }`}
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          + Carte Événement {eventCards.length > 0 ? `(${eventCards.length})` : '(0)'}
+          Événement ({cardUsage.event}/{cardLimits.event})
         </button>
 
         {/* Bouton pour les quiz */}
         <button
           onClick={() => handleSpin('quiz')}
-          disabled={isSpinning || quizCards.length === 0}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center shadow-sm"
+          disabled={isSpinning || quizCards.length === 0 || cardUsage.quiz >= cardLimits.quiz}
+          className={`px-4 py-2 text-white rounded-lg text-sm font-medium transition-colors flex items-center shadow-sm ${
+            cardUsage.quiz >= cardLimits.quiz 
+              ? 'bg-gray-400 cursor-not-allowed' 
+              : quizCards.length === 0
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-green-600 hover:bg-green-700'
+          }`}
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          + Carte Quiz {quizCards.length > 0 ? `(${quizCards.length})` : '(0)'}
+          Quiz ({cardUsage.quiz}/{cardLimits.quiz})
         </button>
       </Box>
       
@@ -435,126 +449,170 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
                         // Affichage amélioré pour les cartes avec impacts conditionnels
                         <Box sx={{ flex: 1 }}>
                           <Typography variant="subtitle2" color="primary.main" sx={{ mb: 1, fontWeight: 'bold' }}>
-                            Impact conditionnel
+                            Impact de l'événement
                           </Typography>
                           
-                          {/* Explication claire des conditions */}
-                          <Typography variant="body2" sx={{ mb: 2 }}>
-                            Cette carte a différents effets selon les cartes présentes sur votre plateau :
-                          </Typography>
-                          
-                          {/* Liste des conditions et leurs effets */}
-                          {getCardConditions(selectedCard).map((condition, index) => {
-                            // Déterminer le type de condition
+                          {/* Récupérer les IDs des cartes actuellement sur le plateau */}
+                          {(() => {
+                            // Utiliser la liste globale des cartes utilisées
+                            const boardCardIds = usedCards;
+                            
+                            console.log("Vérification des cartes sur le plateau:");
+                            console.log("Nombre total de cartes sur le plateau:", boardCardIds.length);
+                            console.log("IDs des cartes sur le plateau:", boardCardIds);
+                            
+                            // Afficher les détails de chaque carte pour le débogage
+                            if (debugMode) {
+                              boardCardIds.forEach((cardId, index) => {
+                                const card = cards.find(c => c.id === cardId);
+                                if (card) {
+                                  console.log(`Carte #${index} sur le plateau:`, {
+                                    id: card.id,
+                                    titre: getCardTitle(card)
+                                  });
+                                }
+                              });
+                            }
+                            
+                            // Trouver la première condition qui est remplie
+                            const matchedCondition = getCardConditions(selectedCard).find(condition => {
+                              // Condition simple
+                              if (condition.cardId && condition.present !== undefined) {
+                                const cardPresent = boardCardIds.includes(condition.cardId);
+                                
+                                console.log(`Vérification de la condition pour la carte ${condition.cardId}:`);
+                                console.log(`- La carte est ${cardPresent ? "présente" : "absente"} sur le plateau`);
+                                console.log(`- La condition attend que la carte soit ${condition.present ? "présente" : "absente"}`);
+                                console.log(`- Résultat: condition ${(cardPresent === condition.present) ? "remplie" : "non remplie"}`);
+                                
+                                return (cardPresent === condition.present);
+                              }
+                              // Condition avec opérateur logique
+                              else if (condition.operator && condition.checks) {
+                                // Tableau pour stocker les résultats des vérifications
+                                const checkResults = [];
+                                
+                                // Vérifier chaque sous-condition
+                                for (const check of condition.checks) {
+                                  const cardPresent = boardCardIds.includes(check.cardId);
+                                  
+                                  // Trouver la carte correspondante
+                                  const cardObj = cards.find(c => c.id === check.cardId);
+                                  const cardTitle = cardObj ? getCardTitle(cardObj) : `Carte #${check.cardId}`;
+                                  
+                                  console.log(`Vérification de la sous-condition pour la carte "${cardTitle}" (${check.cardId}):`);
+                                  console.log(`- La carte est ${cardPresent ? "présente" : "absente"} sur le plateau`);
+                                  console.log(`- La condition attend que la carte soit ${check.present ? "présente" : "absente"}`);
+                                  console.log(`- Résultat: sous-condition ${(cardPresent === check.present) ? "remplie" : "non remplie"}`);
+                                  
+                                  // Ajouter le résultat au tableau
+                                  checkResults.push({
+                                    cardId: check.cardId,
+                                    expected: check.present,
+                                    actual: cardPresent,
+                                    result: cardPresent === check.present
+                                  });
+                                }
+                                
+                                // Appliquer l'opérateur logique
+                                let result = false;
+                                if (condition.operator === "AND") {
+                                  result = checkResults.every(check => check.result);
+                                  console.log(`Opérateur AND: toutes les conditions doivent être remplies. Résultat: ${result ? "rempli" : "non rempli"}`);
+                                } else if (condition.operator === "OR") {
+                                  result = checkResults.some(check => check.result);
+                                  console.log(`Opérateur OR: au moins une condition doit être remplie. Résultat: ${result ? "rempli" : "non rempli"}`);
+                                }
+                                
+                                return result;
+                              }
+                              // Condition par défaut
+                              else if (condition.default) {
+                                return true;
+                              }
+                              return false;
+                            });
+                            
+                            // Si aucune condition n'est remplie, utiliser la condition par défaut
+                            const conditionToShow = matchedCondition || getCardConditions(selectedCard).find(c => c.default);
+                            
+                            if (!conditionToShow) {
+                              return (
+                                <Typography variant="body2" color="text.secondary">
+                                  Aucune condition applicable dans votre situation actuelle.
+                                </Typography>
+                              );
+                            }
+                            
+                            // Déterminer le texte de la condition
                             let conditionText = "";
                             let effectsText = "";
-                            let isConditionMet = false;
-                            
-                            // Récupérer les IDs des cartes actuellement sur le plateau
-                            const boardCardIds = cards.filter(c => c.position).map(c => c.id);
                             
                             // Condition simple
-                            if (condition.cardId && condition.present !== undefined) {
-                              // Vérifier si la condition est remplie
-                              const cardPresent = boardCardIds.includes(condition.cardId);
-                              isConditionMet = (cardPresent === condition.present);
-                              
+                            if (conditionToShow.cardId && conditionToShow.present !== undefined) {
                               // Trouver le titre de la carte pour l'explication
-                              const cardTitle = cards.find(c => c.id === condition.cardId)
-                                ? getCardTitle(cards.find(c => c.id === condition.cardId)!)
-                                : `Carte #${condition.cardId}`;
+                              const cardTitle = cards.find(c => c.id === conditionToShow.cardId)
+                                ? getCardTitle(cards.find(c => c.id === conditionToShow.cardId)!)
+                                : `Carte #${conditionToShow.cardId}`;
                                 
-                              conditionText = condition.present 
-                                ? `Si la carte "${cardTitle}" est présente sur le plateau`
-                                : `Si la carte "${cardTitle}" est absente du plateau`;
+                              conditionText = conditionToShow.present 
+                                ? `La carte "${cardTitle}" est présente sur votre plateau`
+                                : `La carte "${cardTitle}" est absente de votre plateau`;
                             }
                             // Condition avec opérateur logique
-                            else if (condition.operator && condition.checks) {
-                              const checkResults = condition.checks.map(check => {
-                                const cardPresent = boardCardIds.includes(check.cardId);
-                                const result = cardPresent === check.present;
-                                
+                            else if (conditionToShow.operator && conditionToShow.checks) {
+                              const checkTexts = conditionToShow.checks.map(check => {
                                 const cardTitle = cards.find(c => c.id === check.cardId)
                                   ? getCardTitle(cards.find(c => c.id === check.cardId)!)
                                   : `Carte #${check.cardId}`;
                                   
-                                return {
-                                  text: `"${cardTitle}" ${check.present ? 'présente' : 'absente'}`,
-                                  result: result
-                                };
+                                return `"${cardTitle}" est ${check.present ? 'présente' : 'absente'}`;
                               });
                               
-                              if (condition.operator === "AND") {
-                                isConditionMet = checkResults.every(check => check.result);
-                              } else if (condition.operator === "OR") {
-                                isConditionMet = checkResults.some(check => check.result);
-                              }
-                              
-                              conditionText = `Si ${checkResults.map(check => check.text).join(condition.operator === 'AND' ? ' ET ' : ' OU ')}`;
+                              conditionText = checkTexts.join(conditionToShow.operator === 'AND' ? ' ET ' : ' OU ');
                             }
                             // Condition par défaut
-                            else if (condition.default) {
-                              // La condition par défaut est remplie si aucune autre condition n'est remplie
-                              isConditionMet = true; // Simplifié pour l'affichage
-                              conditionText = "Dans tous les autres cas";
+                            else if (conditionToShow.default) {
+                              conditionText = "Condition par défaut appliquée";
                             }
                             
                             // Texte des effets
-                            if (condition.effects) {
+                            if (conditionToShow.effects) {
                               const effects = [];
                               
-                              if (condition.effects.budget !== undefined) {
-                                effects.push(`Budget: ${condition.effects.budget > 0 ? '+' : ''}${condition.effects.budget}K€`);
+                              if (conditionToShow.effects.budget !== undefined) {
+                                effects.push(`Budget: ${conditionToShow.effects.budget > 0 ? '+' : ''}${conditionToShow.effects.budget}K€`);
                               }
                               
-                              if (condition.effects.time !== undefined) {
-                                effects.push(`Délai: ${condition.effects.time > 0 ? '+' : ''}${condition.effects.time} mois`);
+                              if (conditionToShow.effects.time !== undefined) {
+                                effects.push(`Délai: ${conditionToShow.effects.time > 0 ? '+' : ''}${conditionToShow.effects.time} mois`);
                               }
                               
-                              if (condition.effects.message) {
-                                effects.push(condition.effects.message);
+                              if (conditionToShow.effects.message) {
+                                effects.push(conditionToShow.effects.message);
                               }
                               
                               effectsText = effects.join(', ');
                             }
                             
                             return (
-                              <Box key={index} sx={{ 
+                              <Box sx={{ 
                                 mb: 2, 
-                                p: 1.5, 
-                                borderRadius: 1,
+                                p: 2, 
+                                borderRadius: 2,
                                 borderLeft: '4px solid', 
-                                borderColor: isConditionMet ? 'success.main' : 'grey.400',
-                                bgcolor: isConditionMet ? 'rgba(46, 125, 50, 0.08)' : 'rgba(0, 0, 0, 0.02)'
+                                borderColor: 'success.main',
+                                bgcolor: 'rgba(46, 125, 50, 0.08)'
                               }}>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
-                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                                    {conditionText}
-                                  </Typography>
-                                  <Typography 
-                                    variant="caption" 
-                                    sx={{ 
-                                      fontWeight: 'bold', 
-                                      color: isConditionMet ? 'success.main' : 'text.secondary',
-                                      bgcolor: isConditionMet ? 'rgba(46, 125, 50, 0.1)' : 'rgba(0, 0, 0, 0.05)',
-                                      px: 1,
-                                      py: 0.5,
-                                      borderRadius: 1
-                                    }}
-                                  >
-                                    {isConditionMet ? 'Condition remplie' : 'Condition non remplie'}
-                                  </Typography>
-                                </Box>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
+                                  {conditionText}
+                                </Typography>
+                                <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
                                   {effectsText}
                                 </Typography>
                               </Box>
                             );
-                          })}
-                          
-                          <Typography variant="body2" color="info.main" sx={{ mt: 1, fontStyle: 'italic' }}>
-                            L'effet appliqué dépend de l'état actuel de votre plateau de jeu.
-                          </Typography>
+                          })()}
                         </Box>
                       ) : (
                         // Affichage standard pour les cartes sans conditions

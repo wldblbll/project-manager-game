@@ -77,6 +77,17 @@ const Footer = () => {
         <p className="mt-10 text-center text-xs leading-5 text-gray-500">
           &copy; {new Date().getFullYear()} PM Cards. All rights reserved.
         </p>
+        
+        {/* Lien discret vers la page d'administration */}
+        <div className="mt-4 text-center">
+          <Link
+            to="/admin"
+            className="text-[10px] text-gray-300 hover:text-gray-500 transition-colors"
+            title="Administration"
+          >
+            Admin
+          </Link>
+        </div>
       </div>
     </footer>
   );

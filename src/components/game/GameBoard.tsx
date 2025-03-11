@@ -83,6 +83,19 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // États pour le composant
   const [altKeyPressed, setAltKeyPressed] = useState(false);
   
+  // Liste globale des cartes utilisées (placées sur le plateau)
+  const [usedCards, setUsedCards] = useState<string[]>([]);
+  
+  // Mettre à jour la liste des cartes utilisées lorsque les cartes changent
+  useEffect(() => {
+    const cardIds = cards.map(card => card.id);
+    setUsedCards(cardIds);
+    
+    if (debugMode) {
+      console.log("Liste des cartes utilisées mise à jour:", cardIds);
+    }
+  }, [cards, debugMode]);
+  
   // Surveiller la touche Alt pour le mode de débogage
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -313,35 +326,15 @@ const GameBoard: React.FC<GameBoardProps> = ({
       return false;
     }
     
-    // Create a list of all IDs on the board for easier debugging
-    const boardCardIds = cards.filter(c => c.id).map(card => card.id);
+    // Utiliser la liste globale des cartes utilisées
+    const isOnBoard = usedCards.includes(cardId);
     
     if (debugMode) {
-      debugLog("All board card IDs:", boardCardIds);
       debugLog("Checking if card ID exists:", cardId);
-      
-      // Look for exact matches
-      const exactMatch = boardCardIds.includes(cardId);
-      
-      // Look for partial matches (in case of ID formatting issues)
-      const partialMatches = boardCardIds.filter(id => 
-        id && cardId && (id.includes(cardId) || cardId.includes(id))
-      );
-      
-      debugLog(`Exact match found: ${exactMatch}`);
-      if (partialMatches.length > 0) {
-        debugLog(`Partial matches found: ${partialMatches.join(', ')}`);
-      }
-      
-      // If we find an exact match, show the matching card for verification
-      if (exactMatch) {
-        const matchingCard = cards.find(c => c.id === cardId);
-        debugLog("Matching card on board:", matchingCard);
-      }
+      debugLog(`Card is ${isOnBoard ? "on" : "not on"} the board`);
     }
     
-    // Only return true if there's an exact ID match
-    return boardCardIds.includes(cardId);
+    return isOnBoard;
   };
 
   // Fonction utilitaire pour afficher une animation de changement de compteur
@@ -471,16 +464,97 @@ const GameBoard: React.FC<GameBoardProps> = ({
       return;
     }
     
-    // Ajouter chaque carte sélectionnée
-    selectedActionCards.forEach(card => {
+    // Calculer un point de départ pour la disposition en grille
+    const boardWidth = boardRef.current?.clientWidth || 800;
+    const boardHeight = boardRef.current?.clientHeight || 600;
+    const margin = 50;
+    const spacing = 30; // Espacement entre les cartes
+    
+    // Déterminer le nombre de colonnes en fonction du nombre de cartes
+    const numCards = selectedActionCards.length;
+    const numCols = Math.min(3, numCards); // Maximum 3 colonnes
+    const numRows = Math.ceil(numCards / numCols);
+    
+    // Calculer les dimensions de la grille
+    const gridWidth = (numCols * CARD_WIDTH) + ((numCols - 1) * spacing);
+    const gridHeight = (numRows * CARD_MIN_HEIGHT) + ((numRows - 1) * spacing);
+    
+    // Calculer le point de départ pour centrer la grille
+    const startX = (boardWidth - gridWidth) / 2;
+    const startY = (boardHeight - gridHeight) / 2;
+    
+    // Créer un tableau pour stocker les positions déjà utilisées
+    const usedPositions: { x: number; y: number }[] = [...cards.map(card => card.position || { x: 0, y: 0 })];
+    
+    // Ajouter chaque carte sélectionnée avec une position en grille
+    selectedActionCards.forEach((card, index) => {
       if (!isCardOnBoard(card.id)) {
-        const position = getNextAvailablePosition();
-        const newCard = { ...card, position };
+        // Calculer la position en grille
+        const col = index % numCols;
+        const row = Math.floor(index / numCols);
+        
+        // Calculer la position initiale
+        let posX = startX + (col * (CARD_WIDTH + spacing));
+        let posY = startY + (row * (CARD_MIN_HEIGHT + spacing));
+        
+        // Vérifier que la position est dans les limites du tableau
+        posX = Math.max(margin, Math.min(boardWidth - CARD_WIDTH - margin, posX));
+        posY = Math.max(margin, Math.min(boardHeight - CARD_MIN_HEIGHT - margin, posY));
+        
+        // Ajouter un décalage aléatoire pour éviter l'alignement parfait
+        const randomOffsetX = Math.random() * 20 - 10; // -10 à +10 pixels
+        const randomOffsetY = Math.random() * 20 - 10; // -10 à +10 pixels
+        
+        posX += randomOffsetX;
+        posY += randomOffsetY;
+        
+        // Vérifier si la position est déjà utilisée ou si elle chevauche une carte existante
+        let finalPosition = { x: posX, y: posY };
+        let attempts = 0;
+        const maxAttempts = 10;
+        
+        // Essayer de trouver une position non utilisée
+        while (!isPositionValid(finalPosition.x, finalPosition.y) && attempts < maxAttempts) {
+          // Ajouter un décalage plus important à chaque tentative
+          const offsetX = (Math.random() * 40 - 20) * (attempts + 1);
+          const offsetY = (Math.random() * 40 - 20) * (attempts + 1);
+          
+          finalPosition = {
+            x: Math.max(margin, Math.min(boardWidth - CARD_WIDTH - margin, posX + offsetX)),
+            y: Math.max(margin, Math.min(boardHeight - CARD_MIN_HEIGHT - margin, posY + offsetY))
+          };
+          
+          attempts++;
+        }
+        
+        // Si on n'a pas trouvé de position valide après plusieurs tentatives,
+        // utiliser une position complètement différente
+        if (attempts >= maxAttempts) {
+          // Utiliser une position en spirale autour du centre du tableau
+          const centerX = boardWidth / 2;
+          const centerY = boardHeight / 2;
+          const angle = (index * 0.5) % (2 * Math.PI); // Angle en radians
+          const radius = 100 + (index * 10); // Rayon qui augmente avec l'index
+          
+          finalPosition = {
+            x: Math.max(margin, Math.min(boardWidth - CARD_WIDTH - margin, centerX + radius * Math.cos(angle))),
+            y: Math.max(margin, Math.min(boardHeight - CARD_MIN_HEIGHT - margin, centerY + radius * Math.sin(angle)))
+          };
+        }
+        
+        // Ajouter la position à la liste des positions utilisées
+        usedPositions.push(finalPosition);
+        
+        // Créer et ajouter la carte
+        const newCard = { ...card, position: finalPosition };
         if (onSelectCard) {
           onSelectCard(newCard);
         }
       }
     });
+    
+    // Afficher une notification de succès
+    showImpactNotification(`${selectedActionCards.length} cartes action ajoutées`);
     
     // Réinitialiser la sélection et fermer le sélecteur
     setSelectedActionCards([]);
@@ -861,8 +935,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
     if (hasCardConditions(eventCard)) {
       console.log("Conditions détectées:", JSON.stringify(getCardConditions(eventCard), null, 2));
       
-      // Récupérer les IDs des cartes actuellement sur le plateau
-      const boardCardIds = cards.map(card => card.id);
+      // Utiliser la liste globale des cartes utilisées
+      const boardCardIds = usedCards;
       console.log("Cartes sur le plateau:", boardCardIds);
       
       // Variable pour stocker les effets à appliquer
@@ -887,37 +961,54 @@ const GameBoard: React.FC<GameBoardProps> = ({
             ? `Condition testée: La carte "${cardTitle}" est ${conditionMet ? 'présente' : 'absente'} sur le plateau.`
             : `Condition testée: La carte "${cardTitle}" est ${!conditionMet ? 'présente' : 'absente'} sur le plateau.`;
             
-          console.log(`Condition pour carte ${condition.cardId} (présente: ${condition.present}): ${conditionMet}`);
+          console.log(`Vérification de la condition pour la carte ${condition.cardId}:`);
+          console.log(`- La carte est ${cardPresent ? "présente" : "absente"} sur le plateau`);
+          console.log(`- La condition attend que la carte soit ${condition.present ? "présente" : "absente"}`);
+          console.log(`- Résultat: condition ${conditionMet ? "remplie" : "non remplie"}`);
         }
         // Condition avec opérateur logique
         else if (condition.operator && condition.checks) {
-          const checkResults = condition.checks.map(check => {
+          // Tableau pour stocker les résultats des vérifications
+          const checkResults = [];
+          
+          // Vérifier chaque sous-condition
+          for (const check of condition.checks) {
             const cardPresent = boardCardIds.includes(check.cardId);
-            return {
+            
+            // Trouver la carte correspondante
+            const cardObj = allCards.find(c => c.id === check.cardId);
+            const cardTitle = cardObj ? getCardTitle(cardObj) : `Carte #${check.cardId}`;
+            
+            console.log(`Vérification de la sous-condition pour la carte "${cardTitle}" (${check.cardId}):`);
+            console.log(`- La carte est ${cardPresent ? "présente" : "absente"} sur le plateau`);
+            console.log(`- La condition attend que la carte soit ${check.present ? "présente" : "absente"}`);
+            console.log(`- Résultat: sous-condition ${(cardPresent === check.present) ? "remplie" : "non remplie"}`);
+            
+            // Ajouter le résultat au tableau
+            checkResults.push({
               cardId: check.cardId,
               expected: check.present,
               actual: cardPresent,
-              result: cardPresent === check.present
-            };
-          });
+              result: cardPresent === check.present,
+              title: cardTitle
+            });
+          }
           
+          // Appliquer l'opérateur logique
           if (condition.operator === "AND") {
             conditionMet = checkResults.every(check => check.result);
+            console.log(`Opérateur AND: toutes les conditions doivent être remplies. Résultat: ${conditionMet ? "rempli" : "non rempli"}`);
           } else if (condition.operator === "OR") {
             conditionMet = checkResults.some(check => check.result);
+            console.log(`Opérateur OR: au moins une condition doit être remplie. Résultat: ${conditionMet ? "rempli" : "non rempli"}`);
           }
           
           // Construire l'explication détaillée
-          const checkDescriptions = checkResults.map(check => {
-            const cardTitle = allCards.find(c => c.id === check.cardId)
-              ? getCardTitle(allCards.find(c => c.id === check.cardId)!)
-              : `Carte #${check.cardId}`;
-              
-            return `"${cardTitle}" ${check.expected ? 'présente' : 'absente'}: ${check.result ? '✓' : '✗'}`;
-          });
+          const checkDescriptions = checkResults.map(check => 
+            `"${check.title}" ${check.expected ? 'présente' : 'absente'}: ${check.result ? '✓' : '✗'}`
+          );
           
           conditionDescription = `Condition testée (${condition.operator}): ${checkDescriptions.join(' ET ')}`;
-          console.log(`Condition avec opérateur ${condition.operator}: ${conditionMet}`);
         }
         // Condition par défaut
         else if (condition.default) {
@@ -1069,6 +1160,38 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   };
 
+  // Fonction pour vérifier si une position est valide (pas de superposition)
+  const isPositionValid = (x: number, y: number): boolean => {
+    // Vérifier pour chaque carte existante
+    for (const card of cards) {
+      if (!card.position) continue;
+      
+      // Calculer les limites de la carte existante
+      const cardLeft = card.position.x;
+      const cardRight = card.position.x + CARD_WIDTH;
+      const cardTop = card.position.y;
+      const cardBottom = card.position.y + CARD_MIN_HEIGHT;
+      
+      // Calculer les limites de la nouvelle carte
+      const newCardLeft = x;
+      const newCardRight = x + CARD_WIDTH;
+      const newCardTop = y;
+      const newCardBottom = y + CARD_MIN_HEIGHT;
+      
+      // Vérifier s'il y a superposition
+      if (
+        newCardLeft < cardRight + 20 &&
+        newCardRight > cardLeft - 20 &&
+        newCardTop < cardBottom + 20 &&
+        newCardBottom > cardTop - 20
+      ) {
+        return false; // Superposition détectée
+      }
+    }
+    
+    return true; // Pas de superposition
+  };
+
   // Fonction pour obtenir la prochaine position disponible pour une carte
   const getNextAvailablePosition = () => {
     const boardWidth = boardRef.current?.clientWidth || 800;
@@ -1077,11 +1200,51 @@ const GameBoard: React.FC<GameBoardProps> = ({
     // Marge pour éviter de placer les cartes trop près des bords
     const margin = 50;
     
-    // Générer une position aléatoire dans les limites du tableau
-    return {
-      x: Math.max(margin, Math.min(boardWidth - CARD_WIDTH - margin, Math.random() * (boardWidth - CARD_WIDTH - 2 * margin) + margin)),
-      y: Math.max(margin, Math.min(boardHeight - CARD_MIN_HEIGHT - margin, Math.random() * (boardHeight - CARD_MIN_HEIGHT - 2 * margin) + margin))
-    };
+    // Espace minimum entre les cartes
+    const minSpaceBetweenCards = 20;
+    
+    // Nombre maximum de tentatives pour trouver une position non superposée
+    const maxAttempts = 50;
+    
+    // Essayer de trouver une position valide
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      // Générer une position aléatoire dans les limites du tableau
+      const x = Math.max(margin, Math.min(boardWidth - CARD_WIDTH - margin, Math.random() * (boardWidth - CARD_WIDTH - 2 * margin) + margin));
+      const y = Math.max(margin, Math.min(boardHeight - CARD_MIN_HEIGHT - margin, Math.random() * (boardHeight - CARD_MIN_HEIGHT - 2 * margin) + margin));
+      
+      // Vérifier si la position est valide
+      if (isPositionValid(x, y)) {
+        return { x, y };
+      }
+    }
+    
+    // Si aucune position valide n'a été trouvée après le nombre maximum de tentatives,
+    // utiliser une stratégie de placement en grille
+    const gridSpacing = CARD_WIDTH + minSpaceBetweenCards;
+    const rowHeight = CARD_MIN_HEIGHT + minSpaceBetweenCards;
+    
+    // Calculer le nombre de cartes par ligne possible
+    const cardsPerRow = Math.floor((boardWidth - 2 * margin) / gridSpacing);
+    
+    // Calculer la position en grille basée sur le nombre de cartes
+    const cardIndex = cards.length;
+    const row = Math.floor(cardIndex / cardsPerRow);
+    const col = cardIndex % cardsPerRow;
+    
+    // Calculer les coordonnées finales
+    const gridX = margin + col * gridSpacing;
+    const gridY = margin + row * rowHeight;
+    
+    // Vérifier si la position en grille est dans les limites du tableau
+    if (gridY + CARD_MIN_HEIGHT > boardHeight - margin) {
+      // Si on dépasse la hauteur du tableau, placer la carte au centre avec un décalage
+      return {
+        x: boardWidth / 2 - CARD_WIDTH / 2 + (cardIndex % 5) * 10,
+        y: boardHeight / 2 - CARD_MIN_HEIGHT / 2 + (cardIndex % 5) * 10
+      };
+    }
+    
+    return { x: gridX, y: gridY };
   };
 
   return (
@@ -1114,29 +1277,33 @@ const GameBoard: React.FC<GameBoardProps> = ({
                   Actions ({cardUsage.action}/{cardLimits.action})
                 </button>
                 
-                <button
-                  onClick={() => {
-                    setSelectedCardType('event');
-                    setShowCardSelector(true);
-                  }}
-                  className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg 
-                           text-sm font-medium transition-all duration-200 flex items-center shadow-md"
-                >
-                  <span className="mr-2">🎭</span>
-                  Événements ({cardUsage.event}/{cardLimits.event})
-                </button>
-                
-                <button
-                  onClick={() => {
-                    setSelectedCardType('quiz');
-                    setShowCardSelector(true);
-                  }}
-                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg 
-                           text-sm font-medium transition-all duration-200 flex items-center shadow-md"
-                >
-                  <span className="mr-2">❓</span>
-                  Quiz ({cardUsage.quiz}/{cardLimits.quiz})
-                </button>
+                {debugMode && (
+                  <>
+                    <button
+                      onClick={() => {
+                        setSelectedCardType('event');
+                        setShowCardSelector(true);
+                      }}
+                      className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg 
+                               text-sm font-medium transition-all duration-200 flex items-center shadow-md"
+                    >
+                      <span className="mr-2">🎭</span>
+                      Événements ({cardUsage.event}/{cardLimits.event})
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        setSelectedCardType('quiz');
+                        setShowCardSelector(true);
+                      }}
+                      className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg 
+                               text-sm font-medium transition-all duration-200 flex items-center shadow-md"
+                    >
+                      <span className="mr-2">❓</span>
+                      Quiz ({cardUsage.quiz}/{cardLimits.quiz})
+                    </button>
+                  </>
+                )}
               </div>
               
               {/* Roue de cartes aléatoires */}
@@ -1149,6 +1316,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 onCardSelected={onRandomCardSelected}
                 cardLimits={cardLimits}
                 cardUsage={cardUsage}
+                usedCards={usedCards}
               />
             </div>
           </div>
@@ -1161,6 +1329,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           {/* Board cards */}
           {cards.map((card) => {
             const colors = getCardColors(getCardDomain(card) || "");
+            const cardType = getCardType(card);
             
             return (
               <div
@@ -1193,8 +1362,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
             );
           })}
           
-          {/* Tooltip */}
-          {hoveredCard && !draggingCard && activeCardId !== hoveredCard.id && (
+          {/* Tooltip - Ne pas afficher pour les cartes action */}
+          {hoveredCard && !draggingCard && activeCardId !== hoveredCard.id && getCardType(hoveredCard) !== 'action' && (
             <div 
               className="absolute z-20 w-64 p-4 bg-gray-800 backdrop-blur-md rounded-xl shadow-xl border border-gray-700 text-white"
               style={{
@@ -1207,13 +1376,13 @@ const GameBoard: React.FC<GameBoardProps> = ({
             </div>
           )}
           
-          {/* Empty state */}
+          {/* Message d'état vide */}
           {cards.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center text-white/60">
-                <div className="text-4xl mb-2">🎴</div>
-                <p className="text-lg font-medium">Ajoutez des cartes pour commencer</p>
-                <p className="text-sm mt-1">Utilisez le bouton "Ajouter une Carte" ci-dessus</p>
+              <div className="text-center p-6 bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-lg text-white">
+                <div className="text-5xl mb-4">🎴</div>
+                <p className="text-xl font-medium">Ajoutez des cartes pour commencer</p>
+                <p className="mt-2 text-white/70">Utilisez les boutons ci-dessus pour ajouter des cartes au tableau</p>
               </div>
             </div>
           )}

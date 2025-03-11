@@ -1,0 +1,2056 @@
+[
+  {
+    "id":"01-fiche-projet",
+    "type":"action",
+    "title":"Initier la charte projet",
+    "description":"GreenTrip Finder est un projet visant à créer une application mobile et web qui aide les utilisateurs à découvrir des destinations de voyage écologiques et durables en fonction de leurs intérêts personnels, tout en promouvant le tourisme responsable.\n\nPortée du projet:\n1. Fonctionnalités principales:\n   - Profil Utilisateur\n   - Recherche de Destinations\n   - Évaluation Écologique\n   - Réservations\n   - Conseils et Astuces\n   - Communauté et Avis\n\n2. Livrables:\n   - Application mobile (iOS et Android)\n   - Application web\n   - Base de données des destinations écologiques\n   - Documentation utilisateur et guide de démarrage\n   - Plan de communication et de marketing",
+    "domain":"Gestion du contenu",
+    "info":"La charte du projet est un document clé qui officialise son existence et fixe ses objectifs. Elle permet d'autoriser formellement le projet et documente les exigences initiales pour répondre aux besoins des parties prenantes. Ce document doit inclure la justification du projet, ses objectifs, les principaux livrables, les parties prenantes impliquées, les contraintes et hypothèses, ainsi que les critères de succès.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"-0.25"
+  },
+  {
+    "id":"02-critere-succes",
+    "type":"action",
+    "title":"Définir les critères de succès",
+    "description":"Définir les critères de succès pour le projet GreenTrip Finder :\n- Nombre d'utilisateurs actifs : Atteindre 50 000 utilisateurs dans les six premiers mois\n- Taux de satisfaction des utilisateurs : Maintenir un taux de satisfaction de 80% ou plus\n- Impact environnemental positif : Réduire les émissions de CO2 liées aux voyages de 10%\n- Partenariats établis : Collaborer avec au moins 20 partenaires écologiques\n- Objectif : Mesurer l'efficacité du projet et s'assurer qu'il répond aux objectifs fixés",
+    "domain":"Gestion de la qualité",
+    "info":"Les critères de succès permettent de mesurer l'efficacité du projet et de s'assurer qu'il atteint ses objectifs. Ils doivent être spécifiques, mesurables, atteignables, pertinents et temporellement définis (SMART).",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"-0.25"
+  },
+  {
+    "id":"03-definir-parties-prenantes",
+    "type":"action",
+    "title":"Identifier les principales parties prenantes",
+    "description":"Les principales parties prenantes du projet GreenTrip Finder sont :\n- **Ministère de l'Écologie** : Commanditaire du projet, garant des objectifs environnementaux.\n- **Équipe de développement** : Responsables de la conception et de la mise en œuvre de l'application mobile et web.\n- **Experts en tourisme durable** : Fournissent des recommandations et valident les critères écologiques des destinations.\n- **Utilisateurs finaux** : Voyageurs souhaitant organiser des voyages écologiques et donner leur avis sur les destinations.\n- **Partenaires touristiques** : Hôtels, agences de voyage et transporteurs proposant des services écoresponsables.\n- **Équipe marketing et communication** : Chargée de promouvoir l'application et d'attirer une communauté d'utilisateurs engagés.",
+    "domain":"Gestion des parties prenantes",
+    "info":"L'identification des parties prenantes est essentielle pour comprendre les attentes et les influences de chacun sur le projet. Une bonne gestion des parties prenantes permet d'assurer l'adhésion, d'anticiper les risques et de faciliter la communication entre les différents acteurs impliqués.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"-0.25"
+  },
+  {
+    "id":"04-definir-perimetre",
+    "type":"action",
+    "title":"Définir le périmètre du projet",
+    "description":"Le périmètre du projet GreenTrip Finder inclut :\n- La création d'une application mobile (iOS et Android) et web permettant de rechercher des destinations écologiques.\n- L'intégration d'une base de données répertoriant des destinations validées pour leur impact environnemental réduit.\n- Le développement de fonctionnalités clés : profil utilisateur, évaluation écologique, réservation, conseils et communauté.\n- La mise en place d'un plan de communication et de marketing pour promouvoir l'application.\n\nCe qui ne fait **pas** partie du périmètre du projet :\n- Le développement d'une plateforme de réservation complète (les réservations se feront via des partenaires externes).\n- La gestion des transports et des visas pour les utilisateurs.\n- L'ajout de fonctionnalités avancées d'intelligence artificielle au-delà des recommandations de base.\n- La maintenance à long terme après la livraison initiale (qui nécessitera un projet distinct).",
+    "domain":"Gestion du périmètre",
+    "info":"Définir clairement le périmètre du projet permet d'éviter le phénomène de 'scope creep' (dérive du périmètre) qui peut entraîner des retards et un dépassement des ressources. Une bonne définition du périmètre aide à aligner les attentes des parties prenantes et à éviter les dérives de l'objectif initial.",
+    "phase":[
+      "Initiation",
+      "Planification"
+    ],
+    "délai":"-0.4"
+  },
+  {
+    "id":"05-etude-economique",
+    "type":"action",
+    "title":"Réaliser l'étude économique (Business Plan)",
+    "description":"L'étude économique du projet GreenTrip Finder doit inclure :\n- **Analyse du marché** : Identification des tendances du tourisme durable, de la concurrence et des attentes des utilisateurs.\n- **Modèle économique** : Définition des sources de revenus (partenariats avec acteurs du tourisme, abonnements premium, publicité éthique).\n- **Coûts prévisionnels** : Développement, hébergement, maintenance, marketing et support client.\n- **Analyse de rentabilité** : Estimation des revenus et évaluation du retour sur investissement.\n- **Risques financiers** : Identification des incertitudes économiques et des plans d'atténuation.",
+    "domain":"Gestion financière",
+    "info":"Le business plan est un élément clé pour justifier la viabilité économique du projet. Il permet d'aligner les parties prenantes sur les objectifs financiers et d'assurer une allocation efficace des ressources. Il est également essentiel pour convaincre d'éventuels investisseurs ou partenaires financiers.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"-0.6"
+  },
+  {
+    "id":"06-budget-plus",
+    "type":"event",
+    "title":"Subvention gouvernementale inattendue",
+    "description":"Événement : Le projet reçoit une subvention inattendue du gouvernement pour promouvoir le tourisme durable.\n- Impact : Augmentation du budget disponible, permettant d'améliorer les fonctionnalités de l'application ou d'étendre la portée du projet.",
+    "domain":"Gestion financière",
+    "info":"Une subvention inattendue peut offrir des opportunités pour améliorer le projet, mais nécessite une gestion prudente pour s'assurer que les fonds sont utilisés efficacement.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"Variable",
+    "coût":"Variable",
+    "conditions":[
+      {
+        "cardId":"03-definir-parties-prenantes",
+        "present":true,
+        "effects":{
+          "budget":50,
+          "time":0,
+          "message":"Grâce à votre identification des parties prenantes, Vous avez pu bénéficier de cette subvention gouvernementale de +50k€"
+        }
+      },
+      {
+        "cardId":"03-definir-parties-prenantes",
+        "present":false,
+        "effects":{
+          "budget":0,
+          "time":0,
+          "message":"Malheureusement vous n'avez pas la carte action 'Identifier les parties prenantes', Un ministère publique était prêt à vous donner une subvention de 50k€ si vous l'aviez identifié."
+        }
+      }
+    ]
+  },
+  {
+    "id":"07-budget-moins",
+    "type":"event",
+    "title":"Réduction du financement par un investisseur",
+    "description":"Un investisseur s'interroge sur la rentabilité économique du projet et attend une étude économique détaillée sur la valeur générée par celui-ci. Si vous avez déjà sélectionné la carte, l'investisseur sera rassuré. Dans le cas contraire, il réduira son investissement, ce qui entraînera une diminution de votre budget de 20 000 euros.",
+    "domain":"Gestion des parties prenantes",
+    "info":"La gestion proactive des attentes des investisseurs est cruciale pour éviter les malentendus et les réductions de financement.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"Variable",
+    "coût":"Variable",
+    "conditions":[
+      {
+        "cardId":"05-etude-economique",
+        "present":true,
+        "effects":{
+          "budget":0,
+          "time":0,
+          "message":"Bravo ! Vous avez déjà choisi de réaliser une étude économique. Votre budget reste inchangé."
+        }
+      },
+      {
+        "cardId":"05-etude-economique",
+        "present":false,
+        "effects":{
+          "budget":-20,
+          "time":-3,
+          "message":"Malheureusement, vous n'avez pas encore réalisé l'étude économique. Votre budget sera réduit de 10 K€."
+        }
+      }
+    ]
+  },
+  {
+    "id":"7",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Quel est l'objectif principal du projet GreenTrip Finder ?",
+    "options":[
+      "A. Organiser des voyages en groupe",
+      "B. Promouvoir le tourisme responsable",
+      "C. Créer une plateforme de réservation d'hôtels",
+      "D. Développer un réseau social pour voyageurs"
+    ],
+    "correct_answer":"B",
+    "comment":"L'objectif principal du projet GreenTrip Finder est de promouvoir le tourisme responsable en aidant les utilisateurs à trouver des destinations de voyage écologiques en fonction de leurs intérêts."
+  },
+  {
+    "id":"8",
+    "type":"question",
+    "phase":[
+      "Initiation",
+      "Planification"
+    ],
+    "title":"Pourquoi est-il important de créer une charte de projet ?",
+    "options":[
+      "A. Pour définir les tâches quotidiennes de l'équipe",
+      "B. Pour officialiser le projet et fixer ses objectifs",
+      "C. Pour planifier les réunions hebdomadaires",
+      "D. Pour définir le budget détaillé du projet"
+    ],
+    "correct_answer":"B",
+    "comment":"La charte de projet est essentielle pour officialiser le projet et fixer ses objectifs. Elle autorise formellement le projet et documente les exigences initiales pour répondre aux besoins des parties prenantes."
+  },
+  {
+    "id":"9",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Qui sont les parties prenantes clés dans le projet GreenTrip Finder ?",
+    "options":[
+      "A. Les développeurs et les investisseurs",
+      "B. Les voyageurs et les partenaires écologiques",
+      "C. Les agences de voyage et les hôtels",
+      "D. Les influenceurs et les blogueurs"
+    ],
+    "correct_answer":"B",
+    "comment":"Les parties prenantes clés dans le projet GreenTrip Finder incluent les voyageurs, qui sont les utilisateurs finaux de l'application, et les partenaires écologiques, qui fournissent des hébergements et des activités durables."
+  },
+  {
+    "id":"10",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Quel est le principal objectif de la phase d'initiation d'un projet ?",
+    "options":[
+      "A. Définir le budget détaillé",
+      "B. Autoriser formellement le projet",
+      "C. Planifier les activités quotidiennes",
+      "D. Réaliser une analyse des risques"
+    ],
+    "correct_answer":"B",
+    "comment":"Le principal objectif de la phase d'initiation est d'autoriser formellement le projet. Cela inclut la création de la charte de projet, qui définit les objectifs, les livrables principaux, et les parties prenantes clés."
+  },
+  {
+    "id":"11",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Quel document est crucial pour officialiser un projet et fixer ses objectifs ?",
+    "options":[
+      "A. Le plan de gestion de projet",
+      "B. La charte de projet",
+      "C. Le registre des risques",
+      "D. Le plan de communication"
+    ],
+    "correct_answer":"B",
+    "description":"La charte de projet est cruciale pour officialiser un projet et fixer ses objectifs. Elle documente les exigences initiales et autorise formellement le projet."
+  },
+  {
+    "id":"12",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Pourquoi est-il important d'identifier les parties prenantes dès la phase d'initiation ?",
+    "options":[
+      "A. Pour définir le budget du projet",
+      "B. Pour comprendre leurs attentes et besoins",
+      "C. Pour planifier les réunions de l'équipe",
+      "D. Pour réaliser une analyse des risques"
+    ],
+    "correct_answer":"B",
+    "comment":"Identifier les parties prenantes dès la phase d'initiation est important pour comprendre leurs attentes et besoins. Cela permet de gérer efficacement les communications et d'assurer que le projet répond aux besoins de chacun."
+  },
+  {
+    "id":"20",
+    "type":"event",
+    "title":"Audit de sécurité des données",
+    "description":"Événement : Un audit de sécurité révèle des vulnérabilités potentielles dans la protection des données utilisateurs.\n\nL'impact dépend de vos actions précédentes. Si vous avez à la fois défini le périmètre du projet et élaboré la charte, vous serez bien préparé. Si vous avez fait l'un des deux, l'impact sera modéré. Sans ces préparations, l'impact sera sévère.",
+    "domain":"Gestion des risques",
+    "info":"La sécurité des données est un aspect critique des applications modernes, particulièrement pour celles qui traitent des informations personnelles comme les itinéraires de voyage.",
+    "phase":[
+      "Planification",
+      "Exécution"
+    ],
+    "délai":"Variable",
+    "coût":"Variable",
+    "conditions":[
+      {
+        "operator":"AND",
+        "checks":[
+          {
+            "cardId":"1",
+            "present":true
+          },
+          {
+            "cardId":"8",
+            "present":true
+          }
+        ],
+        "effects":{
+          "budget":-5,
+          "time":-1,
+          "message":"Grâce à votre charte de projet et à la définition claire du périmètre, vous aviez anticipé les exigences de sécurité. Impact minimal: -5K€ et -1 mois."
+        }
+      },
+      {
+        "operator":"OR",
+        "checks":[
+          {
+            "cardId":"1",
+            "present":true
+          },
+          {
+            "cardId":"8",
+            "present":true
+          }
+        ],
+        "effects":{
+          "budget":-15,
+          "time":-2,
+          "message":"L'une de vos mesures préventives a permis de limiter l'impact: -15K€ et -2 mois."
+        }
+      },
+      {
+        "default":true,
+        "effects":{
+          "budget":-30,
+          "time":-4,
+          "message":"Sans préparation adéquate, l'audit de sécurité a révélé des problèmes majeurs: -30K€ et -4 mois pour les corrections."
+        }
+      }
+    ]
+  },
+  {
+    "id":"12",
+    "type":"action",
+    "title":"Définir le plan de gestion de projet",
+    "description":"Le plan de gestion de projet GreenTrip Finder doit couvrir la portée, les objectifs, le calendrier, le budget, les ressources, la qualité, les risques, les parties prenantes, et la communication. Ce plan servira de feuille de route pour l'ensemble du projet.",
+    "domain":"Gestion de la planification",
+    "info":"Un plan de gestion de projet détaillé est essentiel pour guider le projet, coordonner les efforts de l'équipe, gérer les attentes des parties prenantes et garantir que le projet reste dans les limites de la portée, du budget et du calendrier.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-0.5",
+    "cout":"1000"
+  },
+  {
+    "id":"13",
+    "type":"action",
+    "title":"Définir la structure de découpage du travail (WBS)",
+    "description":"La création d'une structure de découpage du travail (WBS) pour GreenTrip Finder détaillera toutes les tâches nécessaires pour compléter le projet. Cela inclut la création de l'application, la mise en place de la base de données, le marketing, etc.",
+    "domain":"Gestion de la portée",
+    "info":"Le WBS permet de décomposer le projet en tâches gérables, d'affecter les responsabilités et de s'assurer que rien d'important n'est oublié. Cela permet également d'estimer plus précisément les coûts et les délais.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-0.4",
+    "cout":"800"
+  },
+  {
+    "id":"14",
+    "type":"action",
+    "title":"Estimer les ressources nécessaires",
+    "description":"Identifier et allouer les ressources nécessaires pour la réalisation du projet, incluant les développeurs, les experts en tourisme durable, les spécialistes du marketing et autres. Assurer une répartition optimale des ressources pour éviter les goulets d'étranglement.",
+    "domain":"Gestion des ressources",
+    "info":"L'estimation des ressources nécessaires garantit que le projet dispose de suffisamment de compétences et de moyens pour atteindre ses objectifs. Une mauvaise estimation peut entraîner des retards et des dépassements de coûts.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-0.3",
+    "cout":"500"
+  },
+  {
+    "id":"15",
+    "type":"action",
+    "title":"Élaborer le plan de gestion des risques",
+    "description":"Évaluer les risques potentiels du projet GreenTrip Finder et définir des stratégies d'atténuation. Cela inclut les risques techniques, financiers, environnementaux, ainsi que les risques liés à l'adoption par les utilisateurs.",
+    "domain":"Gestion des risques",
+    "info":"L'identification des risques et la définition de stratégies d'atténuation aident à minimiser les surprises pendant l'exécution du projet. Cela permet d'agir rapidement en cas de problème, garantissant ainsi la réussite du projet.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-0.6",
+    "cout":"700"
+  },
+  {
+    "id":"16",
+    "type":"action",
+    "title":"Lancer le développement de l'application",
+    "description":"Démarrer la phase de développement de l'application GreenTrip Finder, en suivant les exigences définies dans la phase de planification et en s'assurant de respecter le calendrier et le budget.",
+    "domain":"Gestion de l'exécution",
+    "info":"Le lancement du développement est une étape clé pour transformer la vision du projet en réalité. Les retards ou les erreurs de développement peuvent affecter gravement le calendrier et le budget.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-1.2",
+    "cout":"5000"
+  },
+  {
+    "id":"17",
+    "type":"action",
+    "title":"Mettre en place le suivi des indicateurs de performance",
+    "description":"Définir les indicateurs de performance clés (KPI) du projet GreenTrip Finder pour mesurer l'avancement, la qualité et l'efficacité. Cela inclut la performance de l'application, la satisfaction des utilisateurs et les progrès financiers.",
+    "domain":"Gestion de la performance",
+    "info":"Le suivi des KPI permet de détecter rapidement les problèmes et d'apporter des ajustements avant qu'ils n'impactent gravement le projet. C'est une pratique indispensable pour garantir que le projet reste sur la bonne voie.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.5",
+    "cout":"600"
+  },
+  {
+    "id":"18",
+    "type":"action",
+    "title":"Gérer les changements dans le projet",
+    "description":"Assurer un suivi continu des demandes de changement, en les analysant, en les approuvant et en ajustant le plan de projet en conséquence. Cela garantit que les modifications n'affectent pas négativement le projet dans son ensemble.",
+    "domain":"Gestion des changements",
+    "info":"La gestion des changements permet de répondre aux évolutions tout en contrôlant l'impact sur le projet. Sans cette gestion, les dérives de portée et de budget peuvent rapidement se multiplier.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.7",
+    "cout":"800"
+  },
+  {
+    "id":"19",
+    "type":"action",
+    "title":"Contrôler la qualité du produit",
+    "description":"Mettre en place des revues de qualité régulières pour évaluer la conformité de l'application avec les exigences de performance, de sécurité et d'expérience utilisateur. Toute non-conformité sera corrigée avant la livraison.",
+    "domain":"Gestion de la qualité",
+    "info":"Un contrôle qualité régulier assure que le produit final répond aux attentes des utilisateurs et aux spécifications initiales. Cela réduit les risques de révisions coûteuses et de retards.",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "délai":"-0.5",
+    "cout":"900"
+  },
+  {
+    "id":"20",
+    "type":"action",
+    "title":"Vérifier et valider le produit final",
+    "description":"Avant la livraison du projet GreenTrip Finder, vérifier et valider que toutes les fonctionnalités répondent aux critères d'acceptation définis et que le produit est prêt à être lancé sur le marché.",
+    "domain":"Gestion de la validation",
+    "info":"La validation finale est essentielle pour s'assurer que le produit final correspond aux attentes des utilisateurs et des parties prenantes. Une vérification rigoureuse garantit le succès de la mise en production.",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "délai":"-0.4",
+    "cout":"700"
+  },
+  {
+    "id":"21",
+    "type":"action",
+    "title":"Clôturer le projet et effectuer l'évaluation finale",
+    "description":"Après le lancement de l'application, clôturer officiellement le projet en réalisant une rétrospective avec l'équipe, en analysant les performances du projet et en générant un rapport final sur les réussites et les domaines d'amélioration.",
+    "domain":"Gestion de la clôture",
+    "info":"La clôture du projet permet de capitaliser sur l'expérience acquise, de garantir que tous les livrables ont été remis et d'examiner les enseignements tirés pour de futurs projets.",
+    "phase":[
+      "Clôture"
+    ],
+    "délai":"-0.3",
+    "cout":"300"
+  },
+  {
+    "id":"22",
+    "type":"action",
+    "title":"Passer la maintenance et le support à l'équipe opérationnelle",
+    "description":"Transférer la gestion de la maintenance de l'application GreenTrip Finder à une équipe dédiée pour assurer la correction des bugs, les mises à jour et le support client après la mise en ligne.",
+    "domain":"Gestion des opérations",
+    "info":"La gestion de la maintenance garantit la pérennité du projet après la clôture initiale. Une bonne gestion de la maintenance est cruciale pour maintenir une bonne expérience utilisateur à long terme.",
+    "phase":[
+      "Clôture"
+    ],
+    "délai":"-0.2",
+    "cout":"400"
+  },
+  {
+    "id":"23",
+    "type":"action",
+    "title":"Développer la fonctionnalité Profil Utilisateur",
+    "description":"Développer la fonctionnalité permettant aux utilisateurs de créer et de gérer leur profil, incluant la saisie d'informations personnelles, la gestion des préférences de voyage et la connexion via un compte sécurisé.",
+    "domain":"Gestion du développement",
+    "info":"Cette fonctionnalité est essentielle car elle permet aux utilisateurs de personnaliser leur expérience et d'interagir avec l'application de manière plus fluide. Un profil bien conçu est crucial pour favoriser l'adoption et l'engagement.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-1.0",
+    "cout":"2000"
+  },
+  {
+    "id":"24",
+    "type":"action",
+    "title":"Développer la fonctionnalité Recherche de Destinations",
+    "description":"Développer la fonctionnalité de recherche de destinations écologiques qui permet aux utilisateurs de filtrer et de trouver des options en fonction de critères tels que la durabilité, les préférences de voyage et les activités disponibles.",
+    "domain":"Gestion du développement",
+    "info":"La recherche de destinations est au cœur de l'application, car elle permet aux utilisateurs de découvrir des options de voyage. Cette fonctionnalité doit être précise, rapide et facile à utiliser pour garantir une expérience utilisateur fluide.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-1.2",
+    "cout":"2500"
+  },
+  {
+    "id":"25",
+    "type":"action",
+    "title":"Développer la fonctionnalité Évaluation Écologique",
+    "description":"Mettre en place un système d'évaluation écologique qui permettra d'analyser et d'afficher l'empreinte carbone, la durabilité et l'impact environnemental de chaque destination.",
+    "domain":"Gestion du développement",
+    "info":"Cette fonctionnalité est cruciale pour informer les utilisateurs des choix écologiques qu'ils font et pour promouvoir un tourisme plus responsable. Elle renforcera l'attrait de l'application pour les voyageurs soucieux de l'environnement.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-1.0",
+    "cout":"2200"
+  },
+  {
+    "id":"26",
+    "type":"action",
+    "title":"Développer la fonctionnalité Réservations",
+    "description":"Développer une fonctionnalité de réservation permettant aux utilisateurs de réserver des hébergements, des vols ou d'autres services liés à leur voyage de manière simple et transparente, tout en favorisant les options écologiques.",
+    "domain":"Gestion du développement",
+    "info":"La possibilité de réserver directement depuis l'application est essentielle pour assurer la satisfaction des utilisateurs et offrir une expérience complète, de la découverte à la planification du voyage.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-1.5",
+    "cout":"3000"
+  },
+  {
+    "id":"27",
+    "type":"action",
+    "title":"Développer la fonctionnalité Conseils et Astuces",
+    "description":"Créer un espace où les utilisateurs peuvent accéder à des conseils pratiques sur le voyage durable, des astuces pour réduire leur empreinte écologique, et des recommandations pour un tourisme responsable.",
+    "domain":"Gestion du développement",
+    "info":"Cette fonctionnalité enrichit l'expérience utilisateur en offrant une valeur ajoutée. Elle renforce l'image de l'application comme un guide de voyage éthique et responsable.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.8",
+    "cout":"1800"
+  },
+  {
+    "id":"28",
+    "type":"action",
+    "title":"Développer la fonctionnalité Communauté et Avis",
+    "description":"Créer une plateforme où les utilisateurs peuvent échanger des avis, des expériences et des conseils, ainsi que recommander des destinations écologiques à d'autres voyageurs.",
+    "domain":"Gestion du développement",
+    "info":"Une communauté engagée est essentielle pour l'adoption à long terme de l'application. Cette fonctionnalité permet de créer un sentiment de collaboration et d'entraide entre les utilisateurs.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-1.2",
+    "cout":"2400"
+  },
+  {
+    "id":"34",
+    "type":"action",
+    "title":"Identifier et évaluer le risque d'intégration complexe des systèmes",
+    "description":"Identifier et évaluer le risque que l'intégration des différentes technologies (applications mobiles et web, base de données des destinations, systèmes de réservation) soit plus complexe que prévu, ce qui pourrait entraîner des retards et des coûts supplémentaires.",
+    "domain":"Gestion des risques",
+    "info":"L'intégration de systèmes multiples peut être complexe et pourrait provoquer des retards ou des échecs dans le projet. Il est crucial de bien comprendre ce risque afin d'allouer suffisamment de ressources et de temps pour cette tâche.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-0.5",
+    "cout":"800"
+  },
+  {
+    "id":"35",
+    "type":"action",
+    "title":"Atténuer le risque d'intégration complexe des systèmes",
+    "description":"Mettre en place des tests d'intégration continus et des revues de code régulières pour détecter rapidement les problèmes techniques. Embaucher un consultant externe spécialisé dans les intégrations complexes si nécessaire.",
+    "domain":"Gestion des risques",
+    "info":"Les tests continus et l'expertise externe peuvent réduire la probabilité de découvrir des problèmes graves tard dans le projet, permettant ainsi de corriger les erreurs à moindre coût et d'éviter des retards importants.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.3",
+    "cout":"1500"
+  },
+  {
+    "id":"36",
+    "type":"action",
+    "title":"Identifier et évaluer le risque de faible adoption de l'application par les utilisateurs",
+    "description":"Identifier et évaluer le risque que l'application ne soit pas adoptée par les utilisateurs cibles en raison de problèmes d'ergonomie, de fonctionnalités manquantes ou d'une mauvaise communication marketing.",
+    "domain":"Gestion des risques",
+    "info":"Un faible taux d'adoption peut réduire considérablement le retour sur investissement du projet. Il est donc important de valider les hypothèses de conception avec des utilisateurs réels et de s'assurer que l'application répond à leurs besoins.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-0.4",
+    "cout":"1000"
+  },
+  {
+    "id":"37",
+    "type":"action",
+    "title":"Atténuer le risque de faible adoption de l'application",
+    "description":"Mener des tests d'acceptation utilisateur (UAT) avant le lancement, organiser des focus groups pour recueillir des retours sur l'interface utilisateur et les fonctionnalités, et améliorer la stratégie de marketing.",
+    "domain":"Gestion des risques",
+    "info":"Les tests d'acceptation et les focus groups permettent de corriger les problèmes de conception avant le lancement. Une bonne stratégie marketing permet également d'attirer les bons utilisateurs et de garantir l'engagement.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.5",
+    "cout":"1200"
+  },
+  {
+    "id":"38",
+    "type":"action",
+    "title":"Identifier et évaluer le risque de non-conformité aux normes environnementales",
+    "description":"Identifier et évaluer le risque que certaines destinations ou pratiques de l'application ne respectent pas les normes environnementales ou les réglementations locales en matière de durabilité et d'écologie.",
+    "domain":"Gestion des risques",
+    "info":"La non-conformité aux réglementations écologiques peut entraîner des sanctions, des poursuites ou une mauvaise image de marque. Il est essentiel de vérifier régulièrement que les destinations proposées respectent les critères écologiques.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-0.3",
+    "cout":"700"
+  },
+  {
+    "id":"39",
+    "type":"action",
+    "title":"Atténuer le risque de non-conformité aux normes environnementales",
+    "description":"Travailler en collaboration avec des experts en écologie et des avocats spécialisés pour effectuer des audits réguliers des destinations proposées. Mettre en place des critères stricts pour l'ajout de nouvelles destinations.",
+    "domain":"Gestion des risques",
+    "info":"Les audits réguliers et les critères stricts permettent de s'assurer que toutes les destinations proposées respectent les normes écologiques, minimisant ainsi les risques juridiques et environnementaux.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.4",
+    "cout":"800"
+  },
+  {
+    "id":"40",
+    "type":"action",
+    "title":"Identifier et évaluer le risque de mauvaise gestion des données personnelles",
+    "description":"Identifier et évaluer le risque de mauvaise gestion des données personnelles des utilisateurs, y compris la violation des lois sur la protection des données (RGPD) et la perte de données sensibles.",
+    "domain":"Gestion des risques",
+    "info":"La gestion incorrecte des données personnelles peut entraîner des amendes importantes et une perte de confiance des utilisateurs. Il est crucial de respecter toutes les réglementations relatives à la protection des données.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-0.2",
+    "cout":"600"
+  },
+  {
+    "id":"41",
+    "type":"action",
+    "title":"Atténuer le risque de mauvaise gestion des données personnelles",
+    "description":"Mettre en place des pratiques strictes de sécurité des données, incluant le chiffrement des informations sensibles, et obtenir des certifications de conformité aux réglementations sur la protection des données (ex. RGPD).",
+    "domain":"Gestion des risques",
+    "info":"Les mesures de sécurité et les certifications permettent de garantir que les données des utilisateurs sont protégées conformément à la loi et renforcent la confiance dans l'application.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.3",
+    "cout":"1000"
+  },
+  {
+    "id":"42",
+    "type":"action",
+    "title":"Identifier et évaluer le risque de dépassement de budget",
+    "description":"Identifier et évaluer le risque de dépassement du budget alloué au projet, incluant les coûts de développement, de marketing et les imprévus liés à l'intégration de nouvelles fonctionnalités.",
+    "domain":"Gestion des risques",
+    "info":"Les dépassements de budget peuvent compromettre la rentabilité du projet. Il est important de suivre de près les dépenses et de prévoir une marge pour les imprévus.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-0.4",
+    "cout":"500"
+  },
+  {
+    "id":"43",
+    "type":"action",
+    "title":"Atténuer le risque de dépassement de budget",
+    "description":"Mettre en place un suivi strict des dépenses et des marges budgétaires, ainsi qu'une réserve financière pour les imprévus. Revoir régulièrement le plan de budget pour ajuster les prévisions.",
+    "domain":"Gestion des risques",
+    "info":"Un suivi rigoureux du budget permet de détecter rapidement les écarts et de prendre des mesures correctives avant qu'ils ne deviennent problématiques.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.3",
+    "cout":"600"
+  },
+  {
+    "id":"06-budget-plus",
+    "type":"event",
+    "title":"Subvention gouvernementale inattendue",
+    "description":"Événement : Le projet reçoit une subvention inattendue du gouvernement pour promouvoir le tourisme durable.\n- Impact : Augmentation du budget disponible, permettant d'améliorer les fonctionnalités de l'application ou d'étendre la portée du projet.",
+    "domain":"Gestion financière",
+    "info":"Une subvention inattendue peut offrir des opportunités pour améliorer le projet, mais nécessite une gestion prudente pour s'assurer que les fonds sont utilisés efficacement.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"Variable",
+    "coût":"Variable",
+    "conditions":[
+      {
+        "cardId":"03-definir-parties-prenantes",
+        "present":true,
+        "effects":{
+          "budget":50,
+          "time":0,
+          "value":10,
+          "message":"Grâce à votre identification des parties prenantes, Vous avez pu bénéficier de cette subvention gouvernementale de +50k€"
+        }
+      },
+      {
+        "cardId":"03-definir-parties-prenantes",
+        "present":false,
+        "effects":{
+          "budget":0,
+          "time":0,
+          "value":0,
+          "message":"Malheureusement vous n'avez pas la carte action 'Identifier les parties prenantes', Un ministère public était prêt à vous donner une subvention de 50k€ si vous l'aviez identifié."
+        }
+      }
+    ]
+  },
+  {
+    "id":"07-délais-risque-météo",
+    "type":"event",
+    "title":"Risque climatique impactant le projet",
+    "description":"Événement : Un phénomène climatique imprévu (par exemple, des inondations ou des tempêtes) perturbe le développement de l'application ou la recherche de destinations écologiques.\n- Impact : Retard sur le planning et coûts supplémentaires pour compenser les retards.",
+    "domain":"Gestion des risques",
+    "info":"Les événements climatiques peuvent perturber l'approvisionnement en ressources, la planification des tests et même le développement d'une fonctionnalité. Une gestion proactive des risques environnementaux peut réduire cet impact.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"+1",
+    "coût":"+500",
+    "conditions":[
+      {
+        "cardId":"20-identifier-risque-climatique",
+        "present":true,
+        "effects":{
+          "budget":-200,
+          "time":0.5,
+          "value":-5,
+          "message":"Grâce à votre identification des risques climatiques, vous avez pris des mesures préventives, mais cela a entraîné un léger retard et une augmentation du budget."
+        }
+      },
+      {
+        "cardId":"20-identifier-risque-climatique",
+        "present":false,
+        "effects":{
+          "budget":-500,
+          "time":1,
+          "value":-10,
+          "message":"Vous n'aviez pas anticipé ce risque climatique, entraînant un retard conséquent et des coûts supplémentaires pour rétablir le projet."
+        }
+      }
+    ]
+  },
+  {
+    "id":"10-enthousiasme-partie-prenante",
+    "type":"event",
+    "title":"Partie prenante enthousiaste",
+    "description":"Événement : Une partie prenante clé (par exemple, une ONG ou un investisseur privé) exprime un intérêt accru pour le projet après avoir vu le premier prototype.\n- Impact : Support financier ou en ressources supplémentaires pour renforcer le développement.",
+    "domain":"Gestion des parties prenantes",
+    "info":"L'engagement des parties prenantes est essentiel pour garantir la stabilité du projet. Les parties prenantes enthousiastes peuvent faciliter le financement et l'adhésion au projet.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"Variable",
+    "coût":"Variable",
+    "conditions":[
+      {
+        "cardId":"25-obtenir-financement",
+        "present":true,
+        "effects":{
+          "budget":100,
+          "time":0,
+          "value":20,
+          "message":"Grâce à votre action d'obtenir un financement, cette partie prenante vous soutient financièrement pour un meilleur développement."
+        }
+      },
+      {
+        "cardId":"25-obtenir-financement",
+        "present":false,
+        "effects":{
+          "budget":0,
+          "time":0,
+          "value":0,
+          "message":"Il semble que vous n'ayez pas bien défini les parties prenantes clés. Une opportunité de financement a été manquée."
+        }
+      }
+    ]
+  },
+  {
+    "id":"11-contrat-annulé",
+    "type":"event",
+    "title":"Annulation de contrat avec un fournisseur",
+    "description":"Événement : Un fournisseur clé dans le projet annule son contrat en raison de problèmes internes ou de conflits d'intérêts.\n- Impact : Dépendance accrue envers d'autres fournisseurs et risque de retard.",
+    "domain":"Gestion des fournisseurs",
+    "info":"L'annulation de contrats avec des fournisseurs peut entraîner des délais supplémentaires, des coûts accrus et une gestion de crise. Il est essentiel d'avoir un plan de contingence pour de tels événements.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"+1",
+    "coût":"+400",
+    "conditions":[
+      {
+        "cardId":"15-choisir-fournisseurs",
+        "present":true,
+        "effects":{
+          "budget":-100,
+          "time":0.5,
+          "value":-5,
+          "message":"Grâce à vos choix de fournisseurs bien anticipés, vous avez pu limiter l'impact de l'annulation mais avec un léger coût supplémentaire."
+        }
+      },
+      {
+        "cardId":"15-choisir-fournisseurs",
+        "present":false,
+        "effects":{
+          "budget":-400,
+          "time":1,
+          "value":-10,
+          "message":"Vous n'aviez pas anticipé ce risque avec vos fournisseurs, et cela a engendré un retard et des coûts supplémentaires importants."
+        }
+      }
+    ]
+  },
+  {
+    "id":"15-bug-critiques",
+    "type":"event",
+    "title":"Découverte de bugs critiques",
+    "description":"Événement : Un bug critique est découvert lors des tests d'intégration de l'application mobile, ralentissant le développement.\n- Impact : Augmentation du temps de développement et coût pour corriger le bug.",
+    "domain":"Gestion des risques",
+    "info":"Les bugs critiques peuvent entraîner des retards majeurs et augmenter considérablement les coûts. Des tests réguliers et une gestion proactive du code peuvent réduire ce risque.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"+0.5",
+    "coût":"+300",
+    "conditions":[
+      {
+        "cardId":"30-tests-integration",
+        "present":true,
+        "effects":{
+          "budget":-200,
+          "time":0.5,
+          "value":-5,
+          "message":"Vous avez effectué des tests d'intégration, ce qui a permis de détecter le bug plus tôt. Cela a causé un léger retard mais a limité l'impact."
+        }
+      },
+      {
+        "cardId":"30-tests-integration",
+        "present":false,
+        "effects":{
+          "budget":-300,
+          "time":1,
+          "value":-8,
+          "message":"L'absence de tests d'intégration a conduit à la découverte tardive du bug, entraînant un retard et des coûts supplémentaires."
+        }
+      }
+    ]
+  },
+  {
+    "id":"16-succes-viral",
+    "type":"event",
+    "title":"Succès viral inattendu",
+    "description":"Événement : Le projet devient viral grâce à une couverture médiatique imprévue.\n- Impact : Augmentation de l'utilisation de l'application, mais avec des besoins accrus en termes de serveurs et de support client.",
+    "domain":"Gestion des opérations",
+    "info":"Un succès viral peut être une aubaine, mais il peut aussi créer une pression sur les ressources disponibles. Une planification adéquate de la scalabilité du système est essentielle.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"Variable",
+    "coût":"+200",
+    "conditions":[
+      {
+        "cardId":"35-scaling-infrastructure",
+        "present":true,
+        "effects":{
+          "budget":200,
+          "time":0,
+          "value":15,
+          "message":"Vous aviez déjà planifié la scalabilité de l'infrastructure, permettant au projet de gérer ce succès viral sans trop de difficulté."
+        }
+      },
+      {
+        "cardId":"35-scaling-infrastructure",
+        "present":false,
+        "effects":{
+          "budget":500,
+          "time":1,
+          "value":10,
+          "message":"Le succès viral a généré une surcharge imprévue, nécessitant une mise à l'échelle rapide de l'infrastructure et un coût supplémentaire important."
+        }
+      }
+    ]
+  },
+  {
+    "id":"05-definir-besoins",
+    "type":"action",
+    "title":"Définir les besoins des utilisateurs",
+    "description":"Recueillir les exigences des utilisateurs finaux pour les fonctionnalités principales de l'application.\n- Impact : Cela aide à garantir que le produit final répondra aux besoins réels des utilisateurs.",
+    "domain":"Gestion du contenu",
+    "info":"Comprendre les besoins des utilisateurs permet d’aligner les fonctionnalités du projet avec leurs attentes et d’éviter de développer des fonctionnalités inutiles.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"-0.5",
+    "coût":"-100"
+  },
+  {
+    "id":"06-budget-plus",
+    "type":"event",
+    "title":"Subvention gouvernementale inattendue",
+    "description":"Événement : Le projet reçoit une subvention inattendue du gouvernement pour promouvoir le tourisme durable.\n- Impact : Augmentation du budget disponible, permettant d'améliorer les fonctionnalités de l'application ou d'étendre la portée du projet.",
+    "domain":"Gestion financière",
+    "info":"Une subvention inattendue peut offrir des opportunités pour améliorer le projet, mais nécessite une gestion prudente pour s'assurer que les fonds sont utilisés efficacement.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"Variable",
+    "coût":"Variable",
+    "conditions":[
+      {
+        "cardId":"03-definir-parties-prenantes",
+        "present":true,
+        "effects":{
+          "budget":50,
+          "time":0,
+          "value":10,
+          "message":"Grâce à votre identification des parties prenantes, Vous avez pu bénéficier de cette subvention gouvernementale de +50k€"
+        }
+      },
+      {
+        "cardId":"03-definir-parties-prenantes",
+        "present":false,
+        "effects":{
+          "budget":0,
+          "time":0,
+          "value":0,
+          "message":"Malheureusement vous n'avez pas la carte action 'Identifier les parties prenantes', Un ministère public était prêt à vous donner une subvention de 50k€ si vous l'aviez identifié."
+        }
+      }
+    ]
+  },
+  {
+    "id":"07-délais-risque-météo",
+    "type":"event",
+    "title":"Risque climatique impactant le projet",
+    "description":"Événement : Un phénomène climatique imprévu (par exemple, des inondations ou des tempêtes) perturbe le développement de l'application ou la recherche de destinations écologiques.\n- Impact : Retard sur le planning et coûts supplémentaires pour compenser les retards.",
+    "domain":"Gestion des risques",
+    "info":"Les événements climatiques peuvent perturber l'approvisionnement en ressources, la planification des tests et même le développement d'une fonctionnalité. Une gestion proactive des risques environnementaux peut réduire cet impact.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"+1",
+    "coût":"+500",
+    "conditions":[
+      {
+        "cardId":"20-identifier-risque-climatique",
+        "present":true,
+        "effects":{
+          "budget":-200,
+          "time":0.5,
+          "value":-5,
+          "message":"Grâce à votre identification des risques climatiques, vous avez pris des mesures préventives, mais cela a entraîné un léger retard et une augmentation du budget."
+        }
+      },
+      {
+        "cardId":"20-identifier-risque-climatique",
+        "present":false,
+        "effects":{
+          "budget":-500,
+          "time":1,
+          "value":-10,
+          "message":"Vous n'aviez pas anticipé ce risque climatique, entraînant un retard conséquent et des coûts supplémentaires pour rétablir le projet."
+        }
+      }
+    ]
+  },
+  {
+    "id":"10-enthousiasme-partie-prenante",
+    "type":"event",
+    "title":"Partie prenante enthousiaste",
+    "description":"Événement : Une partie prenante clé (par exemple, une ONG ou un investisseur privé) exprime un intérêt accru pour le projet après avoir vu le premier prototype.\n- Impact : Support financier ou en ressources supplémentaires pour renforcer le développement.",
+    "domain":"Gestion des parties prenantes",
+    "info":"L'engagement des parties prenantes est essentiel pour garantir la stabilité du projet. Les parties prenantes enthousiastes peuvent faciliter le financement et l'adhésion au projet.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"Variable",
+    "coût":"Variable",
+    "conditions":[
+      {
+        "cardId":"25-obtenir-financement",
+        "present":true,
+        "effects":{
+          "budget":100,
+          "time":0,
+          "value":20,
+          "message":"Grâce à votre action d'obtenir un financement, cette partie prenante vous soutient financièrement pour un meilleur développement."
+        }
+      },
+      {
+        "cardId":"25-obtenir-financement",
+        "present":false,
+        "effects":{
+          "budget":0,
+          "time":0,
+          "value":0,
+          "message":"Il semble que vous n'ayez pas bien défini les parties prenantes clés. Une opportunité de financement a été manquée."
+        }
+      }
+    ]
+  },
+  {
+    "id":"15-bug-critiques",
+    "type":"event",
+    "title":"Découverte de bugs critiques",
+    "description":"Événement : Un bug critique est découvert lors des tests d'intégration de l'application mobile, ralentissant le développement.\n- Impact : Augmentation du temps de développement et coût pour corriger le bug.",
+    "domain":"Gestion des risques",
+    "info":"Les bugs critiques peuvent entraîner des retards majeurs et augmenter considérablement les coûts. Des tests réguliers et une gestion proactive du code peuvent réduire ce risque.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"+0.5",
+    "coût":"+300",
+    "conditions":[
+      {
+        "cardId":"30-tests-integration",
+        "present":true,
+        "effects":{
+          "budget":-200,
+          "time":0.5,
+          "value":-5,
+          "message":"Vous avez effectué des tests d'intégration, ce qui a permis de détecter le bug plus tôt. Cela a causé un léger retard mais a limité l'impact."
+        }
+      },
+      {
+        "cardId":"30-tests-integration",
+        "present":false,
+        "effects":{
+          "budget":-300,
+          "time":1,
+          "value":-8,
+          "message":"L'absence de tests d'intégration a conduit à la découverte tardive du bug, entraînant un retard et des coûts supplémentaires."
+        }
+      }
+    ]
+  },
+  {
+    "id":"16-succes-viral",
+    "type":"event",
+    "title":"Succès viral inattendu",
+    "description":"Événement : Le projet devient viral grâce à une couverture médiatique imprévue.\n- Impact : Augmentation de l'utilisation de l'application, mais avec des besoins accrus en termes de serveurs et de support client.",
+    "domain":"Gestion des opérations",
+    "info":"Un succès viral peut être une aubaine, mais il peut aussi créer une pression sur les ressources disponibles. Une planification adéquate de la scalabilité du système est essentielle.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"Variable",
+    "coût":"+200",
+    "conditions":[
+      {
+        "cardId":"35-scaling-infrastructure",
+        "present":true,
+        "effects":{
+          "budget":200,
+          "time":0,
+          "value":15,
+          "message":"Vous aviez déjà planifié la scalabilité de l'infrastructure, permettant au projet de gérer ce succès viral sans trop de difficulté."
+        }
+      },
+      {
+        "cardId":"35-scaling-infrastructure",
+        "present":false,
+        "effects":{
+          "budget":500,
+          "time":1,
+          "value":10,
+          "message":"Le succès viral a généré une surcharge imprévue, nécessitant une mise à l'échelle rapide de l'infrastructure et un coût supplémentaire important."
+        }
+      }
+    ]
+  },
+  {
+    "id":"20-identifier-risque-climatique",
+    "type":"action",
+    "title":"Identifier les risques climatiques",
+    "description":"Évaluer les risques climatiques potentiels qui pourraient perturber le projet, tels que des conditions météorologiques extrêmes pouvant affecter la recherche de destinations ou le développement de l'application.\n- Impact : Cela permet de préparer des stratégies d'atténuation en cas d'événements climatiques perturbateurs.",
+    "domain":"Gestion des risques",
+    "info":"L'identification des risques climatiques est cruciale pour anticiper les éventuels impacts et ajuster la gestion du projet en fonction des menaces potentielles.",
+    "phase":[
+      "Initiation"
+    ],
+    "délai":"-0.5",
+    "coût":"-50"
+  },
+  {
+    "id":"25-obtenir-financement",
+    "type":"action",
+    "title":"Obtenir un financement",
+    "description":"Chercher et sécuriser un financement supplémentaire pour le projet, en engageant des discussions avec des investisseurs privés, des subventions gouvernementales, ou des partenariats avec des ONG.\n- Impact : Un financement peut permettre de mieux répondre aux besoins des utilisateurs et améliorer les fonctionnalités de l'application.",
+    "domain":"Gestion financière",
+    "info":"Obtenir des financements supplémentaires est essentiel pour maintenir un flux de trésorerie stable et garantir la viabilité du projet à long terme.",
+    "phase":[
+      "Planification"
+    ],
+    "délai":"-1",
+    "coût":"-100"
+  },
+  {
+    "id":"30-tests-integration",
+    "type":"action",
+    "title":"Effectuer des tests d'intégration",
+    "description":"Effectuer des tests d'intégration pour vérifier que toutes les parties de l'application fonctionnent ensemble correctement.\n- Impact : Permet d'identifier et de corriger les problèmes d'intégration avant la mise en production.",
+    "domain":"Gestion de la qualité",
+    "info":"Les tests d'intégration sont essentiels pour garantir la cohérence du produit, éviter des bugs coûteux et améliorer l'expérience utilisateur.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.5",
+    "coût":"-150"
+  },
+  {
+    "id":"35-scaling-infrastructure",
+    "type":"action",
+    "title":"Mise à l'échelle de l'infrastructure",
+    "description":"Mettre en place une infrastructure évolutive capable de gérer un grand nombre d'utilisateurs en simultané.\n- Impact : Préparer le projet pour un afflux massif d'utilisateurs, ce qui permet une meilleure performance et réactivité de l'application.",
+    "domain":"Gestion des opérations",
+    "info":"Une infrastructure évolutive est cruciale pour gérer les pics d'utilisation et éviter les interruptions de service.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-1",
+    "coût":"-300"
+  },
+  {
+    "id":"40-tests-utilisateurs",
+    "type":"action",
+    "title":"Effectuer des tests utilisateurs",
+    "description":"Organiser des sessions de tests utilisateurs pour valider les fonctionnalités de l'application auprès des utilisateurs finaux.\n- Impact : Permet de recueillir des retours précieux pour affiner l'application et garantir qu'elle répond aux besoins des utilisateurs.",
+    "domain":"Gestion de la qualité",
+    "info":"Les tests utilisateurs permettent de valider les hypothèses de conception et d'améliorer l'ergonomie du produit.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.5",
+    "coût":"-200"
+  },
+  {
+    "id":"50-cloturer-projet",
+    "type":"action",
+    "title":"Clôturer le projet",
+    "description":"Finaliser toutes les livraisons et documents, faire un bilan du projet, et obtenir l'approbation de toutes les parties prenantes pour la clôture officielle du projet.\n- Impact : Garantit que toutes les parties prenantes sont satisfaites et que le projet peut être officiellement considéré comme terminé.",
+    "domain":"Gestion de projet",
+    "info":"La clôture du projet permet de finaliser les objectifs, de tirer des enseignements et de s'assurer que toutes les livraisons ont été réalisées selon les attentes.",
+    "phase":[
+      "Clôture"
+    ],
+    "délai":"-0.5",
+    "coût":"-100"
+  },
+  {
+    "id":"60-rapport-fin-de-projet",
+    "type":"event",
+    "title":"Réception d'un rapport de fin de projet",
+    "description":"Événement : Un rapport de fin de projet est généré, incluant des statistiques sur le succès du projet et des recommandations pour de futures améliorations.\n- Impact : Cela permet de tirer des enseignements pour les futurs projets et d'analyser les performances du projet.",
+    "domain":"Gestion des connaissances",
+    "info":"Le rapport de fin de projet est un outil essentiel pour la réflexion post-mortem, permettant de capitaliser sur les succès et d'apprendre des erreurs.",
+    "phase":[
+      "Clôture"
+    ],
+    "délai":"Variable",
+    "coût":"Variable",
+    "conditions":[
+      {
+        "cardId":"50-cloturer-projet",
+        "present":true,
+        "effects":{
+          "budget":0,
+          "time":0,
+          "value":15,
+          "message":"Félicitations, vous avez bien clôturé le projet et généré un rapport complet pour capitaliser sur l'expérience et préparer l'avenir."
+        }
+      },
+      {
+        "cardId":"50-cloturer-projet",
+        "present":false,
+        "effects":{
+          "budget":-50,
+          "time":0,
+          "value":0,
+          "message":"Le rapport de fin de projet n'a pas été effectué. Vous avez manqué une opportunité de tirer des enseignements pour vos futurs projets."
+        }
+      }
+    ]
+  },
+  {
+    "id":"1",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Quel est l'objectif principal du projet GreenTrip Finder ?",
+    "options":[
+      "A. Organiser des voyages en groupe",
+      "B. Promouvoir le tourisme responsable",
+      "C. Créer une plateforme de réservation d'hôtels",
+      "D. Développer un réseau social pour voyageurs"
+    ],
+    "correct_answer":"B",
+    "comment":"L'objectif principal du projet GreenTrip Finder est de promouvoir le tourisme responsable en aidant les utilisateurs à trouver des destinations de voyage écologiques en fonction de leurs intérêts."
+  },
+  {
+    "id":"2",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Quelles fonctionnalités sont incluses dans le projet GreenTrip Finder ?",
+    "options":[
+      "A. Évaluation écologique et communauté",
+      "B. Suivi des habitudes alimentaires",
+      "C. Création de voyages sur mesure",
+      "D. Sécurité des voyageurs"
+    ],
+    "correct_answer":"A",
+    "comment":"Les principales fonctionnalités de GreenTrip Finder incluent l'évaluation écologique des destinations et la possibilité de rejoindre une communauté d'utilisateurs partageant les mêmes valeurs."
+  },
+  {
+    "id":"3",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Quel document est essentiel pour officialiser le début du projet ?",
+    "options":[
+      "A. Charte du projet",
+      "B. Budget prévisionnel",
+      "C. Cahier des charges",
+      "D. Plan de communication"
+    ],
+    "correct_answer":"A",
+    "comment":"La charte du projet est un document fondamental qui définit les objectifs, les parties prenantes et les ressources du projet."
+  },
+  {
+    "id":"4",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Quel type de financement serait idéal pour un projet comme GreenTrip Finder ?",
+    "options":[
+      "A. Subventions gouvernementales",
+      "B. Investissement privé",
+      "C. Crowdfunding",
+      "D. Prêt bancaire"
+    ],
+    "correct_answer":"A",
+    "comment":"Le financement par des subventions gouvernementales est particulièrement pertinent pour des projets de tourisme responsable et écologique comme GreenTrip Finder."
+  },
+  {
+    "id":"5",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Pourquoi est-il important d'identifier les parties prenantes dès le début du projet ?",
+    "options":[
+      "A. Pour éviter toute mauvaise surprise financière",
+      "B. Pour s'assurer que tous les acteurs clés sont impliqués et que les besoins sont compris",
+      "C. Pour accélérer le processus de développement",
+      "D. Pour réduire les coûts du projet"
+    ],
+    "correct_answer":"B",
+    "comment":"Identifier les parties prenantes permet de mieux comprendre leurs attentes, d'obtenir leur soutien et de gérer les conflits ou risques liés au projet."
+  },
+  {
+    "id":"6",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Quel serait un risque majeur pour GreenTrip Finder ?",
+    "options":[
+      "A. Ne pas trouver de financement",
+      "B. Oublier d'ajouter des photos de destinations",
+      "C. Avoir des problèmes de serveur",
+      "D. Ne pas respecter les délais de livraison"
+    ],
+    "correct_answer":"A",
+    "comment":"Le manque de financement peut être un obstacle majeur pour la réalisation de l'application, surtout si des subventions ou investissements ne sont pas sécurisés."
+  },
+  {
+    "id":"7",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Quel document est créé lors de la phase de planification pour gérer les risques ?",
+    "options":[
+      "A. Plan de gestion des risques",
+      "B. Cahier des charges",
+      "C. Charte de projet",
+      "D. Rapport de fin de projet"
+    ],
+    "correct_answer":"A",
+    "comment":"Le plan de gestion des risques est essentiel pour anticiper et traiter les risques qui pourraient affecter la réussite du projet."
+  },
+  {
+    "id":"8",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Dans la planification du projet, quel est l'objectif principal du calendrier de projet ?",
+    "options":[
+      "A. Organiser les tests utilisateurs",
+      "B. Définir les coûts et le budget",
+      "C. Fixer les dates de livraison et les jalons clés",
+      "D. Identifier les parties prenantes"
+    ],
+    "correct_answer":"C",
+    "comment":"Le calendrier de projet permet de fixer des dates de livraison et des jalons afin de s'assurer que le projet reste sur la bonne voie."
+  },
+  {
+    "id":"9",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Quelle est la meilleure façon de définir les critères de succès d'un projet ?",
+    "options":[
+      "A. Demander au chef de projet de décider seul",
+      "B. Consulter toutes les parties prenantes et recueillir leurs attentes",
+      "C. Se concentrer uniquement sur la rentabilité financière",
+      "D. Ne pas les définir et voir comment le projet se déroule"
+    ],
+    "correct_answer":"B",
+    "comment":"Les critères de succès doivent être définis en collaboration avec toutes les parties prenantes pour garantir que leurs attentes sont bien prises en compte."
+  },
+  {
+    "id":"10",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Pourquoi est-il crucial de définir les responsabilités des membres de l'équipe dans la phase de planification ?",
+    "options":[
+      "A. Pour pouvoir les attribuer à chaque tâche sans confusion",
+      "B. Pour éviter de perdre du temps",
+      "C. Pour être sûr que les parties prenantes seront satisfaites",
+      "D. Pour respecter le budget"
+    ],
+    "correct_answer":"A",
+    "comment":"Définir les responsabilités permet de clarifier les rôles, de favoriser la collaboration et d'assurer une gestion efficace du projet."
+  },
+  {
+    "id":"11",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Dans le cadre du projet GreenTrip Finder, comment le budget doit-il être utilisé ?",
+    "options":[
+      "A. Pour financer la promotion sur les réseaux sociaux uniquement",
+      "B. Pour couvrir les coûts de développement et de gestion des risques",
+      "C. Pour recruter plus de membres de l'équipe",
+      "D. Pour rembourser les investisseurs"
+    ],
+    "correct_answer":"B",
+    "comment":"Le budget doit être alloué pour couvrir le développement de l'application, la gestion des risques et la mise en place des fonctionnalités clés."
+  },
+  {
+    "id":"12",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Quel est l'outil clé pour suivre l'avancement du projet pendant l'exécution ?",
+    "options":[
+      "A. Plan de communication",
+      "B. Tableau de bord de suivi des tâches",
+      "C. Rapport d'achèvement",
+      "D. Plan de gestion des ressources"
+    ],
+    "correct_answer":"B",
+    "comment":"Un tableau de bord permet de suivre l'avancement des tâches et de prendre des mesures correctives rapidement si nécessaire."
+  },
+  {
+    "id":"13",
+    "type":"question",
+    "phase":[
+      "Exécution"
+    ],
+    "title":"Lors de l'exécution, quel est l'objectif principal des tests d'intégration ?",
+    "options":[
+      "A. Vérifier que toutes les fonctionnalités de l'application fonctionnent bien ensemble",
+      "B. Réduire les coûts de développement",
+      "C. Tester la résistance du serveur",
+      "D. Engager les utilisateurs à donner des retours"
+    ],
+    "correct_answer":"A",
+    "comment":"Les tests d'intégration sont essentiels pour s'assurer que toutes les parties de l'application fonctionnent de manière cohérente ensemble."
+  },
+  {
+    "id":"14",
+    "type":"question",
+    "phase":[
+      "Exécution"
+    ],
+    "title":"Quel est l'objectif d'un plan de gestion des ressources pendant l'exécution du projet ?",
+    "options":[
+      "A. Réduire les coûts d'exploitation",
+      "B. Gérer efficacement le temps et les talents",
+      "C. Garantir une qualité de service maximale",
+      "D. Identifier les parties prenantes"
+    ],
+    "correct_answer":"B",
+    "comment":"Un plan de gestion des ressources permet de s'assurer que le temps, les talents et les autres ressources sont utilisés efficacement pour atteindre les objectifs du projet."
+  },
+  {
+    "id":"15",
+    "type":"question",
+    "phase":[
+      "Exécution"
+    ],
+    "title":"Pourquoi est-il essentiel de suivre la progression des tâches pendant l'exécution ?",
+    "options":[
+      "A. Pour se rappeler des dates de fin",
+      "B. Pour ajuster les ressources et éviter les retards",
+      "C. Pour savoir qui doit faire quoi",
+      "D. Pour générer des rapports financiers"
+    ],
+    "correct_answer":"B",
+    "comment":"Suivre la progression des tâches permet de détecter les problèmes de ressources ou de délais et d'ajuster la planification pour éviter les retards."
+  },
+  {
+    "id":"16",
+    "type":"question",
+    "phase":[
+      "Exécution"
+    ],
+    "title":"Que doit faire un chef de projet si un risque majeur survient pendant l'exécution ?",
+    "options":[
+      "A. Ignorer le risque tant qu'il n'affecte pas les délais",
+      "B. Mettre en place un plan d'atténuation et informer les parties prenantes",
+      "C. Réduire le budget pour compenser",
+      "D. Changer les objectifs du projet"
+    ],
+    "correct_answer":"B",
+    "comment":"Lorsqu'un risque majeur survient, le chef de projet doit mettre en œuvre un plan d'atténuation, ajuster le plan si nécessaire et communiquer clairement avec les parties prenantes."
+  },
+  {
+    "id":"17",
+    "type":"question",
+    "phase":[
+      "Exécution"
+    ],
+    "title":"Lors de l'exécution, quel est le rôle du tableau de bord de suivi ?",
+    "options":[
+      "A. Suivre les budgets uniquement",
+      "B. Suivre l'avancement des tâches et des ressources",
+      "C. Suivre la satisfaction des clients",
+      "D. Prévoir les risques à venir"
+    ],
+    "correct_answer":"B",
+    "comment":"Un tableau de bord de suivi est utilisé pour suivre l'avancement des tâches, gérer les ressources et s'assurer que le projet reste sur la bonne voie."
+  },
+  {
+    "id":"18",
+    "type":"question",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "title":"Quel est le principal objectif de la phase de surveillance et maîtrise ?",
+    "options":[
+      "A. Livrer le produit final",
+      "B. Suivre les progrès du projet, identifier les écarts et prendre des mesures correctives",
+      "C. Définir les exigences des parties prenantes",
+      "D. Organiser des tests utilisateurs"
+    ],
+    "correct_answer":"B",
+    "comment":"Le but principal de cette phase est de suivre l'avancement, identifier tout écart par rapport au plan et mettre en place des actions pour corriger les déviations."
+  },
+  {
+    "id":"19",
+    "type":"question",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "title":"Que doit-on faire si un écart majeur est constaté entre le plan et l'exécution ?",
+    "options":[
+      "A. Ignorer l'écart et continuer",
+      "B. Modifier le plan sans informer les parties prenantes",
+      "C. Mettre en place une action corrective et réajuster le plan",
+      "D. Prolonger la durée du projet sans autre action"
+    ],
+    "correct_answer":"C",
+    "comment":"En cas d'écart majeur, une action corrective doit être mise en place pour remettre le projet sur la bonne voie, et le plan doit être réajusté si nécessaire."
+  },
+  {
+    "id":"20",
+    "type":"question",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "title":"Pourquoi est-il important d'avoir des indicateurs de performance clés (KPI) durant la phase de surveillance et maîtrise ?",
+    "options":[
+      "A. Pour déterminer le salaire des employés",
+      "B. Pour mesurer l'efficacité du projet et prendre des décisions informées",
+      "C. Pour augmenter la durée du projet",
+      "D. Pour mieux planifier les prochaines étapes"
+    ],
+    "correct_answer":"B",
+    "comment":"Les KPI permettent de mesurer l'avancement du projet, d'identifier les points de friction et de prendre des décisions pour garantir la réussite du projet."
+  },
+  {
+    "id":"21",
+    "type":"question",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "title":"Quel est l'impact de l'évaluation continue des risques durant l'exécution ?",
+    "options":[
+      "A. Aucun, car le plan est déjà fait",
+      "B. Cela permet d'anticiper les problèmes et de prendre des mesures pour limiter les impacts",
+      "C. Cela ralentit le projet",
+      "D. Cela augmente les coûts du projet de manière significative"
+    ],
+    "correct_answer":"B",
+    "comment":"L'évaluation continue des risques permet de détecter les problèmes avant qu'ils ne deviennent critiques et de les traiter de manière proactive."
+  },
+  {
+    "id":"22",
+    "type":"question",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "title":"Lors de la phase de surveillance et maîtrise, comment peut-on ajuster les ressources si le projet prend du retard ?",
+    "options":[
+      "A. Ajouter plus de ressources humaines ou réaffecter des tâches",
+      "B. Augmenter le budget",
+      "C. Réduire la qualité du produit final",
+      "D. Ignorer le retard et espérer que cela s'améliore"
+    ],
+    "correct_answer":"A",
+    "comment":"Ajouter ou réaffecter des ressources humaines permet de compenser les retards et d'assurer que le projet reste sur la bonne voie sans compromettre la qualité."
+  },
+  {
+    "id":"23",
+    "type":"question",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "title":"Quel est le rôle du gestionnaire de projet dans le suivi des communications durant cette phase ?",
+    "options":[
+      "A. Communiquer uniquement les résultats positifs aux parties prenantes",
+      "B. Assurer une communication transparente et régulière avec toutes les parties prenantes",
+      "C. Se concentrer uniquement sur les aspects techniques du projet",
+      "D. Limiter les échanges pour éviter les distractions"
+    ],
+    "correct_answer":"B",
+    "comment":"Une communication claire et régulière avec toutes les parties prenantes permet de garantir que tout le monde est informé et que des ajustements peuvent être faits rapidement."
+  },
+  {
+    "id":"24",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Quel est l'objectif principal de la phase de clôture d'un projet ?",
+    "options":[
+      "A. Finaliser toutes les tâches restantes",
+      "B. Collecter les leçons apprises et évaluer les résultats du projet",
+      "C. Lancer la phase de maintenance",
+      "D. Organiser une grande fête pour célébrer la fin du projet"
+    ],
+    "correct_answer":"B",
+    "comment":"La phase de clôture vise à évaluer les résultats du projet, à tirer des leçons apprises et à clôturer formellement le projet."
+  },
+  {
+    "id":"25",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Quel document doit être finalisé avant la clôture d'un projet ?",
+    "options":[
+      "A. Plan de gestion des risques",
+      "B. Rapport final de projet",
+      "C. Cahier des charges",
+      "D. Liste des parties prenantes"
+    ],
+    "correct_answer":"B",
+    "comment":"Le rapport final de projet est essentiel pour résumer les résultats, l'analyse des écarts et les leçons apprises du projet."
+  },
+  {
+    "id":"26",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Quelles sont les bonnes pratiques pour assurer une clôture réussie d'un projet ?",
+    "options":[
+      "A. Ignorer les erreurs commises pendant le projet",
+      "B. Documenter les succès et les échecs pour améliorer les futurs projets",
+      "C. Ne pas faire de débriefing avec les parties prenantes",
+      "D. Conclure le projet dès que le produit final est livré"
+    ],
+    "correct_answer":"B",
+    "comment":"Documenter les succès et les échecs du projet est essentiel pour tirer des enseignements et améliorer la gestion des projets futurs."
+  },
+  {
+    "id":"27",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Que doit-on faire avec les ressources humaines et matérielles à la clôture du projet ?",
+    "options":[
+      "A. Les redistribuer ou les libérer pour d'autres projets",
+      "B. Les conserver pour la phase de maintenance",
+      "C. Les garder en attente pour une future extension du projet",
+      "D. Les réaffecter immédiatement à un autre projet concurrent"
+    ],
+    "correct_answer":"A",
+    "comment":"Les ressources humaines et matérielles doivent être réaffectées ou libérées une fois le projet clôturé, pour être utilisées de manière optimale dans d'autres projets."
+  },
+  {
+    "id":"28",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Pourquoi est-il important de réaliser un bilan financier à la fin du projet ?",
+    "options":[
+      "A. Pour déterminer la rentabilité du projet et justifier les dépenses",
+      "B. Pour obtenir plus de financement pour les futures étapes",
+      "C. Pour déterminer les coûts des tâches à l'avenir",
+      "D. Pour augmenter le budget des projets à venir"
+    ],
+    "correct_answer":"A",
+    "comment":"Un bilan financier permet de vérifier si le projet a respecté le budget et de justifier les dépenses aux parties prenantes."
+  },
+  {
+    "id":"29",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Quel type de rétroaction doit être demandé à la fin du projet ?",
+    "options":[
+      "A. Rétroaction sur le produit final uniquement",
+      "B. Rétroaction sur la gestion du projet, y compris la communication, le suivi des risques et la gestion des ressources",
+      "C. Rétroaction uniquement sur la phase de développement",
+      "D. Aucune rétroaction n'est nécessaire après la clôture du projet"
+    ],
+    "correct_answer":"B",
+    "comment":"La rétroaction doit être globale, portant sur tous les aspects de la gestion du projet, pour tirer des enseignements et améliorer les pratiques futures."
+  },
+  {
+    "id":"06-scope-creep",
+    "type":"event",
+    "title":"Scope Creep : Extension non planifiée des fonctionnalités",
+    "description":"Événement : De nouvelles fonctionnalités sont demandées par les parties prenantes sans réévaluation des ressources, du budget ou du délai.",
+    "domain":"Gestion de périmètre",
+    "info":"Le scope creep survient lorsque de nouvelles exigences sont ajoutées au projet sans un contrôle approprié, augmentant le risque de dépassement de coûts et de délais.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"+2",
+    "coût":"+15",
+    "value":"+5",
+    "conditions":[
+      {
+        "cardId":"10-preciser-perimetre",
+        "present":true,
+        "effects":{
+          "budget":0,
+          "time":0,
+          "value":0,
+          "message":"Votre définition claire du périmètre vous aide à éviter une partie des risques liés au scope creep. Cependant, de nouvelles demandes sont venues élargir le périmètre du projet."
+        }
+      },
+      {
+        "cardId":"10-preciser-perimetre",
+        "present":false,
+        "effects":{
+          "budget":15,
+          "time":2,
+          "value":5,
+          "message":"En l'absence d'une gestion claire du périmètre, vous avez ajouté de nouvelles fonctionnalités non planifiées, augmentant les coûts et le délai du projet."
+        }
+      }
+    ]
+  },
+  {
+    "id":"07-gestion-scope-creep",
+    "type":"action",
+    "title":"Réduire l'impact du scope creep",
+    "description":"Mettre en place des actions pour maîtriser les nouvelles demandes de fonctionnalités. Cela inclut la réévaluation des priorités et l'ajustement des ressources.",
+    "domain":"Gestion de périmètre",
+    "info":"Une gestion proactive du périmètre, incluant des échanges avec les parties prenantes et des ajustements sur le plan de projet, permet de limiter l'impact du scope creep.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.5",
+    "coût":"-5",
+    "value":"-3",
+    "conditions":[
+      {
+        "cardId":"07-gestion-scope-creep",
+        "present":true,
+        "effects":{
+          "budget":-5,
+          "time":-0.5,
+          "value":-3,
+          "message":"En ayant pris cette action, vous avez réussi à négocier une réévaluation des priorités et ajusté le périmètre pour maîtriser l'impact sur les délais et le budget."
+        }
+      }
+    ]
+  },
+  {
+    "id":"07-gold-plating",
+    "type":"event",
+    "title":"Gold Plating : Fonctionnalités ajoutées sans valeur réelle",
+    "description":"Événement : Le projet subit des ajouts de fonctionnalités ou de détails supplémentaires qui ne sont pas nécessaires et qui augmentent le budget et les délais.",
+    "domain":"Gestion de qualité",
+    "info":"Le gold plating consiste à ajouter des fonctionnalités ou des caractéristiques non demandées, créant ainsi des coûts inutiles sans ajouter de valeur au projet.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"+1",
+    "coût":"+10",
+    "value":"0",
+    "conditions":[
+      {
+        "cardId":"11-validations-fonctionnalites",
+        "present":true,
+        "effects":{
+          "budget":0,
+          "time":0,
+          "value":0,
+          "message":"Bien que vous ayez validé les fonctionnalités essentielles, des ajouts inutiles ont été réalisés, augmentant les coûts et le délai du projet."
+        }
+      },
+      {
+        "cardId":"11-validations-fonctionnalites",
+        "present":false,
+        "effects":{
+          "budget":10,
+          "time":1,
+          "value":0,
+          "message":"En l'absence de validation stricte des fonctionnalités, vous avez ajouté des fonctionnalités superflues qui ne répondent pas aux attentes des parties prenantes, augmentant inutilement les coûts et le délai."
+        }
+      }
+    ]
+  },
+  {
+    "id":"08-controle-gold-plating",
+    "type":"action",
+    "title":"Limiter le gold plating",
+    "description":"Assurer que les fonctionnalités développées restent alignées avec les exigences des parties prenantes sans ajout excessif de caractéristiques inutiles.",
+    "domain":"Gestion de qualité",
+    "info":"Limiter le gold plating nécessite un contrôle strict de la portée et une validation continue des fonctionnalités pour éviter les ajouts inutiles qui augmentent les coûts et les délais sans ajouter de valeur.",
+    "phase":[
+      "Exécution"
+    ],
+    "délai":"-0.5",
+    "coût":"-5",
+    "value":"0",
+    "conditions":[
+      {
+        "cardId":"08-controle-gold-plating",
+        "present":true,
+        "effects":{
+          "budget":-5,
+          "time":-0.5,
+          "value":0,
+          "message":"En appliquant cette action, vous avez limité l'impact du gold plating, réduisant ainsi le budget et le délai sans affecter la qualité du produit final."
+        }
+      }
+    ]
+  },
+  {
+    "id":"1",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Que faire lorsque les parties prenantes demandent des changements avant même que le projet ait commencé ?",
+    "options":[
+      "A. Accepter les changements pour ne pas contrarier les parties prenantes.",
+      "B. Refuser catégoriquement tout changement.",
+      "C. Évaluer l'impact des changements proposés avant de prendre une décision.",
+      "D. Ajouter les changements sans évaluation."
+    ],
+    "correct_answer":"C",
+    "comment":"Dans la phase d'initiation, il est important de bien évaluer les changements avant de les intégrer. Une évaluation de l'impact sur le périmètre, le budget et les délais est essentielle pour prendre une décision éclairée."
+  },
+  {
+    "id":"2",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Que faire si les parties prenantes ne sont pas claires sur leurs attentes ?",
+    "options":[
+      "A. Deviner leurs attentes et continuer le projet.",
+      "B. Organiser une réunion pour clarifier les attentes avant de commencer.",
+      "C. Ignorer et avancer selon le plan initial.",
+      "D. Reporter le projet indéfiniment jusqu'à avoir des clarifications."
+    ],
+    "correct_answer":"B",
+    "comment":"Clarifier les attentes des parties prenantes au début du projet est essentiel. Cela permet de définir un périmètre précis et d’éviter les malentendus ou changements inattendus plus tard."
+  },
+  {
+    "id":"3",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Comment réagir face à un scope creep non contrôlé dans la phase d'initiation ?",
+    "options":[
+      "A. Laisser le périmètre s'étendre sans discuter.",
+      "B. Mettre en place un processus de gestion des changements et évaluer chaque nouvelle demande.",
+      "C. Annuler toutes les demandes de changement, quelle qu'en soit la nature.",
+      "D. Intégrer tous les changements sans évaluation."
+    ],
+    "correct_answer":"B",
+    "comment":"Un scope creep doit être contrôlé en définissant un processus clair pour gérer les demandes de changement. Cela permet de garantir que l'extension du périmètre est bien évaluée avant d’être acceptée."
+  },
+  {
+    "id":"4",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Comment gérer un risque de non-respect des délais après avoir analysé le planning du projet ?",
+    "options":[
+      "A. Augmenter les ressources sans réévaluer la planification.",
+      "B. Négocier des extensions de délai avec les parties prenantes.",
+      "C. Revoir le planning pour intégrer les marges de sécurité et les risques potentiels.",
+      "D. Abandonner une fonctionnalité pour gagner du temps."
+    ],
+    "correct_answer":"C",
+    "comment":"La gestion proactive des risques liés aux délais consiste à réévaluer le planning, à ajouter des marges de sécurité et à prévoir des solutions aux imprévus. Cela aide à minimiser les risques d'impacts sur les délais."
+  },
+  {
+    "id":"5",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Quel est le meilleur moment pour définir la portée du projet ?",
+    "options":[
+      "A. Dès le début du projet, pendant la phase d'initiation.",
+      "B. Lors de la phase de planification, après avoir analysé toutes les parties prenantes.",
+      "C. Lorsque le projet est presque terminé.",
+      "D. Juste avant de commencer le développement."
+    ],
+    "correct_answer":"B",
+    "comment":"La portée du projet doit être clairement définie durant la phase de planification, après avoir pris en compte les attentes des parties prenantes et les risques potentiels."
+  },
+  {
+    "id":"6",
+    "type":"question",
+    "phase":[
+      "Exécution"
+    ],
+    "title":"Comment réagir face à un dépassement de budget dû à un gold plating ?",
+    "options":[
+      "A. Ignorer le dépassement et continuer.",
+      "B. Revoir les fonctionnalités et déterminer si elles apportent une réelle valeur ajoutée.",
+      "C. Pousser encore plus loin les améliorations pour maximiser la qualité.",
+      "D. Réduire immédiatement les fonctionnalités pour compenser les coûts."
+    ],
+    "correct_answer":"B",
+    "comment":"Le gold plating peut être tentant, mais il est essentiel de s'assurer que chaque amélioration apportée au projet génère une valeur réelle pour les parties prenantes. Revoir les fonctionnalités permet de faire un choix éclairé."
+  },
+  {
+    "id":"7",
+    "type":"question",
+    "phase":[
+      "Exécution"
+    ],
+    "title":"Quel est l'impact de la communication efficace sur la gestion de projet ?",
+    "options":[
+      "A. Elle n'a pas d'impact majeur sur le succès du projet.",
+      "B. Elle permet de minimiser les conflits et de garantir que tout le monde est aligné.",
+      "C. Elle est utile uniquement pendant les phases de planification.",
+      "D. Elle est seulement importante pour les parties prenantes externes."
+    ],
+    "correct_answer":"B",
+    "comment":"Une communication efficace garantit que toutes les parties prenantes sont alignées et réduit les risques de malentendus, contribuant ainsi au succès global du projet."
+  },
+  {
+    "id":"8",
+    "type":"question",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "title":"Quel est l'impact de la surveillance continue des risques sur un projet ?",
+    "options":[
+      "A. Elle permet d'identifier rapidement les problèmes et de prendre des mesures correctives.",
+      "B. Elle est inutile, car les risques sont souvent imprévisibles.",
+      "C. Elle ralentit le projet en imposant trop de contrôle.",
+      "D. Elle est seulement nécessaire lors de la clôture du projet."
+    ],
+    "correct_answer":"A",
+    "comment":"La surveillance des risques tout au long du projet permet d'identifier les problèmes avant qu'ils ne deviennent critiques, et de prendre des mesures correctives pour minimiser leur impact."
+  },
+  {
+    "id":"9",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Que faire lorsqu’un projet atteint ses objectifs avant la date de livraison prévue ?",
+    "options":[
+      "A. Célébrer la réussite et tout arrêter.",
+      "B. Passer à un autre projet sans terminer les livrables restants.",
+      "C. S'assurer que tous les livrables sont finalisés et que la documentation est complète.",
+      "D. Ajouter des fonctionnalités non prévues pour maximiser les gains."
+    ],
+    "correct_answer":"C",
+    "comment":"Même si les objectifs sont atteints tôt, il est crucial de finaliser tous les livrables et d'assurer que toute la documentation est complète avant de clôturer le projet."
+  },
+  {
+    "id":"10",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Quel est le but principal de l'évaluation post-projet ?",
+    "options":[
+      "A. Célébrer les succès du projet.",
+      "B. Identifier les points à améliorer pour les futurs projets.",
+      "C. Redéfinir les objectifs du projet.",
+      "D. Recommencer le projet à zéro."
+    ],
+    "correct_answer":"B",
+    "comment":"L'évaluation post-projet est essentielle pour identifier les leçons apprises et les améliorations possibles pour les futurs projets, afin d'améliorer continuellement la gestion de projet."
+  },
+  {
+    "id":"11",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Que faire si vous réalisez que le projet n'a pas de sponsor exécutif clair ?",
+    "options":[
+      "A. Accepter de continuer sans sponsor exécutif.",
+      "B. Identifier et obtenir un sponsor exécutif avant de continuer.",
+      "C. Ignorer cette situation, car ça ne devrait pas affecter le projet.",
+      "D. Avancer sans soutien, les sponsors ne sont pas importants."
+    ],
+    "correct_answer":"B",
+    "comment":"Avoir un sponsor exécutif clair est crucial pour le soutien stratégique et les ressources. Cela permet de garantir l'engagement des parties prenantes clés tout au long du projet."
+  },
+  {
+    "id":"12",
+    "type":"question",
+    "phase":[
+      "Initiation"
+    ],
+    "title":"Lors de la phase d'initiation, quels sont les principaux éléments à identifier ?",
+    "options":[
+      "A. L’objectif, les parties prenantes, et le périmètre du projet.",
+      "B. Le budget uniquement.",
+      "C. Les équipes de développement.",
+      "D. Les tâches spécifiques à accomplir."
+    ],
+    "correct_answer":"A",
+    "comment":"La phase d'initiation doit clarifier l’objectif, les parties prenantes et le périmètre du projet pour poser les bases solides du succès du projet."
+  },
+  {
+    "id":"13",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Que faire si vous découvrez que des ressources clés ne seront pas disponibles à temps ?",
+    "options":[
+      "A. Adapter le planning pour intégrer un retard sans discuter.",
+      "B. Réévaluer les dépendances et replanifier en conséquence.",
+      "C. Ignorer et espérer que le problème se résolve de lui-même.",
+      "D. Éliminer la ressource et poursuivre sans elle."
+    ],
+    "correct_answer":"B",
+    "comment":"Réévaluer les dépendances et replanifier en conséquence permet d'ajuster les ressources et de minimiser les perturbations sur les délais du projet."
+  },
+  {
+    "id":"14",
+    "type":"question",
+    "phase":[
+      "Planification"
+    ],
+    "title":"Lors de l'élaboration du plan de projet, quelle est la première chose à faire concernant les risques ?",
+    "options":[
+      "A. Les ignorer car ils ne se produiront probablement pas.",
+      "B. Identifier et évaluer les risques potentiels dès le début.",
+      "C. Attendre que les risques se manifestent avant de les gérer.",
+      "D. Se concentrer uniquement sur les risques financiers."
+    ],
+    "correct_answer":"B",
+    "comment":"L’identification précoce des risques permet de les gérer activement, réduisant ainsi leur impact potentiel sur le projet."
+  },
+  {
+    "id":"15",
+    "type":"question",
+    "phase":[
+      "Exécution"
+    ],
+    "title":"Comment réagir face à une augmentation de la charge de travail pendant l'exécution du projet ?",
+    "options":[
+      "A. Ignorer la surcharge et continuer.",
+      "B. Ajouter plus de ressources ou ajuster le planning en conséquence.",
+      "C. Réduire la qualité pour respecter les délais.",
+      "D. Annuler les tâches supplémentaires et ne pas tenir compte du changement."
+    ],
+    "correct_answer":"B",
+    "comment":"Ajouter des ressources ou réajuster le planning sont des réponses adaptées à l'augmentation de la charge de travail, garantissant que le projet continue d'avancer efficacement."
+  },
+  {
+    "id":"16",
+    "type":"question",
+    "phase":[
+      "Exécution"
+    ],
+    "title":"Que faire si une équipe rencontre des difficultés de collaboration ?",
+    "options":[
+      "A. Ignorer et espérer que la situation se résolve d'elle-même.",
+      "B. Fournir une formation sur la communication et renforcer la collaboration.",
+      "C. Accepter les tensions sans rien changer.",
+      "D. Diviser l'équipe et assigner des tâches individuellement."
+    ],
+    "correct_answer":"B",
+    "comment":"Des difficultés de collaboration doivent être traitées en améliorant la communication et en favorisant l'esprit d'équipe pour maintenir l'efficacité du projet."
+  },
+  {
+    "id":"17",
+    "type":"question",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "title":"Comment réagir si une équipe de développement ne respecte pas les délais ?",
+    "options":[
+      "A. Punir l'équipe pour les retards.",
+      "B. Identifier les causes des retards et ajuster les ressources ou le planning.",
+      "C. Ignorer les retards, car tout va bien se passer.",
+      "D. Annuler toutes les tâches en retard et continuer avec d'autres équipes."
+    ],
+    "correct_answer":"B",
+    "comment":"Il est essentiel d'identifier les causes des retards afin de prendre des mesures correctives. Cela peut impliquer l'ajustement des ressources ou du planning pour respecter les objectifs."
+  },
+  {
+    "id":"18",
+    "type":"question",
+    "phase":[
+      "Surveillance et Maîtrise"
+    ],
+    "title":"Comment réagir face à une dérive de budget au milieu du projet ?",
+    "options":[
+      "A. Ignorer le dépassement de budget et espérer que cela se résolve.",
+      "B. Analyser la cause du dépassement et réévaluer les dépenses futures.",
+      "C. Ajouter plus de budget sans aucune analyse.",
+      "D. Réduire les fonctionnalités et les livrables pour compenser les coûts."
+    ],
+    "correct_answer":"B",
+    "comment":"Il est important d'analyser les causes du dépassement et de réévaluer les dépenses pour éviter que la situation ne devienne ingérable à long terme."
+  },
+  {
+    "id":"19",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Que faire après avoir livré les derniers livrables du projet ?",
+    "options":[
+      "A. Clore le projet sans évaluation.",
+      "B. Organiser une réunion de rétrospective et évaluer les performances.",
+      "C. Passer immédiatement à un autre projet sans évaluation.",
+      "D. Lancer une nouvelle phase de développement."
+    ],
+    "correct_answer":"B",
+    "comment":"Une évaluation post-projet est essentielle pour tirer des leçons et améliorer les processus pour les projets futurs. Cela garantit l'apprentissage continu et l'amélioration."
+  },
+  {
+    "id":"20",
+    "type":"question",
+    "phase":[
+      "Clôture"
+    ],
+    "title":"Que faire si une partie prenante clé n'est pas satisfaite des résultats du projet ?",
+    "options":[
+      "A. Ignorer leur retour et clore le projet.",
+      "B. Écouter leurs préoccupations et discuter des ajustements possibles.",
+      "C. Réduire les attentes des parties prenantes pour éviter d'autres problèmes.",
+      "D. Terminer le projet sans discuter des retours."
+    ],
+    "correct_answer":"B",
+    "comment":"Écouter les préoccupations des parties prenantes et discuter des ajustements possibles est crucial pour maintenir de bonnes relations et garantir une clôture réussie."
+  }
+]
