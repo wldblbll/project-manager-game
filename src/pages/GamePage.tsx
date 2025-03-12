@@ -8,6 +8,7 @@ import ecovoyageProjectCards from "@/data/project-cards-ecovoyage.json";
 import gameConfig from "@/data/game-config.json";
 import { Project } from "@/components/ProjectSelector";
 import { getCardTitle, getCardDomain, getCardType } from "@/utils/cardHelpers";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Define types for our game
 export type Card = {
@@ -156,9 +157,12 @@ const calculateTotalTurns = (cardLimits: { action: number; event: number; quiz: 
 
 const GamePage = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   
   // State for selected project
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   
   // State for dynamic game configuration
   const [phases, setPhases] = useState<string[]>([]);
@@ -202,24 +206,50 @@ const GamePage = () => {
 
   // Load selected project
   useEffect(() => {
-    // Try to get the selected project from localStorage
-    const storedProject = localStorage.getItem('selectedProject');
-    if (storedProject) {
+    setIsLoading(true);
+    
+    // Fonction pour charger le projet
+    const loadProject = () => {
       try {
-        const parsedProject = JSON.parse(storedProject) as Project;
-        setSelectedProject(parsedProject);
-        setProjectName(parsedProject.name); // Mettre à jour le nom du projet
-        console.log("Loaded project:", parsedProject.name);
+        // Try to get the selected project from localStorage
+        const storedProject = localStorage.getItem('selectedProject');
+        
+        if (storedProject) {
+          try {
+            const parsedProject = JSON.parse(storedProject) as Project;
+            setSelectedProject(parsedProject);
+            setProjectName(parsedProject.name); // Mettre à jour le nom du projet
+            console.log("Loaded project:", parsedProject.name);
+            setIsLoading(false);
+          } catch (error) {
+            console.error("Error parsing stored project:", error);
+            setLoadError("Erreur lors du chargement du projet. Veuillez réessayer.");
+            // Redirection différée pour éviter les problèmes sur mobile
+            setTimeout(() => {
+              navigate('/');
+            }, 500);
+          }
+        } else {
+          // If no project is selected, redirect to home
+          console.log("No project selected, redirecting to home");
+          setLoadError("Aucun projet sélectionné. Veuillez en choisir un.");
+          // Redirection différée pour éviter les problèmes sur mobile
+          setTimeout(() => {
+            navigate('/');
+          }, 500);
+        }
       } catch (error) {
-        console.error("Error parsing stored project:", error);
-        // If there's an error, redirect to home to select a project
-        navigate('/');
+        console.error("Error in loadProject:", error);
+        setLoadError("Une erreur inattendue s'est produite. Veuillez réessayer.");
+        setTimeout(() => {
+          navigate('/');
+        }, 500);
       }
-    } else {
-      // If no project is selected, redirect to home
-      console.log("No project selected, redirecting to home");
-      navigate('/');
-    }
+    };
+    
+    // Utiliser un délai pour s'assurer que tout est prêt, surtout sur mobile
+    setTimeout(loadProject, 100);
+    
   }, [navigate]);
 
   // Add function to get current phase's card limits
@@ -961,6 +991,43 @@ const GamePage = () => {
       }, 3000);
     }
   }, [gameState.valuePoints]);
+
+  // Afficher un écran de chargement ou d'erreur si nécessaire
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-4">
+        <img 
+          src="/logo.png" 
+          alt="PM Cards Logo" 
+          className="w-24 h-24 mb-6 animate-pulse"
+        />
+        <h1 className="text-2xl font-bold text-white mb-4">Chargement du jeu...</h1>
+        <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+  
+  if (loadError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-4">
+        <img 
+          src="/logo.png" 
+          alt="PM Cards Logo" 
+          className="w-24 h-24 mb-6"
+        />
+        <h1 className="text-2xl font-bold text-white mb-4">Oups !</h1>
+        <p className="text-white text-center mb-6">{loadError}</p>
+        <button
+          onClick={() => navigate('/')}
+          className="bg-white text-indigo-600 px-6 py-3 rounded-full text-lg font-semibold 
+                   shadow-lg hover:shadow-xl transform transition-all duration-300 
+                   hover:scale-105 hover:bg-indigo-50"
+        >
+          Retour à l'accueil
+        </button>
+      </div>
+    );
+  }
 
   // If game is not yet initialized, show loading
   if (gameState.phases.length === 0) {

@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import AnimatedText from './AnimatedText';
 import ProjectSelector from './ProjectSelector';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
   const navigate = useNavigate();
   const [showProjectSelector, setShowProjectSelector] = useState(false);
+  const isMobile = useIsMobile();
+  
+  // Fonction pour gérer le clic sur le bouton de démarrage
+  const handleStartGame = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("Bouton de démarrage cliqué");
+    
+    // Utiliser setTimeout pour éviter les problèmes de navigation sur certains appareils mobiles
+    setTimeout(() => {
+      navigate('/game');
+    }, 100);
+  };
   
   return (
     <div className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
@@ -33,14 +46,25 @@ const Hero = () => {
         </div>
 
         {/* CTA Button */}
-        <button
-          onClick={() => navigate('/game')}
-          className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
-                   shadow-lg hover:shadow-xl transform transition-all duration-300 
-                   hover:scale-105 hover:bg-indigo-50"
-        >
-          Commencer à jouer 🎮
-        </button>
+        {isMobile ? (
+          <Link
+            to="/game"
+            className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
+                     shadow-lg hover:shadow-xl transform transition-all duration-300 
+                     hover:scale-105 hover:bg-indigo-50 inline-block"
+          >
+            Commencer à jouer 🎮
+          </Link>
+        ) : (
+          <button
+            onClick={handleStartGame}
+            className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
+                     shadow-lg hover:shadow-xl transform transition-all duration-300 
+                     hover:scale-105 hover:bg-indigo-50"
+          >
+            Commencer à jouer 🎮
+          </button>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const CallToAction = () => {
+  const isMobile = useIsMobile();
+  
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-red-500 to-purple-500">
       <div className="mx-auto max-w-7xl py-24 px-6 sm:py-32 lg:px-8">
@@ -24,6 +27,7 @@ const CallToAction = () => {
                 className="rounded-full bg-white px-8 py-4 text-lg font-semibold text-purple-600 
                          shadow-lg hover:bg-purple-50 transition-all duration-300 
                          transform hover:scale-105 hover:shadow-xl"
+                aria-label="Commencer le jeu"
               >
                 Commencer l'Aventure 🚀
               </Link>
