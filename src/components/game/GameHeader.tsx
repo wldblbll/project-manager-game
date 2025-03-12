@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 interface GameHeaderProps {
   budget: number;
@@ -23,6 +23,27 @@ const GameHeader: React.FC<GameHeaderProps> = ({
   projectName = "PM Cards",
   onMilestoneStep
 }) => {
+  // Ajouter dynamiquement les keyframes au document
+  useEffect(() => {
+    // Vérifier si le style existe déjà
+    const styleId = 'pulse-attention-keyframes';
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement('style');
+      style.id = styleId;
+      style.innerHTML = `
+        @keyframes pulseAttention {
+          0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); }
+          70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(250, 204, 21, 0); }
+          100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); }
+        }
+        .pulse-attention-button {
+          animation: pulseAttention 1.5s infinite;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }, []);
+
   return (
     <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-4 shadow-lg">
       <div className="container mx-auto">
@@ -53,10 +74,11 @@ const GameHeader: React.FC<GameHeaderProps> = ({
               {remainingTurns === 0 && onMilestoneStep && (
                 <button
                   onClick={onMilestoneStep}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-full text-sm font-medium
-                           transition-all duration-200"
+                  className="pulse-attention-button bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-full text-sm font-medium
+                           transition-all duration-200 shadow-lg relative overflow-hidden"
                 >
-                  Passer à l'étape jalon ✨
+                  <span className="relative z-10">Passer à l'étape jalon ✨</span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 opacity-0 hover:opacity-100 transition-opacity duration-300"></span>
                 </button>
               )}
             </div>

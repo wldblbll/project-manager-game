@@ -16,7 +16,7 @@
       "cardLimits": {
         "action": 1,
         "event": 1,
-        "quiz": 2
+        "quiz": 1
       },
       "penalties": {
         "time": 2,
