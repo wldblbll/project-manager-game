@@ -854,19 +854,6 @@
     "délai": "-0.6"
   },
   {
-    "id": "definir-les-besoins-des-utilisateurs",
-    "type": "action",
-    "title": "Définir les besoins des utilisateurs",
-    "description": "Recueillir les exigences des utilisateurs finaux pour les fonctionnalités principales de l'application.\n- Impact : Cela aide à garantir que le produit final répondra aux besoins réels des utilisateurs.",
-    "domain": "Gestion du contenu",
-    "info": "Comprendre les besoins des utilisateurs permet d’aligner les fonctionnalités du projet avec leurs attentes et d’éviter de développer des fonctionnalités inutiles.",
-    "phase": [
-      "Initiation"
-    ],
-    "délai": "-0.5",
-    "coût": "-100"
-  },
-  {
     "id": "reduction-du-financement-par-un-investisseur",
     "type": "event",
     "title": "Réduction du financement par un investisseur",
@@ -1192,19 +1179,6 @@
     "comment": "La phase d'initiation doit clarifier l’objectif, les parties prenantes et le périmètre du projet pour poser les bases solides du succès du projet."
   },
   {
-    "id": "definir-le-plan-de-gestion-de-projet",
-    "type": "action",
-    "title": "Définir le plan de gestion de projet",
-    "description": "Le plan de gestion de projet GreenTrip Finder doit couvrir la portée, les objectifs, le calendrier, le budget, les ressources, la qualité, les risques, les parties prenantes, et la communication. Ce plan servira de feuille de route pour l'ensemble du projet.",
-    "domain": "Gestion de la planification",
-    "info": "Un plan de gestion de projet détaillé est essentiel pour guider le projet, coordonner les efforts de l'équipe, gérer les attentes des parties prenantes et garantir que le projet reste dans les limites de la portée, du budget et du calendrier.",
-    "phase": [
-      "Planification"
-    ],
-    "délai": "-0.5",
-    "cout": "1000"
-  },
-  {
     "id": "definir-la-structure-de-decoupage-du-travail-wbs",
     "type": "action",
     "title": "Définir la structure de découpage du travail (WBS)",
@@ -1309,17 +1283,190 @@
     "cout": "500"
   },
   {
-    "id": "obtenir-un-financement",
+    "id": "influenceur-ecolo",
+    "type": "event",
+    "title": "L'influenceur Écolo",
+    "description": "Événement : Un influenceur populaire mentionne votre projet sur les réseaux sociaux.\n- Impact : Augmentation soudaine de la visibilité et de l'intérêt pour l'application.",
+    "domain": "Gestion de la communication",
+    "info": "Un buzz médiatique peut être une aubaine, mais il peut aussi créer une pression sur les ressources disponibles. Une planification adéquate de la scalabilité du système est essentielle.",
+    "phase": ["DEBUG",
+      "Planification"
+    ],
+    "délai": "Variable",
+    "coût": "Variable",
+    "conditions": [
+      {
+        "cardId": "planifier-la-scalabilite-de-linfrastructure",
+        "present": true,
+        "effects": {
+          "budget": 0,
+          "time": 0,
+          "value": 50,
+          "message": "Vous aviez déjà planifié la scalabilité de l'infrastructure, permettant au projet de gérer ce succès viral sans trop de difficulté."
+        }
+      },
+      {
+        "cardId": "planifier-la-scalabilite-de-linfrastructure",
+        "present": false,
+        "effects": {
+          "budget": -10,
+          "time": 1,
+          "value": -10,
+          "message": "Le succès viral a généré une surcharge imprévue, nécessitant une mise à l'échelle rapide de l'infrastructure et un coût supplémentaire important."
+        }
+      }
+    ]
+  },
+  {
+    "id": "planifier-la-scalabilite-de-linfrastructure",
     "type": "action",
-    "title": "Obtenir un financement",
-    "description": "Chercher et sécuriser un financement supplémentaire pour le projet, en engageant des discussions avec des investisseurs privés, des subventions gouvernementales, ou des partenariats avec des ONG.\n- Impact : Un financement peut permettre de mieux répondre aux besoins des utilisateurs et améliorer les fonctionnalités de l'application.",
-    "domain": "Gestion financière",
-    "info": "Obtenir des financements supplémentaires est essentiel pour maintenir un flux de trésorerie stable et garantir la viabilité du projet à long terme.",
+    "title": "Planifier la scalabilité de l'infrastructure",
+    "description": "Prévoir les besoins en infrastructure pour gérer un afflux potentiel d'utilisateurs dès le lancement, en tenant compte des pics de trafic et des besoins en stockage.",
+    "domain": "Gestion de l'infrastructure",
+    "info": "Une bonne planification de la scalabilité permet d'éviter les interruptions de service et les coûts supplémentaires en cas de succès inattendu.",
+    "phase": ["DEBUG",
+      "Planification"
+    ],
+    "conditions": [
+      {
+        "cardId": "influenceur-ecolo",
+        "present": true,
+        "effects": {
+          "budget": 0,
+          "time": 0,
+          "value": 50,
+          "message": "Bravo ! Un influenceur a mentionné votre projet sur les réseaux sociaux.\n- En planifiant la scalabilité de votre application vous allez pouvoir absorber l'augmentation soudaine de la visibilité et de l'intérêt pour l'application. Cela vous fait gagner 50 points de valeur."
+        }
+      }
+    ],
+    "délai": "-0.5",
+    "cout": "-10"
+  },
+  {
+    "id": "programme-mentorat",
+    "type": "action",
+    "title": "Mettre en place un programme de mentorat",
+    "description": "Associer les membres expérimentés de l'équipe à des employés plus jeunes pour favoriser le transfert de connaissances et le développement des compétences.",
+    "domain": "Gestion des ressources humaines",
+    "info": "Le mentorat permet de développer les compétences internes, d'améliorer la cohésion d'équipe et de fidéliser les employés.",
+    "phase": ["Planification"],
+    "délai": "-0.3",
+    "cout": "250"
+  },
+  {
+    "id": "crise-des-talents",
+    "type": "event",
+    "title": "La Crise des Talents",
+    "description": "Événement : Un concurrent lance une campagne de recrutement agressive.\n- Impact : Retards dans la planification et le développement, perte de compétences clés.",
+    "domain": "Gestion des ressources humaines",
+    "info": "La gestion des talents est essentielle pour le succès du projet. La mise en place d'un programme de mentorat peut aider à retenir les employés et à développer les compétences internes.",
     "phase": [
       "Planification"
     ],
-    "délai": "-1",
-    "coût": "-100"
+    "délai": "Variable",
+    "coût": "Variable",
+    "conditions": [
+      {
+        "cardId": "programme-mentorat",
+        "present": true,
+        "effects": {
+          "budget": -5,
+          "time": -1,
+          "value": 10,
+          "message": "Le programme de mentorat a renforcé la cohésion de l'équipe et a permis de retenir certains talents clés."
+        }
+      },
+      {
+        "cardId": "programme-mentorat",
+        "present": false,
+        "effects": {
+          "budget": -15,
+          "time": -4,
+          "value": 0,
+          "message": "L'absence de mesures pour retenir les talents a entraîné des retards et une perte de compétences clés."
+        }
+      }
+    ]
+  },
+  {
+    "id": "audit-transparence",
+    "type": "action",
+    "title": "Mener un audit de transparence",
+    "description": "Engager un organisme indépendant pour auditer les pratiques durables de l'application et publier un rapport de transparence.",
+    "domain": "Gestion de la communication",
+    "info": "Un audit de transparence permet de renforcer la crédibilité de l'application et de démontrer son engagement envers le tourisme durable. Il est particulièrement efficace en cas de scandale de greenwashing.",
+    "phase": ["Planification","Exécution","Clôture"],
+    "délai": "-0.5",
+    "cout": "-20",
+    "conditions": [
+      {
+        "cardId": "scandale-greenwashing",
+        "present": true,
+        "effects": {
+          "value": 20,
+          "message": "L'audit de transparence a permis de contrer efficacement le scandale de greenwashing et de renforcer la confiance des utilisateurs."
+        }
+      },
+      {
+        "cardId": "scandale-greenwashing",
+        "present": false,
+        "effects": {
+          "value": 5,
+          "message": "L'audit de transparence a renforcé la crédibilité de l'application, même en l'absence de scandale de greenwashing."
+        }
+      }
+    ]
+  },
+  {
+    "id": "scandale-greenwashing",
+    "type": "event",
+    "title": "Le Scandale du Greenwashing",
+    "description": "Événement : Un concurrent est accusé de greenwashing, ce qui jette le doute sur la crédibilité de l'ensemble du secteur du tourisme durable.\n- Impact : Nécessité de renforcer la transparence et la communication sur les pratiques durables de l'application.",
+    "domain": "Gestion de la communication",
+    "info": "Un scandale de greenwashing peut nuire à la réputation de l'ensemble du secteur. Il est essentiel de renforcer la transparence et de communiquer sur les pratiques durables de l'application.",
+    "phase": [
+      "Planification",
+      "Exécution",
+      "Clôture"
+    ],
+    "délai": "Variable",
+    "coût": "Variable",
+    "conditions": [
+      {
+        "cardId": "audit-transparence",
+        "present": true,
+        "effects": {
+          "budget": 0,
+          "time": 0,
+          "value": 5,
+          "message": "L'audit de transparence a permis de renforcer la crédibilité de l'application et de rassurer les utilisateurs."
+        }
+      },
+      {
+        "cardId": "audit-transparence",
+        "present": false,
+        "effects": {
+          "budget": -10,
+          "time": -1,
+          "value": -10,
+          "message": "L'absence d'audit de transparence a nui à la réputation de l'application et a entraîné une perte de confiance des utilisateurs."
+        }
+      }
+    ]
+  },
+  {
+    "id": "audit-transparence",
+    "type": "action",
+    "title": "Mener un audit de transparence",
+    "description": "Engager un organisme indépendant pour auditer les pratiques durables de l'application et publier un rapport de transparence.",
+    "domain": "Gestion de la communication",
+    "info": "Un audit de transparence permet de renforcer la crédibilité de l'application et de démontrer son engagement envers le tourisme durable.",
+    "phase": [
+      "Planification",
+      "Exécution"
+    ],
+    "délai": "-0.5",
+    "cout": "200"
   },
   {
     "id": "audit-de-securite-des-donnees",
@@ -1419,7 +1566,7 @@
   {
     "id": "quel-document-est-cree-lors-de-la-phase-de-planification-pour-gerer-les-risques-",
     "type": "question",
-    "phase": [
+    "phase": ["DEBUG",
       "Planification"
     ],
     "title": "Quel document est créé lors de la phase de planification pour gérer les risques ?",

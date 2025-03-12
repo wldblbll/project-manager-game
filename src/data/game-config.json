@@ -9,6 +9,22 @@
     "boardTopMargin": 100
   },
   "phases": [
+
+    {
+      "name": "DEBUG",
+      "order": 0,
+      "requiredCards": ["Développer la charte du projet"],
+      "cardLimits": {
+        "action": 1,
+        "event": 1,
+        "quiz": 1
+      },
+      "penalties": {
+        "time": 2,
+        "budget": 20,
+        "message": "La charte du projet n'a pas été définie correctement. Cela entraîne des retards et des coûts supplémentaires."
+      }
+    },
     {
       "name": "Initiation",
       "order": 1,

@@ -442,6 +442,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
       if (cardType && cardUsage) {
         debugLog(`Incrementing card usage for type ${cardType}. Before: ${cardUsage[cardType]}`);
       }
+      
+      // Vérifier si la carte a des conditions (pour les cartes action) APRÈS l'avoir ajoutée
+      console.log("Checking if card has conditions:", hasCardConditions(card));
+      if (cardType === "action" && hasCardConditions(card)) {
+        console.log("Action card has conditions, processing them...");
+        // Traiter les conditions immédiatement pour que l'utilisateur voie le contenu de la carte
+        handleActionCardConditions(card);
+      }
     }
     
     // Fermer le sélecteur de cartes si ce n'est pas une carte action ou si la touche Alt n'est pas enfoncée
@@ -450,115 +458,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   };
   
-  // Fonction pour ajouter toutes les cartes action sélectionnées
-  const handleAddSelectedActionCards = () => {
-    if (selectedActionCards.length === 0) {
-      showImpactNotification("Aucune carte action sélectionnée");
-      return;
-    }
-    
-    // Vérifier les limites de cartes
-    const remainingActionSlots = cardLimits.action - cardUsage.action;
-    if (selectedActionCards.length > remainingActionSlots) {
-      showImpactNotification(`Vous ne pouvez ajouter que ${remainingActionSlots} cartes action supplémentaires`);
-      return;
-    }
-    
-    // Calculer un point de départ pour la disposition en grille
-    const boardWidth = boardRef.current?.clientWidth || 800;
-    const boardHeight = boardRef.current?.clientHeight || 600;
-    const margin = 50;
-    const spacing = 30; // Espacement entre les cartes
-    
-    // Déterminer le nombre de colonnes en fonction du nombre de cartes
-    const numCards = selectedActionCards.length;
-    const numCols = Math.min(3, numCards); // Maximum 3 colonnes
-    const numRows = Math.ceil(numCards / numCols);
-    
-    // Calculer les dimensions de la grille
-    const gridWidth = (numCols * CARD_WIDTH) + ((numCols - 1) * spacing);
-    const gridHeight = (numRows * CARD_MIN_HEIGHT) + ((numRows - 1) * spacing);
-    
-    // Calculer le point de départ pour centrer la grille
-    const startX = (boardWidth - gridWidth) / 2;
-    const startY = (boardHeight - gridHeight) / 2;
-    
-    // Créer un tableau pour stocker les positions déjà utilisées
-    const usedPositions: { x: number; y: number }[] = [...cards.map(card => card.position || { x: 0, y: 0 })];
-    
-    // Ajouter chaque carte sélectionnée avec une position en grille
-    selectedActionCards.forEach((card, index) => {
-      if (!isCardOnBoard(card.id)) {
-        // Calculer la position en grille
-        const col = index % numCols;
-        const row = Math.floor(index / numCols);
-        
-        // Calculer la position initiale
-        let posX = startX + (col * (CARD_WIDTH + spacing));
-        let posY = startY + (row * (CARD_MIN_HEIGHT + spacing));
-        
-        // Vérifier que la position est dans les limites du tableau
-        posX = Math.max(margin, Math.min(boardWidth - CARD_WIDTH - margin, posX));
-        posY = Math.max(margin, Math.min(boardHeight - CARD_MIN_HEIGHT - margin, posY));
-        
-        // Ajouter un décalage aléatoire pour éviter l'alignement parfait
-        const randomOffsetX = Math.random() * 20 - 10; // -10 à +10 pixels
-        const randomOffsetY = Math.random() * 20 - 10; // -10 à +10 pixels
-        
-        posX += randomOffsetX;
-        posY += randomOffsetY;
-        
-        // Vérifier si la position est déjà utilisée ou si elle chevauche une carte existante
-        let finalPosition = { x: posX, y: posY };
-        let attempts = 0;
-        const maxAttempts = 10;
-        
-        // Essayer de trouver une position non utilisée
-        while (!isPositionValid(finalPosition.x, finalPosition.y) && attempts < maxAttempts) {
-          // Ajouter un décalage plus important à chaque tentative
-          const offsetX = (Math.random() * 40 - 20) * (attempts + 1);
-          const offsetY = (Math.random() * 40 - 20) * (attempts + 1);
-          
-          finalPosition = {
-            x: Math.max(margin, Math.min(boardWidth - CARD_WIDTH - margin, posX + offsetX)),
-            y: Math.max(margin, Math.min(boardHeight - CARD_MIN_HEIGHT - margin, posY + offsetY))
-          };
-          
-          attempts++;
-        }
-        
-        // Si on n'a pas trouvé de position valide après plusieurs tentatives,
-        // utiliser une position complètement différente
-        if (attempts >= maxAttempts) {
-          // Utiliser une position en spirale autour du centre du tableau
-          const centerX = boardWidth / 2;
-          const centerY = boardHeight / 2;
-          const angle = (index * 0.5) % (2 * Math.PI); // Angle en radians
-          const radius = 100 + (index * 10); // Rayon qui augmente avec l'index
-          
-          finalPosition = {
-            x: Math.max(margin, Math.min(boardWidth - CARD_WIDTH - margin, centerX + radius * Math.cos(angle))),
-            y: Math.max(margin, Math.min(boardHeight - CARD_MIN_HEIGHT - margin, centerY + radius * Math.sin(angle)))
-          };
-        }
-        
-        // Ajouter la position à la liste des positions utilisées
-        usedPositions.push(finalPosition);
-        
-        // Créer et ajouter la carte
-        const newCard = { ...card, position: finalPosition };
-        if (onSelectCard) {
-          onSelectCard(newCard);
-        }
-      }
-    });
-    
-    // Afficher une notification de succès
-    showImpactNotification(`${selectedActionCards.length} cartes action ajoutées`);
-    
-    // Réinitialiser la sélection et fermer le sélecteur
-    setSelectedActionCards([]);
-    setShowCardSelector(false);
+  // Fonction pour gérer les conditions des cartes action
+  const handleActionCardConditions = (actionCard: Card) => {
+    // ... existing code ...
   };
 
   // Card Selector Component
@@ -674,15 +576,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
       const cardType = getCardType(card);
       
       if (cardType === 'action') {
-        // Pour les cartes action, ajouter/retirer de la sélection
-        setSelectedActionCards(prev => {
-          const isAlreadySelected = prev.some(c => c.id === card.id);
-          if (isAlreadySelected) {
-            return prev.filter(c => c.id !== card.id);
-          } else {
-            return [...prev, card];
-          }
-        });
+        // Pour les cartes action, remplacer la sélection actuelle par cette carte
+        // (une seule carte action à la fois)
+        setSelectedActionCards([card]);
+        
+        // Option: ajouter automatiquement la carte au tableau après sélection
+        // handleAddCard(card);
       } else {
         // Pour les autres types, ajouter directement au tableau
         handleAddCard(card);
@@ -692,6 +591,20 @@ const GameBoard: React.FC<GameBoardProps> = ({
     // Vérifier si une carte est sélectionnée
     const isCardSelected = (cardId: string) => {
       return selectedActionCards.some(card => card.id === cardId);
+    };
+    
+    // Fonction pour ajouter la carte action sélectionnée
+    const handleAddSelectedActionCard = () => {
+      if (selectedActionCards.length === 0) {
+        showImpactNotification("Aucune carte action sélectionnée");
+        return;
+      }
+      
+      // Ajouter la carte sélectionnée
+      handleAddCard(selectedActionCards[0]);
+      
+      // Réinitialiser la sélection
+      setSelectedActionCards([]);
     };
     
     return (
@@ -735,7 +648,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
             
             <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
               <p className="text-sm text-gray-500">
-                Cliquez sur une carte pour l'ajouter au tableau.
+                {localSelectedType === 'action' 
+                  ? 'Sélectionnez une carte action à ajouter au tableau.' 
+                  : 'Cliquez sur une carte pour l\'ajouter au tableau.'}
               </p>
               
               {/* Search input */}
@@ -801,17 +716,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
             </div>
           </div>
           
-          {/* Afficher le nombre de cartes sélectionnées et le bouton d'ajout pour les cartes action */}
+          {/* Afficher le bouton d'ajout pour la carte action sélectionnée */}
           {localSelectedType === 'action' && selectedActionCards.length > 0 && (
             <div className="mt-4 p-3 bg-blue-50 rounded-lg flex justify-between items-center">
               <span className="text-blue-700 font-medium">
-                {selectedActionCards.length} carte{selectedActionCards.length > 1 ? 's' : ''} sélectionnée{selectedActionCards.length > 1 ? 's' : ''}
+                Carte sélectionnée : {getCardTitle(selectedActionCards[0])}
               </span>
               <button
-                onClick={handleAddSelectedActionCards}
+                onClick={handleAddSelectedActionCard}
                 className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium"
               >
-                Ajouter les cartes sélectionnées
+                Ajouter cette carte
               </button>
             </div>
           )}

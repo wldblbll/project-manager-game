@@ -21,8 +21,8 @@ const AVAILABLE_PROJECTS: Project[] = [
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80',
   },
   {
-    id: 'ecovoyage',
-    name: 'EcoVoyage',
+    id: 'Greentrip',
+    name: 'GreenTrip Finder,',
     description: 'Application mobile pour planifier des vacances écologiques et durables.',
     dataFile: 'project-cards-ecovoyage.json',
     image: 'https://images.unsplash.com/photo-1506422748879-887454f9cdff?auto=format&fit=crop&q=80',
