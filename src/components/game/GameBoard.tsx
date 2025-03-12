@@ -1274,7 +1274,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                            text-sm font-medium transition-all duration-200 flex items-center shadow-md"
                 >
                   <span className="mr-2">🛠️</span>
-                  Actions ({cardUsage.action}/{cardLimits.action})
+                  Actions ({cardLimits.action - cardUsage.action} restantes)
                 </button>
                 
                 {debugMode && (
@@ -1288,7 +1288,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                                text-sm font-medium transition-all duration-200 flex items-center shadow-md"
                     >
                       <span className="mr-2">🎭</span>
-                      Événements ({cardUsage.event}/{cardLimits.event})
+                      Événements ({cardLimits.event - cardUsage.event} restantes)
                     </button>
                     
                     <button
@@ -1300,7 +1300,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                                text-sm font-medium transition-all duration-200 flex items-center shadow-md"
                     >
                       <span className="mr-2">❓</span>
-                      Quiz ({cardUsage.quiz}/{cardLimits.quiz})
+                      Quiz ({cardLimits.quiz - cardUsage.quiz} restantes)
                     </button>
                   </>
                 )}

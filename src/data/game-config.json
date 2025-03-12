@@ -14,9 +14,9 @@
       "order": 1,
       "requiredCards": ["Développer la charte du projet"],
       "cardLimits": {
-        "action": 7,
-        "event": 6,
-        "quiz": 17
+        "action": 1,
+        "event": 1,
+        "quiz": 2
       },
       "penalties": {
         "time": 2,
