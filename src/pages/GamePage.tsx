@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import GameHeader from "@/components/game/GameHeader";
 import Timeline from "@/components/game/Timeline";
 import GameBoard from "@/components/game/GameBoard";
-import defaultProjectCards from "@/data/project-cards.json";
+import defaultProjectCards from "@/data/project-cards-default.json";
 import ecovoyageProjectCards from "@/data/project-cards-ecovoyage.json";
 import gameConfig from "@/data/game-config.json";
 import { Project } from "@/components/ProjectSelector";
@@ -71,7 +71,7 @@ export type GameState = {
 
 // Define mapping between project files and their data
 const PROJECT_DATA: Record<string, any> = {
-  'project-cards.json': defaultProjectCards,
+  'project-cards-default.json': defaultProjectCards,
   'project-cards-ecovoyage.json': ecovoyageProjectCards,
 };
 
@@ -360,6 +360,7 @@ const GamePage = () => {
       
       if (!projectCards) {
         console.error(`No data found for project file: ${selectedProject.dataFile}`);
+        setLoadError(`Impossible de charger les données du projet "${selectedProject.name}". Fichier non trouvé: ${selectedProject.dataFile}`);
         return;
       }
 
@@ -397,6 +398,7 @@ const GamePage = () => {
 
       if (processedCards.length === 0) {
         console.error("No cards were loaded from the JSON file");
+        setLoadError(`Le fichier du projet "${selectedProject.name}" ne contient aucune carte.`);
         return;
       }
 
@@ -436,8 +438,9 @@ const GamePage = () => {
       console.log("Domains with colors:", colorMapping);
     } catch (error) {
       console.error("Error processing cards:", error);
+      setLoadError(`Une erreur s'est produite lors du traitement des données du projet "${selectedProject.name}". Veuillez réessayer.`);
     }
-  }, [selectedProject]);
+  }, [selectedProject, setLoadError]);
 
   // Calculate the next available position on the board
   const getNextAvailablePosition = () => {

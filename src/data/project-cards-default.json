@@ -1,0 +1,549 @@
+[
+  {
+    "id": "card-1",
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Initiation"],
+    "nom": "Développer la charte du projet",
+    "meta-description": "La charte du projet est un document clé qui officialise son existence et fixe ses objectifs. Elle permet d'autoriser formellement le projet et documente les exigences initiales pour répondre aux besoins des parties prenantes. Ce document doit inclure la justification du projet, ses objectifs, les principaux livrables, les parties prenantes impliquées, les contraintes et hypothèses, ainsi que les critères de succès.",
+    "description": "Charte du projet ÉcoVoyage :\n- Objectif : Réduire l'empreinte carbone des trajets pour répondre aux enjeux environnementaux en proposant des alternatives de transport écoresponsables\n- Livrables : Application mobile avec recherche de trajets optimisés, suivi en temps réel et gamification\n- Parties prenantes clés : Ministère de l'Écologie, opérateurs de transport, utilisateurs\n- Contraintes : Respect des réglementations RGPD, intégration avec les API des transports existants\n- Critères de succès : Adoption par au moins 100 000 utilisateurs dans la première année, réduction mesurable des émissions de CO2 liées aux déplacements",
+    "délai": "2 semaines",
+    "coût": "15 K€"
+  },
+  {
+    "id": "card-2",
+    "type": "Action",
+    "domaine": "Gestion des parties prenantes",
+    "phase": ["Initiation"],
+    "nom": "Identifier les parties prenantes",
+    "meta-description": "L'identification des parties prenantes est un processus crucial qui consiste à reconnaître toutes les personnes, groupes ou organisations susceptibles d'influencer ou d'être affectés par le projet. Cette étape permet de comprendre qui sont les acteurs clés, quelles sont leurs attentes et comment ils peuvent impacter la réussite du projet. Une identification précise permet d'élaborer des stratégies d'engagement appropriées.",
+    "description": "Pour le projet ÉcoVoyage, les parties prenantes identifiées incluent :\n- Le Ministère de l'Écologie (sponsor principal et autorité réglementaire)\n- Les opérateurs de transport (fournisseurs de données et partenaires opérationnels)\n- Les utilisateurs finaux (particuliers soucieux de l'environnement et voyageurs réguliers)\n- Les autorités locales des villes pilotes\n- Les associations environnementales (soutien et promotion)\n- L'équipe de développement\n- Les investisseurs potentiels pour les futures phases d'expansion",
+    "délai": "2 semaines",
+    "coût": "10 K€"
+  },
+  {
+    "id": "card-3",
+    "type": "Action",
+    "domaine": "Gestion des ressources",
+    "phase": ["Initiation"],
+    "nom": "Définir l'équipe projet",
+    "meta-description": "La définition de l'équipe projet consiste à identifier et rassembler les personnes aux compétences complémentaires nécessaires à la réalisation du projet. Cette étape est essentielle car la composition de l'équipe influence directement la capacité du projet à atteindre ses objectifs. Une équipe bien constituée combine expertise technique, expérience métier et compétences interpersonnelles.",
+    "description": "L'équipe du projet ÉcoVoyage est constituée de professionnels aux compétences variées et complémentaires :\n- Léa (Chef de projet) : Coordination générale et liaison avec les parties prenantes\n- Tom (UX/UI Designer) : Conception d'interfaces intuitives et éco-responsables\n- Sarah (Développeur frontend) : Spécialiste React Native pour l'application mobile\n- Alex (Développeur backend) : Expert en API et calculs d'optimisation d'itinéraires\n- Morgan (QA) : Tests et assurance qualité avec focus sur l'expérience utilisateur\n- Camille (DevOps) : Infrastructure cloud écologique et déploiement continu\n- Jules (Product Owner) : Définition et priorisation des fonctionnalités\n- Sophia (Scrum Master) : Facilitation et amélioration des processus agiles",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "id": "card-4",
+    "type": "Action",
+    "domaine": "Gestion de la communication",
+    "phase": ["Initiation"],
+    "nom": "Organiser la réunion de lancement",
+    "meta-description": "La réunion de lancement (kick-off meeting) marque le démarrage officiel du projet. C'est un moment clé pour présenter la vision, les objectifs et l'équipe à toutes les parties prenantes. Cette réunion permet d'établir une compréhension commune du projet, de clarifier les attentes et de commencer à créer une dynamique d'équipe positive. C'est également l'occasion de répondre aux questions et préoccupations initiales.",
+    "description": "La réunion de lancement d'ÉcoVoyage s'est tenue au Ministère de l'Écologie avec 35 participants incluant des représentants de tous les acteurs clés. Points abordés :\n- Présentation de la vision : créer l'application de référence pour les déplacements écoresponsables\n- Démonstration d'un prototype interactif montrant les principales fonctionnalités\n- Introduction de chaque membre de l'équipe et leur rôle\n- Calendrier prévisionnel avec les jalons majeurs\n- Session de questions-réponses ayant soulevé des préoccupations concernant la protection des données et l'accessibilité\n- Définition des canaux de communication et de la fréquence des points d'avancement\nLa réunion a suscité un enthousiasme général et un engagement fort des opérateurs de transport.",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "id": "card-5",
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Initiation"],
+    "nom": "Élaborer le cas d'affaires",
+    "meta-description": "Le cas d'affaires (business case) est un document qui justifie l'investissement dans un projet en détaillant sa valeur pour l'organisation et les parties prenantes. Il présente l'analyse coûts-bénéfices, le retour sur investissement attendu et les alternatives considérées. Ce document est crucial car il aide les décideurs à comprendre pourquoi le projet devrait être approuvé et financé, et sert de référence pour évaluer le succès du projet.",
+    "description": "Le cas d'affaires d'ÉcoVoyage démontre sa viabilité sur plusieurs dimensions :\n\nJustification économique :\n- Coût total de développement : 1,2M€\n- Revenus attendus : partenariats avec opérateurs (600K€/an) + abonnements premium (800K€/an)\n- ROI attendu : rentabilité à 18 mois, VAN positive de 3,5M€ sur 5 ans\n\nJustification environnementale :\n- Réduction estimée de 85 000 tonnes de CO2 par an\n- Contribution aux objectifs nationaux de réduction d'émissions\n- Création d'un référentiel de données environnementales sur les transports\n\nAlternatives écartées :\n- Subventionner directement les opérateurs de transport (impact plus limité)\n- Campagne de sensibilisation traditionnelle (moins mesurable)\n- Réglementation plus stricte (résistance des acteurs économiques)",
+    "délai": "3 semaines",
+    "coût": "20 K€"
+  },
+  {
+    "id": "card-6",
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Planification"],
+    "nom": "Éliciter le besoin",
+    "meta-description": "L'élicitation des besoins est le processus de collecte, d'analyse et de documentation des exigences des parties prenantes. Cette étape fondamentale permet de comprendre ce que le produit doit accomplir, quels problèmes il doit résoudre et quelles fonctionnalités il doit offrir. Des besoins bien définis servent de fondation pour la conception et le développement du produit, réduisant les risques de changements coûteux plus tard dans le projet.",
+    "description": "Suite à des ateliers d'élicitation avec les utilisateurs potentiels et les experts du domaine, les besoins suivants ont été identifiés pour ÉcoVoyage :\n\nBesoin principal : Un algorithme d'optimisation écologique capable de :\n- Calculer précisément l'empreinte carbone de chaque option de transport\n- Équilibrer trois critères : émissions CO2, temps de trajet et coût\n- Intégrer des données météorologiques pour recommander des options adaptées\n- Prendre en compte les préférences utilisateur (priorité écologie vs temps)\n- Proposer des combinaisons multimodales optimales\n\nExigences techniques associées :\n- Temps de réponse < 3 secondes pour les calculs d'itinéraires\n- Précision carbone vérifiée par des experts indépendants\n- Mise à jour des données en temps réel\n- Adaptation aux spécificités régionales (disponibilité des transports)",
+    "délai": "4 semaines",
+    "coût": "35 K€"
+  },
+  {
+    "id": "card-7",
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Planification"],
+    "nom": "Créer la WBS",
+    "meta-description": "La Structure de Découpage du Projet (WBS - Work Breakdown Structure) est un outil fondamental de gestion de projet qui décompose le travail en composants plus petits et plus gérables. Cette représentation hiérarchique permet de visualiser l'intégralité du projet, d'identifier tous les livrables nécessaires et de s'assurer qu'aucun élément important n'est oublié. La WBS facilite l'estimation des ressources, l'attribution des responsabilités et le suivi de l'avancement.",
+    "description": "La WBS du projet ÉcoVoyage décompose le travail en 5 grandes catégories :\n\n1. Application Mobile\n   1.1 Interface utilisateur\n      1.1.1 Écrans de recherche et résultats\n      1.1.2 Profil et préférences utilisateur\n      1.1.3 Système de gamification\n   1.2 Fonctionnalités clés\n      1.2.1 Module de recherche d'itinéraires\n      1.2.2 Calculateur d'empreinte carbone\n      1.2.3 Système de réservation\n      1.2.4 Suivi en temps réel\n   1.3 Infrastructure technique\n      1.3.1 Architecture backend\n      1.3.2 Intégration des API externes\n      1.3.3 Base de données et stockage\n\n2. Marketing et Communication\n   2.1 Stratégie de lancement\n   2.2 Matériel promotionnel\n   2.3 Partenariats\n\n3. Tests et Qualité\n   3.1 Tests fonctionnels\n   3.2 Tests utilisateurs\n   3.3 Audits de performance\n\n4. Formation et Support\n   4.1 Documentation\n   4.2 Formation du personnel\n   4.3 Système d'assistance utilisateur\n\n5. Gestion de Projet\n   5.1 Coordination des équipes\n   5.2 Suivi et reporting\n   5.3 Gestion des risques",
+    "délai": "2 semaines",
+    "coût": "10 K€"
+  },
+  {
+    "id": "card-8",
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Planification"],
+    "nom": "Définir le périmètre",
+    "meta-description": "La définition du périmètre consiste à déterminer précisément ce qui fait partie du projet et ce qui en est exclu. Un périmètre bien défini permet d'éviter le scope creep (l'élargissement non contrôlé du projet), de gérer les attentes des parties prenantes et d'établir des bases solides pour la planification et l'exécution. Ce processus inclut la description détaillée du produit, de ses fonctionnalités et de ses limites.",
+    "description": "Le périmètre du projet ÉcoVoyage est défini comme suit :\n\nInclus dans le périmètre :\n1. Application mobile disponible sur iOS et Android\n2. Cinq fonctionnalités principales :\n   - Recherche d'itinéraires multimodaux avec filtres écologiques\n   - Comparaison visuelle de l'impact environnemental des options\n   - Réservation directe avec partenaires de transport\n   - Suivi des trajets en temps réel avec notifications\n   - Système de gamification (badges, défis, classements)\n3. Intégration avec 15 opérateurs de transport dans 3 villes pilotes\n4. Système de support utilisateur (FAQ, chat)\n5. Tableau de bord d'analyse des données d'utilisation\n\nExclu du périmètre :\n1. Système de paiement intégré (utilisation des plateformes partenaires)\n2. Fonctionnalités de réseau social\n3. Extension au-delà des 3 villes pilotes\n4. Version web de l'application\n5. Intégration avec les systèmes de navigation GPS\n\nCritères d'acceptation :\n- 100% des fonctionnalités principales testées et validées\n- Performance conforme aux exigences non-fonctionnelles\n- Validation par le comité utilisateur",
+    "délai": "2 semaines",
+    "coût": "15 K€"
+  },
+  {
+    "id": "card-9",
+    "type": "Action",
+    "domaine": "Gestion du calendrier",
+    "phase": ["Planification"],
+    "nom": "Développer l'échéancier",
+    "meta-description": "Le développement de l'échéancier est le processus d'analyse des séquences d'activités, de leurs durées, des ressources requises et des contraintes pour créer un calendrier de projet réaliste. Un échéancier bien conçu sert de feuille de route, permettant de coordonner les efforts, d'anticiper les besoins en ressources et de suivre la progression du projet. Il facilite également la communication avec les parties prenantes sur les délais attendus.",
+    "description": "L'échéancier du projet ÉcoVoyage s'étend sur 12 mois avec les jalons suivants :\n\nPhase 1 : Initiation (Mois 1)\n- Semaines 1-2 : Élaboration de la charte du projet et identification des parties prenantes\n- Semaines 3-4 : Définition de l'équipe et réunion de lancement\n\nPhase 2 : Planification (Mois 2-3)\n- Mois 2 : Élicitation des besoins et création de la WBS\n- Mois 3 : Définition du périmètre, planification des ressources et des coûts\n\nPhase 3 : Développement (Mois 4-9)\n- Mois 4-5 : Développement de l'architecture et prototype\n- Mois 6-7 : Développement des fonctionnalités principales\n- Mois 8-9 : Intégration des API et finalisation du backend\n\nPhase 4 : Test (Mois 10)\n- Tests utilisateurs et de performance\n- Corrections et ajustements\n\nPhase 5 : Déploiement (Mois 11-12)\n- Mois 11 : Version bêta et campagne de communication\n- Mois 12 : Lancement officiel et transfert à l'équipe de maintenance\n\nChemin critique identifié : développement de l'algorithme d'optimisation → intégration des API → tests de performance",
+    "délai": "2 semaines",
+    "coût": "15 K€"
+  },
+  {
+    "id": "card-10",
+    "type": "Action",
+    "domaine": "Gestion du calendrier",
+    "phase": ["Planification"],
+    "nom": "Définir les activités",
+    "meta-description": "La définition des activités est le processus d'identification et de documentation des actions spécifiques à effectuer pour produire les livrables du projet. Ces activités constituent les blocs de construction de l'échéancier et forment la base de l'estimation, de la planification, de l'exécution, du suivi et du contrôle du travail du projet. Une définition précise des activités aide à s'assurer que toutes les tâches nécessaires sont prises en compte.",
+    "description": "Pour le projet ÉcoVoyage, les activités principales ont été définies pour chaque livrable :\n\n1. Module de recherche d'itinéraire :\n   - Conception de l'algorithme de recherche\n   - Développement du moteur de filtrage\n   - Création de l'interface de recherche\n   - Implémentation des filtres écologiques\n   - Tests d'optimisation\n\n2. Calculateur d'empreinte carbone :\n   - Recherche et validation des données d'émission\n   - Développement de l'algorithme de calcul\n   - Création des visualisations comparatives\n   - Validation scientifique des résultats\n\n3. Système de réservation :\n   - Négociation des API avec les partenaires\n   - Développement des connecteurs\n   - Implémentation du processus de réservation\n   - Tests d'intégration avec chaque opérateur\n\n4. Suivi en temps réel :\n   - Implémentation du système de géolocalisation\n   - Développement du module de notifications\n   - Intégration des données de trafic en temps réel\n\n5. Système de gamification :\n   - Conception du système de points et badges\n   - Développement du module de défis\n   - Création du tableau de classement\n   - Implémentation du système de récompenses",
+    "délai": "2 semaines",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des coûts",
+    "phase": ["Planification"],
+    "nom": "Estimer les coûts",
+    "description": "Développer une approximation des ressources financières nécessaires pour réaliser le projet ÉcoVoyage, incluant le développement, les tests et le déploiement.",
+    "délai": "2 semaines",
+    "coût": "15 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des coûts",
+    "phase": ["Planification"],
+    "nom": "Déterminer le budget",
+    "description": "Agréger les coûts estimés des activités individuelles pour établir une ligne de base des coûts autorisés pour le projet ÉcoVoyage.",
+    "délai": "1 semaine",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des ressources",
+    "phase": ["Planification"],
+    "nom": "Planifier sprint",
+    "description": "Cette action vous autorise à planifier un sprint de développement et de l'exécuter. Le coût et le délai des actions dans le sprint seront déduits de votre compteur. Si à la fin du sprint, toutes les sous-fonctions d'une fonctionnalité sont terminées, vous pouvez gagner la valeur associée à la fonctionnalité.",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des ressources",
+    "phase": ["Planification"],
+    "nom": "Estimer les ressources",
+    "description": "Déterminer le type et les quantités de matériaux, de ressources humaines, d'équipements et de fournitures nécessaires pour exécuter chaque activité.",
+    "délai": "2 semaines",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la qualité",
+    "phase": ["Planification"],
+    "nom": "Planifier la gestion de la qualité",
+    "description": "Identifier les exigences et normes de qualité pour le projet et ses livrables, et documenter comment le projet démontrera la conformité.",
+    "délai": "2 semaines",
+    "coût": "15 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la qualité",
+    "phase": ["Planification"],
+    "nom": "Définir les métriques de qualité",
+    "description": "Établir des indicateurs mesurables pour évaluer la performance de l'application (temps de réponse, précision des calculs d'empreinte carbone, satisfaction utilisateur).",
+    "délai": "1 semaine",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des risques",
+    "phase": ["Planification"],
+    "nom": "Identifier un risque",
+    "description": "Risque 1: L'accès aux données des opérateurs de transports peut s'avérer complexe ou instable, ce qui peut rendre l'application non fonctionnelle.",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des risques",
+    "phase": ["Planification"],
+    "nom": "Évaluer un risque",
+    "description": "Risque 1: Après évaluation ci-dessous l'impact et la probabilité du risque 1",
+    "impact délai": "4 mois",
+    "impact coût": "-100 K€",
+    "probabilité": "40%",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des risques",
+    "phase": ["Planification"],
+    "nom": "Atténuer un risque",
+    "description": "Risque 1: Utiliser une plateforme payante pour récupérer les données de transport. Il vous faudra 2 mois pour la développer",
+    "délai": "2 mois",
+    "coût": "50 K€",
+    "nouveau impact délai": "1 mois",
+    "nouveau impact coût": "5 K€",
+    "nouvelle probabilité": "10%"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des risques",
+    "phase": ["Planification"],
+    "nom": "Identifier un nouveau risque",
+    "description": "Risque 2: L'adoption insuffisante de l'application par les utilisateurs finaux peut compromettre le succès du projet.",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des risques",
+    "phase": ["Planification"],
+    "nom": "Évaluer le nouveau risque",
+    "description": "Risque 2: Après évaluation, voici l'impact et la probabilité du risque d'adoption insuffisante",
+    "impact délai": "0 mois",
+    "impact coût": "-300 K€",
+    "probabilité": "50%",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des risques",
+    "phase": ["Planification"],
+    "nom": "Atténuer le risque d'adoption",
+    "description": "Risque 2: Mettre en place une campagne de communication et des incitations pour les premiers utilisateurs.",
+    "délai": "3 mois",
+    "coût": "100 K€",
+    "nouveau impact délai": "0 mois",
+    "nouveau impact coût": "-50 K€",
+    "nouvelle probabilité": "20%"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des risques",
+    "phase": ["Planification"],
+    "nom": "Planifier les réponses aux risques",
+    "description": "Développer des options et actions pour améliorer les opportunités et réduire les menaces aux objectifs du projet.",
+    "délai": "2 semaines",
+    "coût": "15 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des parties prenantes",
+    "phase": ["Planification"],
+    "nom": "Identifier une partie prenante",
+    "description": "La CNIL et le RGPD sont très importants à prendre en compte pour s'assurer de la conformité de votre application.",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des parties prenantes",
+    "phase": ["Planification"],
+    "nom": "Planifier l'engagement des parties prenantes",
+    "description": "Développer des approches pour impliquer les parties prenantes du projet en fonction de leurs besoins, attentes et influence potentielle.",
+    "délai": "2 semaines",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la communication",
+    "phase": ["Planification"],
+    "nom": "Planifier la gestion des communications",
+    "description": "Développer une approche appropriée pour les activités de communication du projet basée sur les besoins d'information de chaque partie prenante.",
+    "délai": "2 semaines",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des parties prenantes",
+    "phase": ["Exécution"],
+    "nom": "Communiquer avec une partie prenante",
+    "description": "Organiser une réunion d'échange avec un expert qui vous aidera à faire le lien avec La CNIL et le RGPD.",
+    "délai": "2 semaines",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Exécution"],
+    "nom": "Développer le module de recherche de trajet",
+    "description": "Créer la fonctionnalité centrale permettant aux utilisateurs de rechercher et planifier leur trajet avec des options écologiques.",
+    "délai": "3 mois",
+    "coût": "300 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Exécution"],
+    "nom": "Intégrer les API de transport",
+    "description": "Connecter l'application aux interfaces de programmation des différents opérateurs de transport pour obtenir des données en temps réel.",
+    "délai": "2 mois",
+    "coût": "200 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Exécution"],
+    "nom": "Développer le système de gamification",
+    "description": "Mettre en place le système de points, récompenses et classements pour encourager les comportements écologiques.",
+    "délai": "2 mois",
+    "coût": "150 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Exécution"],
+    "nom": "Implémenter le calcul d'empreinte carbone",
+    "description": "Développer l'algorithme qui calcule et compare l'empreinte carbone des différentes options de transport.",
+    "délai": "2 mois",
+    "coût": "180 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Exécution"],
+    "nom": "Développer le système de réservation",
+    "description": "Créer le module permettant aux utilisateurs de réserver directement leurs billets via l'application.",
+    "délai": "2 mois",
+    "coût": "220 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des ressources",
+    "phase": ["Exécution"],
+    "nom": "Action de leadership",
+    "description": "Organiser une journée avec l'équipe pour créer des liens, les motiver et expliquer le sens du projet ÉcoVoyage.",
+    "délai": "1 jour",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la qualité",
+    "phase": ["Exécution"],
+    "nom": "Réaliser les tests utilisateurs",
+    "description": "Organiser des sessions de test avec un panel d'utilisateurs pour recueillir leurs retours sur l'expérience utilisateur.",
+    "délai": "1 mois",
+    "coût": "50 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la qualité",
+    "phase": ["Exécution"],
+    "nom": "Effectuer les tests de performance",
+    "description": "Tester les performances de l'application sous différentes charges pour s'assurer qu'elle répond aux exigences de rapidité et de fiabilité.",
+    "délai": "3 semaines",
+    "coût": "40 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la communication",
+    "phase": ["Surveillance & Contrôle", "Exécution"],
+    "nom": "Rapport d'avancement",
+    "description": "Préparer et présenter un rapport d'avancement du projet au comité de pilotage, incluant les métriques clés et l'état d'avancement par rapport au planning.",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la qualité",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Contrôler la qualité",
+    "description": "Surveiller et enregistrer les résultats des activités de qualité pour évaluer la performance et recommander les changements nécessaires.",
+    "délai": "2 semaines",
+    "coût": "20 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la qualité",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Gérer les défauts",
+    "description": "L'équipe QA a identifié plusieurs bugs critiques dans le module de calcul d'empreinte carbone. Organisez une session de correction avec l'équipe de développement.",
+    "délai": "2 semaines",
+    "coût": "30 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Analyser une demande de changement",
+    "description": "Le Ministère de l'Écologie souhaite ajouter une fonctionnalité de compensation carbone. Analysez l'impact sur le projet.",
+    "délai": "2 semaines",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Valider une demande de changement",
+    "description": "Après analyse, la fonctionnalité de compensation carbone est approuvée. Mettez à jour les documents du projet et le plan de développement.",
+    "délai": "1 semaine",
+    "coût": "5 K€",
+    "impact délai": "1 mois",
+    "impact coût": "100 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du calendrier",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Maîtriser l'échéancier",
+    "description": "Le développement du module de notifications en temps réel prend plus de temps que prévu. Réorganisez les ressources pour respecter les délais globaux.",
+    "délai": "1 semaine",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des coûts",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Maîtriser les coûts",
+    "description": "Le projet approche 80% du budget alors que seulement 70% des travaux sont terminés. Identifiez les domaines où des économies peuvent être réalisées.",
+    "délai": "2 semaines",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des risques",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Surveillance des risques",
+    "description": "Vérifier régulièrement l'état des risques identifiés et identifier de nouveaux risques potentiels à mesure que le projet progresse.",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des risques",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Gérer un risque qui se produit",
+    "description": "Le risque 1 (accès aux données des opérateurs) s'est matérialisé. Mettez en œuvre le plan de contingence prévu.",
+    "délai": "1 mois",
+    "coût": "50 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des parties prenantes",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Contrôler les engagements",
+    "description": "Vérifier que les livrables du projet sont conformes aux exigences spécifiées et aux attentes des parties prenantes.",
+    "délai": "2 semaines",
+    "coût": "15 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des parties prenantes",
+    "phase": ["Surveillance & Contrôle"],
+    "nom": "Gérer la résistance au changement",
+    "description": "Certains opérateurs de transport sont réticents à partager leurs données. Mettez en place une stratégie pour les convaincre des bénéfices mutuels.",
+    "délai": "3 semaines",
+    "coût": "20 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Exécution"],
+    "nom": "Lancer la version bêta",
+    "description": "Déployer l'application auprès d'un groupe limité d'utilisateurs pour tester en conditions réelles.",
+    "délai": "1 mois",
+    "coût": "100 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la communication",
+    "phase": ["Exécution"],
+    "nom": "Campagne de communication",
+    "description": "Lancer une campagne de communication pour faire connaître l'application auprès du grand public.",
+    "délai": "2 mois",
+    "coût": "150 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion du contenu",
+    "phase": ["Clôture"],
+    "nom": "Lancement officiel de l'application",
+    "description": "Déployer l'application officiellement dans les trois villes pilotes après correction des problèmes identifiés en phase bêta.",
+    "délai": "2 semaines",
+    "coût": "50 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des ressources",
+    "phase": ["Clôture"],
+    "nom": "Former le personnel de support",
+    "description": "Former l'équipe qui sera en charge du support et de la maintenance de l'application après le projet.",
+    "délai": "3 semaines",
+    "coût": "30 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des parties prenantes",
+    "phase": ["Clôture"],
+    "nom": "Obtenir l'acceptation formelle",
+    "description": "Obtenir l'acceptation formelle du Ministère de l'Écologie que tous les livrables du projet ont été complétés selon les exigences.",
+    "délai": "2 semaines",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des ressources",
+    "phase": ["Clôture"],
+    "nom": "Transfert des ressources",
+    "description": "Libérer les ressources du projet et les réaffecter à d'autres projets ou à l'équipe de maintenance.",
+    "délai": "2 semaines",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la communication",
+    "phase": ["Clôture"],
+    "nom": "Capturer les leçons apprises",
+    "description": "Organiser une réunion de rétrospective pour documenter les succès, échecs et leçons apprises tout au long du projet.",
+    "délai": "1 semaine",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la communication",
+    "phase": ["Clôture"],
+    "nom": "Archiver les documents du projet",
+    "description": "Rassembler et archiver tous les documents du projet pour référence future et conformité.",
+    "délai": "1 semaine",
+    "coût": "5 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des coûts",
+    "phase": ["Clôture"],
+    "nom": "Fermer les comptes du projet",
+    "description": "Finaliser toutes les activités financières et clôturer les comptes du projet ÉcoVoyage.",
+    "délai": "2 semaines",
+    "coût": "10 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion de la qualité",
+    "phase": ["Clôture"],
+    "nom": "Valider la conformité finale",
+    "description": "Vérifier que l'application répond à toutes les exigences de qualité, de sécurité et de conformité réglementaire avant la clôture officielle.",
+    "délai": "2 semaines",
+    "coût": "15 K€"
+  },
+  {
+    "type": "Action",
+    "domaine": "Gestion des parties prenantes",
+    "phase": ["Clôture"],
+    "nom": "Célébrer le succès du projet",
+    "description": "Organiser un événement pour reconnaître les contributions de l'équipe et des parties prenantes et célébrer l'accomplissement du projet.",
+    "délai": "1 jour",
+    "coût": "10 K€"
+  }
+]

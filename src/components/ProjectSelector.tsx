@@ -11,12 +11,13 @@ export type Project = {
   image?: string;
 };
 
-const DEFAULT_PROJECTS: Project[] = [
+// Liste statique des projets disponibles
+const AVAILABLE_PROJECTS: Project[] = [
   {
     id: 'default',
     name: 'Projet par défaut',
     description: 'Projet de gestion classique avec des cartes génériques.',
-    dataFile: 'project-cards.json',
+    dataFile: 'project-cards-default.json',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80',
   },
   {
@@ -31,29 +32,30 @@ const DEFAULT_PROJECTS: Project[] = [
 interface ProjectSelectorProps {
   onSelectProject?: (project: Project) => void;
   standalone?: boolean;
+  onClose?: () => void; // Nouvelle prop pour fermer le modal
 }
 
-const ProjectSelector = ({ onSelectProject, standalone = false }: ProjectSelectorProps) => {
-  const [projects, setProjects] = useState<Project[]>(DEFAULT_PROJECTS);
+const ProjectSelector = ({ onSelectProject, standalone = false, onClose }: ProjectSelectorProps) => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // In a real app, you might fetch this from an API
-    // This could be extended to scan the data directory for JSON files
-    setProjects(DEFAULT_PROJECTS);
-  }, []);
-
   const handleSelectProject = (project: Project) => {
     setSelectedProject(project);
+    
+    // Stocker le projet sélectionné dans localStorage
+    localStorage.setItem('selectedProject', JSON.stringify(project));
+    
     if (onSelectProject) {
       onSelectProject(project);
     }
     
+    // Fermer le modal si la fonction onClose est fournie
+    if (onClose) {
+      onClose();
+    }
+    
     if (standalone) {
-      // Store selected project in localStorage
-      localStorage.setItem('selectedProject', JSON.stringify(project));
-      // Navigate to the game page
+      // Naviguer vers la page de jeu
       navigate('/game');
     }
   };
@@ -62,7 +64,7 @@ const ProjectSelector = ({ onSelectProject, standalone = false }: ProjectSelecto
     <div className="w-full max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-center">Choisissez un projet</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {projects.map((project) => (
+        {AVAILABLE_PROJECTS.map((project) => (
           <Card 
             key={project.id} 
             className={`cursor-pointer transition-all duration-300 hover:shadow-lg ${

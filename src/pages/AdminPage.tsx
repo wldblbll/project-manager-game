@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import defaultProjectCards from "@/data/project-cards.json";
+import defaultProjectCards from "@/data/project-cards-default.json";
 import ecovoyageProjectCards from "@/data/project-cards-ecovoyage.json";
 import { Card } from "@/pages/GamePage";
 import { getCardTitle, getCardDescription, getCardDomain, getCardType, getCardPhase } from "@/utils/cardHelpers";

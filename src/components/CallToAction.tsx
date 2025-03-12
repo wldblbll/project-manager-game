@@ -1,9 +1,37 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
+import ProjectSelector from './ProjectSelector';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const CallToAction = () => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  const [showProjectSelector, setShowProjectSelector] = useState(false);
+  
+  // Fonction pour gérer le clic sur le bouton de démarrage
+  const handleStartGame = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // Vérifier si un projet est déjà sélectionné
+    const storedProject = localStorage.getItem('selectedProject');
+    
+    if (storedProject) {
+      // Si un projet est déjà sélectionné, naviguer vers la page de jeu
+      setTimeout(() => {
+        navigate('/game');
+      }, 100);
+    } else {
+      // Sinon, afficher le sélecteur de projet
+      setShowProjectSelector(true);
+    }
+  };
+  
+  // Fonction pour effacer le projet sélectionné
+  const handleClearProject = () => {
+    localStorage.removeItem('selectedProject');
+    setShowProjectSelector(true);
+  };
   
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-red-500 to-purple-500">
@@ -21,16 +49,27 @@ const CallToAction = () => {
               en relevant des défis passionnants !
             </p>
             
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
-                to="/game"
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-x-6">
+              <button
+                onClick={handleStartGame}
                 className="rounded-full bg-white px-8 py-4 text-lg font-semibold text-purple-600 
                          shadow-lg hover:bg-purple-50 transition-all duration-300 
-                         transform hover:scale-105 hover:shadow-xl"
+                         transform hover:scale-105 hover:shadow-xl mb-4 sm:mb-0"
                 aria-label="Commencer le jeu"
               >
                 Commencer l'Aventure 🚀
-              </Link>
+              </button>
+              
+              {/* Bouton pour changer de projet */}
+              <button
+                onClick={handleClearProject}
+                className="rounded-full bg-transparent border border-white text-white px-6 py-3 text-sm font-medium
+                         shadow-lg hover:bg-white/10 transition-all duration-300 
+                         transform hover:scale-105 hover:shadow-xl"
+                aria-label="Changer de projet"
+              >
+                Changer de projet 🔄
+              </button>
             </div>
 
             <div className="mt-8 animate-bounce">
@@ -45,6 +84,21 @@ const CallToAction = () => {
           </div>
         </div>
       </div>
+      
+      {/* Project Selector Modal */}
+      <Dialog open={showProjectSelector} onOpenChange={setShowProjectSelector}>
+        <DialogContent className="sm:max-w-[800px] p-0">
+          <DialogHeader className="p-6 pb-0">
+            <DialogTitle className="text-2xl font-bold text-center">Sélection du projet</DialogTitle>
+          </DialogHeader>
+          <div className="p-6">
+            <ProjectSelector 
+              onClose={() => setShowProjectSelector(false)}
+              standalone={true}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

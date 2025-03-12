@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import AnimatedText from './AnimatedText';
 import ProjectSelector from './ProjectSelector';
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -14,10 +15,24 @@ const Hero = () => {
     e.preventDefault();
     console.log("Bouton de démarrage cliqué");
     
-    // Utiliser setTimeout pour éviter les problèmes de navigation sur certains appareils mobiles
-    setTimeout(() => {
-      navigate('/game');
-    }, 100);
+    // Vérifier si un projet est déjà sélectionné
+    const storedProject = localStorage.getItem('selectedProject');
+    
+    if (storedProject) {
+      // Si un projet est déjà sélectionné, naviguer vers la page de jeu
+      setTimeout(() => {
+        navigate('/game');
+      }, 100);
+    } else {
+      // Sinon, afficher le sélecteur de projet
+      setShowProjectSelector(true);
+    }
+  };
+  
+  // Fonction pour effacer le projet sélectionné
+  const handleClearProject = () => {
+    localStorage.removeItem('selectedProject');
+    setShowProjectSelector(true);
   };
   
   return (
@@ -46,26 +61,53 @@ const Hero = () => {
         </div>
 
         {/* CTA Button */}
-        {isMobile ? (
-          <Link
-            to="/game"
-            className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
-                     shadow-lg hover:shadow-xl transform transition-all duration-300 
-                     hover:scale-105 hover:bg-indigo-50 inline-block"
-          >
-            Commencer à jouer 🎮
-          </Link>
-        ) : (
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {isMobile ? (
+            <button
+              onClick={() => setShowProjectSelector(true)}
+              className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
+                       shadow-lg hover:shadow-xl transform transition-all duration-300 
+                       hover:scale-105 hover:bg-indigo-50 inline-block"
+            >
+              Commencer à jouer 🎮
+            </button>
+          ) : (
+            <button
+              onClick={handleStartGame}
+              className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
+                       shadow-lg hover:shadow-xl transform transition-all duration-300 
+                       hover:scale-105 hover:bg-indigo-50"
+            >
+              Commencer à jouer 🎮
+            </button>
+          )}
+          
+          {/* Bouton pour changer de projet */}
           <button
-            onClick={handleStartGame}
-            className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
+            onClick={handleClearProject}
+            className="bg-transparent border border-white text-white px-6 py-3 rounded-full text-sm font-medium
                      shadow-lg hover:shadow-xl transform transition-all duration-300 
-                     hover:scale-105 hover:bg-indigo-50"
+                     hover:scale-105 hover:bg-white/10"
           >
-            Commencer à jouer 🎮
+            Changer de projet 🔄
           </button>
-        )}
+        </div>
       </div>
+      
+      {/* Project Selector Modal */}
+      <Dialog open={showProjectSelector} onOpenChange={setShowProjectSelector}>
+        <DialogContent className="sm:max-w-[800px] p-0">
+          <DialogHeader className="p-6 pb-0">
+            <DialogTitle className="text-2xl font-bold text-center">Sélection du projet</DialogTitle>
+          </DialogHeader>
+          <div className="p-6">
+            <ProjectSelector 
+              onClose={() => setShowProjectSelector(false)}
+              standalone={true}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
