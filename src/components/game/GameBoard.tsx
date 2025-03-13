@@ -469,10 +469,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
       // Fermer le sélecteur de cartes
       setShowCardSelector(false);
       
-      // Vérifier si la carte a des conditions et les traiter
-      if (cardType === 'action' && hasCardConditions(card)) {
-        console.log("Action card has conditions, processing them...");
-        handleActionCardConditions(card);
+      // Traiter les cartes selon leur type
+      if (cardType === 'action') {
+        // Afficher toutes les cartes action dans la jolie Box modale
+        console.log("Displaying action card in modal...");
+        displayCardInModal(card);
+        
+        // Si la carte a des conditions, les traiter également
+        if (hasCardConditions(card)) {
+          console.log("Action card has conditions, processing them...");
+          handleActionCardConditions(card);
+        }
       } else if (cardType === 'event' && hasCardConditions(card)) {
         console.log("Event card has conditions, processing them...");
         handleEventCardEffect(card);
@@ -586,129 +593,13 @@ const GameBoard: React.FC<GameBoardProps> = ({
         }
       }
       
-      // Préparer le contenu de la carte et le résultat des conditions
-      const cardTitle = getCardTitle(actionCard);
-      const cardDescription = getCardDescription(actionCard);
-      
-      // Créer un message HTML pour afficher le contenu de la carte et le résultat des conditions
-      let htmlMessage = `
-        <div>
-          <h3 style="font-weight: bold; margin-bottom: 8px; font-size: 16px;">${cardTitle}</h3>
-          <p style="margin-bottom: 10px;">${cardDescription}</p>
-      `;
-      
-      // Ajouter le résultat des conditions
+      // Appliquer les effets ou afficher le message par défaut
       if (effectsToApply) {
-        // Ajouter le message spécifique de la condition
-        if (effectsToApply.message) {
-          htmlMessage += `
-            <p style="margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
-              ${effectsToApply.message}
-            </p>
-          `;
-          
-          // Stocker le résultat des conditions dans un attribut personnalisé de la carte
-          // pour l'afficher dans le panneau latéral
-          const cardIndex = cards.findIndex(c => c.id === actionCard.id);
-          if (cardIndex !== -1) {
-            // Créer une copie de la carte avec les informations de condition
-            const updatedCard = {
-              ...cards[cardIndex],
-              conditionResult: {
-                message: effectsToApply.message,
-                budget: effectsToApply.budget,
-                time: effectsToApply.time,
-                value: effectsToApply.value
-              }
-            };
-            
-            // Mettre à jour la carte dans le tableau
-            const newCards = [...cards];
-            newCards[cardIndex] = updatedCard;
-            
-            // Mettre à jour l'état global des cartes
-            if (onMoveCard) {
-              // Utiliser onMoveCard pour mettre à jour la carte (même si on ne change pas sa position)
-              onMoveCard(actionCard.id, updatedCard.position || { x: 0, y: 0 });
-              
-              // Forcer la mise à jour de l'affichage du panneau latéral
-              setTimeout(() => {
-                // Fermer et rouvrir le panneau pour forcer le rafraîchissement
-                const currentActiveCardId = activeCardId;
-                setActiveCardId(null);
-                setTimeout(() => {
-                  setActiveCardId(currentActiveCardId);
-                }, 50);
-              }, 100);
-            }
-          }
-        } else {
-          // Message par défaut si pas de message spécifique
-          htmlMessage += `
-            <p style="margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
-              ${conditionDescription}
-            </p>
-          `;
-        }
-        
-        // Ajouter les badges d'impact
-        htmlMessage += `
-          <div style="display: flex; gap: 10px; margin-top: 5px;">
-            ${effectsToApply.budget !== undefined ? 
-              `<span style="padding: 3px 8px; border-radius: 12px; background-color: ${effectsToApply.budget >= 0 ? '#f44336' : '#4caf50'}; color: white; font-size: 12px;">
-                ${effectsToApply.budget >= 0 ? '+' : ''}${effectsToApply.budget}K€
-              </span>` : ''}
-            ${effectsToApply.time !== undefined ? 
-              `<span style="padding: 3px 8px; border-radius: 12px; background-color: ${effectsToApply.time >= 0 ? '#f44336' : '#4caf50'}; color: white; font-size: 12px;">
-                ${effectsToApply.time >= 0 ? '+' : ''}${effectsToApply.time} jours
-              </span>` : ''}
-            ${effectsToApply.value !== undefined ? 
-              `<span style="padding: 3px 8px; border-radius: 12px; background-color: #4caf50; color: white; font-size: 12px;">
-                +${effectsToApply.value} points
-              </span>` : ''}
-          </div>
-        `;
-        
-        // Afficher le message
-        showImpactNotificationHTML(htmlMessage);
-        
-        // Appliquer l'impact sur le budget
-        if (effectsToApply.budget !== undefined && onModifyBudget) {
-          console.log(`Applying cost impact: ${effectsToApply.budget}K€`);
-          onModifyBudget(effectsToApply.budget);
-          
-          // Afficher une animation pour l'impact sur le coût
-          showCounterAnimation('budget', effectsToApply.budget);
-        }
-        
-        // Appliquer l'impact sur le délai
-        if (effectsToApply.time !== undefined && onModifyTime) {
-          console.log(`Applying time impact: ${effectsToApply.time} months`);
-          onModifyTime(effectsToApply.time);
-          
-          // Afficher une animation pour l'impact sur le délai
-          showCounterAnimation('time', effectsToApply.time);
-        }
-        
-        // Appliquer l'impact sur la valeur du projet
-        if (effectsToApply.value !== undefined && onAddValuePoints) {
-          console.log(`Applying value impact: ${effectsToApply.value} points`);
-          onAddValuePoints(effectsToApply.value);
-          
-          // Afficher une animation pour l'impact sur la valeur
-          showCounterAnimation('points', effectsToApply.value);
-        }
+        // Traiter les effets et mettre à jour la carte
+        tempDisplayCardDetails(actionCard, effectsToApply, conditionDescription);
       } else {
-        // Si aucune condition n'est remplie, afficher un message par défaut
-        htmlMessage += `
-          <p style="margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
-            Aucune condition n'a été remplie pour cette carte action.
-          </p>
-        </div>
-        `;
-        
-        // Afficher le message
-        showImpactNotificationHTML(htmlMessage);
+        // Si aucune condition n'est remplie, ne rien faire de spécial
+        console.log("Aucune condition n'a été remplie pour cette carte action.");
       }
     } else {
       // Si la carte n'a pas de conditions, afficher un message d'erreur
@@ -1061,8 +952,13 @@ const GameBoard: React.FC<GameBoardProps> = ({
     
     debugLog("Card clicked:", cardId);
     
-    // Ouvrir ou fermer le panneau latéral
-    setActiveCardId(activeCardId === cardId ? null : cardId);
+    // Si c'est une carte action, afficher dans une jolie Box modale
+    if (getCardType(card) === 'action') {
+      displayCardInModal(card);
+    } else {
+      // Pour les autres types de cartes, ouvrir ou fermer le panneau latéral
+      setActiveCardId(activeCardId === cardId ? null : cardId);
+    }
   };
 
   // Utiliser le composant DetailSidePanel importé
@@ -1616,6 +1512,301 @@ const GameBoard: React.FC<GameBoardProps> = ({
     // Transmettre la carte au parent si nécessaire
     if (onRandomCardSelected) {
       onRandomCardSelected(card);
+    }
+  };
+
+  // Fonction pour afficher une carte dans une jolie Box modale
+  const displayCardInModal = (card: Card) => {
+    console.log("=== AFFICHAGE CARTE DANS MODAL ===");
+    console.log("Carte:", getCardTitle(card));
+    
+    // Créer un conteneur pour la modal
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '9999';
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.3s ease';
+    
+    // Créer la modal
+    const modal = document.createElement('div');
+    modal.style.width = '90%';
+    modal.style.maxWidth = '600px';
+    modal.style.maxHeight = '80vh';
+    modal.style.display = 'flex';
+    modal.style.flexDirection = 'column';
+    modal.style.borderRadius = '12px';
+    modal.style.overflow = 'hidden';
+    modal.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
+    modal.style.backgroundColor = 'white';
+    
+    // Créer l'en-tête de la carte
+    const header = document.createElement('div');
+    header.style.padding = '24px';
+    header.style.background = 'linear-gradient(135deg, #3b82f6, #1e40af)';
+    header.style.color = 'white';
+    header.style.position = 'relative';
+    header.style.overflow = 'hidden';
+    
+    // Ajouter un cercle décoratif
+    const decorativeCircle = document.createElement('div');
+    decorativeCircle.style.position = 'absolute';
+    decorativeCircle.style.top = '-20px';
+    decorativeCircle.style.right = '-20px';
+    decorativeCircle.style.width = '100px';
+    decorativeCircle.style.height = '100px';
+    decorativeCircle.style.borderRadius = '50%';
+    decorativeCircle.style.background = 'rgba(255, 255, 255, 0.1)';
+    decorativeCircle.style.zIndex = '0';
+    
+    // Ajouter le titre
+    const title = document.createElement('h2');
+    title.textContent = getCardTitle(card);
+    title.style.fontWeight = 'bold';
+    title.style.fontSize = '1.25rem';
+    title.style.position = 'relative';
+    title.style.zIndex = '1';
+    title.style.margin = '0';
+    
+    // Ajouter le type de carte
+    const cardType = document.createElement('p');
+    cardType.textContent = 'Action';
+    cardType.style.marginTop = '8px';
+    cardType.style.opacity = '0.9';
+    cardType.style.fontSize = '0.875rem';
+    cardType.style.position = 'relative';
+    cardType.style.zIndex = '1';
+    cardType.style.margin = '8px 0 0 0';
+    
+    // Ajouter les éléments à l'en-tête
+    header.appendChild(decorativeCircle);
+    header.appendChild(title);
+    header.appendChild(cardType);
+    
+    // Créer le contenu de la carte
+    const content = document.createElement('div');
+    content.style.padding = '24px';
+    content.style.overflowY = 'auto';
+    content.style.flexGrow = '1';
+    
+    // Ajouter la description
+    const description = document.createElement('p');
+    description.textContent = getCardDescription(card);
+    description.style.marginBottom = '24px';
+    description.style.lineHeight = '1.5';
+    
+    // Ajouter les informations supplémentaires si disponibles
+    const cardInfo = getCardInfo(card);
+    if (cardInfo) {
+      const info = document.createElement('p');
+      info.textContent = cardInfo;
+      info.style.fontStyle = 'italic';
+      info.style.marginBottom = '16px';
+      info.style.padding = '12px';
+      info.style.backgroundColor = 'rgba(0, 0, 0, 0.03)';
+      info.style.borderRadius = '8px';
+      content.appendChild(info);
+    }
+    
+    // Ajouter les badges pour le coût et le délai si disponibles
+    const cost = getCardCost(card);
+    const time = getCardTime(card);
+    
+    if (cost || time) {
+      const badgesContainer = document.createElement('div');
+      badgesContainer.style.display = 'flex';
+      badgesContainer.style.gap = '8px';
+      badgesContainer.style.marginTop = '16px';
+      
+      if (cost) {
+        const costValue = parseInt(cost.replace(/[^0-9-]/g, '')) || 0;
+        const costBadge = document.createElement('span');
+        costBadge.textContent = `💰 ${cost}`;
+        costBadge.style.padding = '4px 12px';
+        costBadge.style.borderRadius = '16px';
+        costBadge.style.backgroundColor = costValue >= 0 ? '#f44336' : '#4caf50';
+        costBadge.style.color = 'white';
+        costBadge.style.fontSize = '0.875rem';
+        costBadge.style.fontWeight = '500';
+        badgesContainer.appendChild(costBadge);
+      }
+      
+      if (time) {
+        const timeValue = parseInt(time.replace(/[^0-9-]/g, '')) || 0;
+        const timeBadge = document.createElement('span');
+        timeBadge.textContent = `⏱️ ${time}`;
+        timeBadge.style.padding = '4px 12px';
+        timeBadge.style.borderRadius = '16px';
+        timeBadge.style.backgroundColor = timeValue >= 0 ? '#f44336' : '#4caf50';
+        timeBadge.style.color = 'white';
+        timeBadge.style.fontSize = '0.875rem';
+        timeBadge.style.fontWeight = '500';
+        badgesContainer.appendChild(timeBadge);
+      }
+      
+      content.appendChild(badgesContainer);
+    }
+    
+    // Ajouter la description au contenu
+    content.insertBefore(description, content.firstChild);
+    
+    // Ajouter un bouton de fermeture
+    const closeButton = document.createElement('button');
+    closeButton.innerHTML = '×';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '12px';
+    closeButton.style.right = '12px';
+    closeButton.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+    closeButton.style.border = 'none';
+    closeButton.style.color = 'white';
+    closeButton.style.fontSize = '24px';
+    closeButton.style.width = '32px';
+    closeButton.style.height = '32px';
+    closeButton.style.borderRadius = '50%';
+    closeButton.style.display = 'flex';
+    closeButton.style.justifyContent = 'center';
+    closeButton.style.alignItems = 'center';
+    closeButton.style.cursor = 'pointer';
+    closeButton.style.zIndex = '2';
+    closeButton.style.transition = 'background-color 0.2s';
+    
+    closeButton.onmouseover = () => {
+      closeButton.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+    };
+    
+    closeButton.onmouseout = () => {
+      closeButton.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+    };
+    
+    // Fonction pour fermer la modal
+    const closeModal = () => {
+      overlay.style.opacity = '0';
+      setTimeout(() => {
+        if (document.body.contains(overlay)) {
+          document.body.removeChild(overlay);
+        }
+      }, 300);
+    };
+    
+    closeButton.onclick = closeModal;
+    
+    // Fermer également en cliquant sur l'overlay
+    overlay.onclick = (e) => {
+      if (e.target === overlay) {
+        closeModal();
+      }
+    };
+    
+    // Ajouter le bouton de fermeture à l'en-tête
+    header.appendChild(closeButton);
+    
+    // Ajouter l'en-tête et le contenu à la modal
+    modal.appendChild(header);
+    modal.appendChild(content);
+    
+    // Ajouter la modal à l'overlay
+    overlay.appendChild(modal);
+    
+    // Ajouter l'overlay au DOM
+    document.body.appendChild(overlay);
+    
+    // Afficher la modal avec une animation
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+    }, 10);
+  };
+
+  // Fonction pour afficher une carte action dans une fenêtre
+  const displayActionCard = (actionCard: Card) => {
+    console.log("=== AFFICHAGE CARTE ACTION ===");
+    console.log("Carte:", getCardTitle(actionCard));
+    
+    // Utiliser la nouvelle fonction pour afficher la carte dans une jolie Box modale
+    displayCardInModal(actionCard);
+    
+    // Stocker le contenu HTML dans la carte pour référence future
+    const cardIndex = cards.findIndex(c => c.id === actionCard.id);
+    if (cardIndex !== -1) {
+      // Créer une copie de la carte avec les informations
+      const updatedCard = {
+        ...cards[cardIndex],
+        conditionResult: {
+          message: getCardDescription(actionCard),
+          htmlContent: getCardDescription(actionCard)
+        }
+      };
+      
+      // Mettre à jour la carte dans le tableau
+      const newCards = [...cards];
+      newCards[cardIndex] = updatedCard;
+      
+      // Mettre à jour l'état global des cartes
+      if (onMoveCard) {
+        // Utiliser onMoveCard pour mettre à jour la carte (même si on ne change pas sa position)
+        onMoveCard(actionCard.id, updatedCard.position || { x: 0, y: 0 });
+      }
+    }
+  };
+
+  // Fonction pour afficher une carte dans une jolie Box modale (pour les cartes action avec conditions)
+  const tempDisplayCardDetails = (actionCard: Card, effectsToApply: any, conditionDescription: string) => {
+    // Stocker le résultat des conditions dans un attribut personnalisé de la carte
+    const cardIndex = cards.findIndex(c => c.id === actionCard.id);
+    if (cardIndex !== -1) {
+      // Créer une copie de la carte avec les informations de condition
+      const updatedCard = {
+        ...cards[cardIndex],
+        conditionResult: {
+          message: effectsToApply?.message || conditionDescription,
+          budget: effectsToApply?.budget,
+          time: effectsToApply?.time,
+          value: effectsToApply?.value
+        }
+      };
+      
+      // Mettre à jour la carte dans le tableau
+      const newCards = [...cards];
+      newCards[cardIndex] = updatedCard;
+      
+      // Mettre à jour l'état global des cartes
+      if (onMoveCard) {
+        // Utiliser onMoveCard pour mettre à jour la carte (même si on ne change pas sa position)
+        onMoveCard(actionCard.id, updatedCard.position || { x: 0, y: 0 });
+      }
+    }
+    
+    // Appliquer l'impact sur le budget si nécessaire
+    if (effectsToApply?.budget !== undefined && onModifyBudget) {
+      console.log(`Applying cost impact: ${effectsToApply.budget}K€`);
+      onModifyBudget(effectsToApply.budget);
+      
+      // Afficher une animation pour l'impact sur le coût
+      showCounterAnimation('budget', effectsToApply.budget);
+    }
+    
+    // Appliquer l'impact sur le délai si nécessaire
+    if (effectsToApply?.time !== undefined && onModifyTime) {
+      console.log(`Applying time impact: ${effectsToApply.time} months`);
+      onModifyTime(effectsToApply.time);
+      
+      // Afficher une animation pour l'impact sur le délai
+      showCounterAnimation('time', effectsToApply.time);
+    }
+    
+    // Appliquer l'impact sur la valeur du projet si nécessaire
+    if (effectsToApply?.value !== undefined && onAddValuePoints) {
+      console.log(`Applying value impact: ${effectsToApply.value} points`);
+      onAddValuePoints(effectsToApply.value);
+      
+      // Afficher une animation pour l'impact sur la valeur
+      showCounterAnimation('points', effectsToApply.value);
     }
   };
 

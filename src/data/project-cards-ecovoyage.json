@@ -1289,7 +1289,7 @@
     "description": "Événement : Un influenceur populaire mentionne votre projet sur les réseaux sociaux.\n- Impact : Augmentation soudaine de la visibilité et de l'intérêt pour l'application.",
     "domain": "Gestion de la communication",
     "info": "Un buzz médiatique peut être une aubaine, mais il peut aussi créer une pression sur les ressources disponibles. Une planification adéquate de la scalabilité du système est essentielle.",
-    "phase": ["DEBUG",
+    "phase": [
       "Planification"
     ],
     "délai": "Variable",
@@ -1324,7 +1324,7 @@
     "description": "Prévoir les besoins en infrastructure pour gérer un afflux potentiel d'utilisateurs dès le lancement, en tenant compte des pics de trafic et des besoins en stockage.",
     "domain": "Gestion de l'infrastructure",
     "info": "Une bonne planification de la scalabilité permet d'éviter les interruptions de service et les coûts supplémentaires en cas de succès inattendu.",
-    "phase": ["DEBUG",
+    "phase": [
       "Planification"
     ],
     "conditions": [
@@ -1349,9 +1349,9 @@
     "description": "Associer les membres expérimentés de l'équipe à des employés plus jeunes pour favoriser le transfert de connaissances et le développement des compétences.",
     "domain": "Gestion des ressources humaines",
     "info": "Le mentorat permet de développer les compétences internes, d'améliorer la cohésion d'équipe et de fidéliser les employés.",
-    "phase": ["Planification"],
+    "phase": ["Planification", "DEBUG"],
     "délai": "-0.3",
-    "cout": "250"
+    "cout": "-2"
   },
   {
     "id": "crise-des-talents",
@@ -1360,7 +1360,7 @@
     "description": "Événement : Un concurrent lance une campagne de recrutement agressive.\n- Impact : Retards dans la planification et le développement, perte de compétences clés.",
     "domain": "Gestion des ressources humaines",
     "info": "La gestion des talents est essentielle pour le succès du projet. La mise en place d'un programme de mentorat peut aider à retenir les employés et à développer les compétences internes.",
-    "phase": [
+    "phase": ["DEBUG",
       "Planification"
     ],
     "délai": "Variable",
@@ -1370,8 +1370,8 @@
         "cardId": "programme-mentorat",
         "present": true,
         "effects": {
-          "budget": -5,
-          "time": -1,
+          "budget": 5,
+          "time": 2,
           "value": 10,
           "message": "Le programme de mentorat a renforcé la cohésion de l'équipe et a permis de retenir certains talents clés."
         }
@@ -1380,7 +1380,7 @@
         "cardId": "programme-mentorat",
         "present": false,
         "effects": {
-          "budget": -15,
+          "budget": -10,
           "time": -4,
           "value": 0,
           "message": "L'absence de mesures pour retenir les talents a entraîné des retards et une perte de compétences clés."
@@ -1396,8 +1396,8 @@
     "domain": "Gestion de la communication",
     "info": "Un audit de transparence permet de renforcer la crédibilité de l'application et de démontrer son engagement envers le tourisme durable. Il est particulièrement efficace en cas de scandale de greenwashing.",
     "phase": ["Planification","Exécution","Clôture"],
-    "délai": "-0.5",
-    "cout": "-20",
+    "délai": "-1",
+    "cout": "-10",
     "conditions": [
       {
         "cardId": "scandale-greenwashing",
@@ -1412,7 +1412,7 @@
         "present": false,
         "effects": {
           "value": 5,
-          "message": "L'audit de transparence a renforcé la crédibilité de l'application, même en l'absence de scandale de greenwashing."
+          "message": "L'audit de transparence a renforcé la crédibilité de l'application."
         }
       }
     ]
