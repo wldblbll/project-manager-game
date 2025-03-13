@@ -320,20 +320,87 @@ const AllCardsPage = () => {
               
               {/* Affichage des détails spécifiques selon le type de carte */}
               {getCardType(selectedCard) === 'action' && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                  {selectedCard.coût && (
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h4 className="text-sm font-semibold text-blue-800 mb-1">Coût</h4>
-                      <p className="text-blue-900 font-medium">{selectedCard.coût}</p>
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    {selectedCard.coût && (
+                      <div className="bg-blue-50 p-4 rounded-lg">
+                        <h4 className="text-sm font-semibold text-blue-800 mb-1">Coût</h4>
+                        <p className="text-blue-900 font-medium">{selectedCard.coût}</p>
+                      </div>
+                    )}
+                    {selectedCard.délai && (
+                      <div className="bg-blue-50 p-4 rounded-lg">
+                        <h4 className="text-sm font-semibold text-blue-800 mb-1">Délai</h4>
+                        <p className="text-blue-900 font-medium">{selectedCard.délai}</p>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Ajout de l'affichage des conditions pour les cartes action */}
+                  {hasCardConditions(selectedCard) && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-semibold text-blue-800 mb-2">Conditions</h3>
+                      {getCardConditions(selectedCard).map((condition, index) => (
+                        <div key={index} className="bg-blue-50 p-4 rounded-lg mb-3">
+                          {condition.cardId && condition.present !== undefined && (
+                            <p className="text-blue-900 mb-2">
+                              <span className="font-medium">Condition:</span> La carte #{condition.cardId} doit être {condition.present ? 'présente' : 'absente'}
+                            </p>
+                          )}
+                          
+                          {condition.operator && condition.checks && (
+                            <div className="mb-2">
+                              <p className="text-blue-900 font-medium mb-1">Conditions multiples ({condition.operator}):</p>
+                              <ul className="list-disc list-inside">
+                                {condition.checks.map((check, checkIndex) => (
+                                  <li key={checkIndex} className="text-blue-800">
+                                    La carte #{check.cardId} doit être {check.present ? 'présente' : 'absente'}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                          
+                          {condition.effects && (
+                            <div className="mt-3 pt-3 border-t border-blue-200">
+                              <p className="text-blue-900 font-medium mb-1">Effets:</p>
+                              <ul className="list-disc list-inside">
+                                {condition.effects.budget !== undefined && (
+                                  <li className="text-blue-800">
+                                    Budget: {condition.effects.budget > 0 ? '+' : ''}{condition.effects.budget}K€
+                                  </li>
+                                )}
+                                {condition.effects.time !== undefined && (
+                                  <li className="text-blue-800">
+                                    Délai: {condition.effects.time > 0 ? '+' : ''}{condition.effects.time} jours
+                                  </li>
+                                )}
+                                {condition.effects.value !== undefined && (
+                                  <li className="text-blue-800">
+                                    Valeur: {condition.effects.value > 0 ? '+' : ''}{condition.effects.value} points
+                                  </li>
+                                )}
+                                {condition.effects.message && (
+                                  <li className="text-blue-800">
+                                    {containsMarkdown(condition.effects.message) ? (
+                                      <MarkdownContent content={condition.effects.message} />
+                                    ) : (
+                                      condition.effects.message
+                                    )}
+                                  </li>
+                                )}
+                              </ul>
+                            </div>
+                          )}
+                          
+                          {condition.default && (
+                            <p className="text-blue-700 italic">Condition par défaut</p>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   )}
-                  {selectedCard.délai && (
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h4 className="text-sm font-semibold text-blue-800 mb-1">Délai</h4>
-                      <p className="text-blue-900 font-medium">{selectedCard.délai}</p>
-                    </div>
-                  )}
-                </div>
+                </>
               )}
               
               {getCardType(selectedCard) === 'event' && (
