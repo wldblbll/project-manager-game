@@ -44,9 +44,18 @@ export type Card = {
     effects?: {
       budget?: number;
       time?: number;
+      value?: number;
       message?: string;
     };
   }[];
+  // Propriété pour stocker les résultats des conditions
+  conditionResult?: {
+    message?: string;
+    budget?: number;
+    time?: number;
+    value?: number;
+    htmlContent?: string;
+  };
 };
 
 export type GameState = {
@@ -699,71 +708,59 @@ const GamePage = () => {
       // Afficher la notification
       showTurnsNotification();
       
-      let newState;
-      if (cardType === 'action' && !prevState.boardCards.some(c => c.id === card.id)) {
-        // Gestion des cartes action
-        const position = getNextAvailablePosition();
-        const cardWithPosition = { ...card, position };
+      // Générer une position pour la nouvelle carte
+      const position = getNextAvailablePosition();
+      const cardWithPosition = { ...card, position };
+      
+      // Vérifier si la carte est déjà sur le tableau
+      const isCardAlreadyOnBoard = prevState.boardCards.some(c => c.id === card.id);
+      if (isCardAlreadyOnBoard) {
+        console.log(`Card ${card.id} is already on the board. Skipping.`);
+        return prevState;
+      }
+      
+      let newState = {
+        ...prevState,
+        boardCards: [...prevState.boardCards, cardWithPosition],
+        remainingTurns: newRemainingTurns,
+        cardUsage: newCardUsage
+      };
+      
+      // Traitement spécifique selon le type de carte
+      if (cardType === 'quiz') {
+        // Ajouter également aux cartes sélectionnées pour le quiz
+        newState.selectedCards = [...prevState.selectedCards, cardWithPosition];
         
-        newState = {
-          ...prevState,
-          boardCards: [...prevState.boardCards, cardWithPosition],
-          remainingTurns: newRemainingTurns,
-          cardUsage: newCardUsage
-        };
-      } else if (cardType === 'quiz') {
-        // Gestion spécifique des cartes quiz
-        console.log("Processing quiz card:", card);
-        // Assurez-vous que la carte a les propriétés nécessaires
-        if (card.options && card.correct_answer) {
-          // Afficher une notification pour la carte quiz
-          const quizNotification = document.createElement('div');
-          quizNotification.textContent = "🎯 Question quiz : " + card.title;
-          quizNotification.style.position = 'fixed';
-          quizNotification.style.top = '220px';
-          quizNotification.style.right = '20px';
-          quizNotification.style.backgroundColor = '#4CAF50';
-          quizNotification.style.color = 'white';
-          quizNotification.style.padding = '8px 16px';
-          quizNotification.style.borderRadius = '20px';
-          quizNotification.style.fontWeight = 'bold';
-          quizNotification.style.zIndex = '9999';
+        // Afficher une notification pour la carte quiz
+        const quizNotification = document.createElement('div');
+        quizNotification.textContent = "🎯 Question quiz : " + card.title;
+        quizNotification.style.position = 'fixed';
+        quizNotification.style.top = '220px';
+        quizNotification.style.right = '20px';
+        quizNotification.style.backgroundColor = '#4CAF50';
+        quizNotification.style.color = 'white';
+        quizNotification.style.padding = '8px 16px';
+        quizNotification.style.borderRadius = '20px';
+        quizNotification.style.fontWeight = 'bold';
+        quizNotification.style.zIndex = '9999';
+        quizNotification.style.opacity = '0';
+        quizNotification.style.transform = 'translateX(20px)';
+        quizNotification.style.transition = 'all 0.3s ease-out';
+        
+        document.body.appendChild(quizNotification);
+        
+        setTimeout(() => {
+          quizNotification.style.opacity = '1';
+          quizNotification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        setTimeout(() => {
           quizNotification.style.opacity = '0';
           quizNotification.style.transform = 'translateX(20px)';
-          quizNotification.style.transition = 'all 0.3s ease-out';
-          
-          document.body.appendChild(quizNotification);
-          
           setTimeout(() => {
-            quizNotification.style.opacity = '1';
-            quizNotification.style.transform = 'translateX(0)';
-          }, 100);
-          
-          setTimeout(() => {
-            quizNotification.style.opacity = '0';
-            quizNotification.style.transform = 'translateX(20px)';
-            setTimeout(() => {
-              document.body.removeChild(quizNotification);
-            }, 300);
-          }, 3000);
-
-          newState = {
-            ...prevState,
-            remainingTurns: newRemainingTurns,
-            cardUsage: newCardUsage,
-            selectedCards: [...prevState.selectedCards, card]
-          };
-        } else {
-          console.error("Quiz card missing required properties:", card);
-          return prevState;
-        }
-      } else {
-        // Pour les autres types de cartes (event)
-        newState = {
-          ...prevState,
-          remainingTurns: newRemainingTurns,
-          cardUsage: newCardUsage
-        };
+            document.body.removeChild(quizNotification);
+          }, 300);
+        }, 3000);
       }
 
       // Si le nombre de tours restants est 0, déclencher automatiquement le jalon

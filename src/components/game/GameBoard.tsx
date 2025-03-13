@@ -443,24 +443,254 @@ const GameBoard: React.FC<GameBoardProps> = ({
         debugLog(`Incrementing card usage for type ${cardType}. Before: ${cardUsage[cardType]}`);
       }
       
-      // Vérifier si la carte a des conditions (pour les cartes action) APRÈS l'avoir ajoutée
-      console.log("Checking if card has conditions:", hasCardConditions(card));
-      if (cardType === "action" && hasCardConditions(card)) {
-        console.log("Action card has conditions, processing them...");
-        // Traiter les conditions immédiatement pour que l'utilisateur voie le contenu de la carte
-        handleActionCardConditions(card);
-      }
-    }
-    
-    // Fermer le sélecteur de cartes si ce n'est pas une carte action ou si la touche Alt n'est pas enfoncée
-    if (cardType !== 'action' || altKeyPressed) {
+      // Fermer le sélecteur de cartes
       setShowCardSelector(false);
+      
+      // Vérifier si la carte a des conditions et les traiter
+      if (cardType === 'action' && hasCardConditions(card)) {
+        console.log("Action card has conditions, processing them...");
+        handleActionCardConditions(card);
+      } else if (cardType === 'event' && hasCardConditions(card)) {
+        console.log("Event card has conditions, processing them...");
+        handleEventCardEffect(card);
+      }
     }
   };
   
   // Fonction pour gérer les conditions des cartes action
   const handleActionCardConditions = (actionCard: Card) => {
-    // ... existing code ...
+    console.log("=== ACTION AVEC CONDITIONS DÉCLENCHÉE ===");
+    console.log("Carte complète:", JSON.stringify(actionCard, null, 2));
+    console.log("Type:", getCardType(actionCard));
+    console.log("Titre:", getCardTitle(actionCard));
+    console.log("A des conditions:", hasCardConditions(actionCard));
+    console.log("Conditions brutes:", actionCard.conditions);
+    
+    // Vérifier si la carte a des conditions
+    if (hasCardConditions(actionCard)) {
+      console.log("Conditions détectées:", JSON.stringify(getCardConditions(actionCard), null, 2));
+      
+      // Utiliser la liste globale des cartes utilisées
+      const boardCardIds = usedCards;
+      console.log("Cartes sur le plateau:", boardCardIds);
+      
+      // Variable pour stocker les effets à appliquer
+      let effectsToApply = null;
+      let conditionDescription = "";
+      
+      // Parcourir les conditions
+      for (const condition of getCardConditions(actionCard)) {
+        let conditionMet = false;
+        
+        // Condition simple
+        if (condition.cardId && condition.present !== undefined) {
+          const cardPresent = boardCardIds.includes(condition.cardId);
+          conditionMet = (cardPresent === condition.present);
+          
+          // Trouver le titre de la carte pour l'explication
+          const cardTitle = allCards.find(c => c.id === condition.cardId)
+            ? getCardTitle(allCards.find(c => c.id === condition.cardId)!)
+            : `Carte #${condition.cardId}`;
+            
+          conditionDescription = condition.present 
+            ? `Condition testée: La carte "${cardTitle}" est ${conditionMet ? 'présente' : 'absente'} sur le plateau.`
+            : `Condition testée: La carte "${cardTitle}" est ${!conditionMet ? 'présente' : 'absente'} sur le plateau.`;
+            
+          console.log(`Vérification de la condition pour la carte ${condition.cardId}:`);
+          console.log(`- La carte est ${cardPresent ? "présente" : "absente"} sur le plateau`);
+          console.log(`- La condition attend que la carte soit ${condition.present ? "présente" : "absente"}`);
+          console.log(`- Résultat: condition ${conditionMet ? "remplie" : "non remplie"}`);
+        }
+        // Condition avec opérateur logique
+        else if (condition.operator && condition.checks) {
+          // Tableau pour stocker les résultats des vérifications
+          const checkResults = [];
+          
+          // Vérifier chaque sous-condition
+          for (const check of condition.checks) {
+            if (check.cardId && check.present !== undefined) {
+              const cardPresent = boardCardIds.includes(check.cardId);
+              const result = (cardPresent === check.present);
+              
+              // Trouver le titre de la carte pour l'explication
+              const cardTitle = allCards.find(c => c.id === check.cardId)
+                ? getCardTitle(allCards.find(c => c.id === check.cardId)!)
+                : `Carte #${check.cardId}`;
+                
+              checkResults.push({
+                cardId: check.cardId,
+                title: cardTitle,
+                expected: check.present,
+                actual: cardPresent,
+                result
+              });
+              
+              console.log(`Vérification de la sous-condition pour la carte ${check.cardId}:`);
+              console.log(`- La carte est ${cardPresent ? "présente" : "absente"} sur le plateau`);
+              console.log(`- La condition attend que la carte soit ${check.present ? "présente" : "absente"}`);
+              console.log(`- Résultat: sous-condition ${result ? "remplie" : "non remplie"}`);
+            }
+          }
+          
+          // Appliquer l'opérateur logique
+          if (condition.operator === "AND") {
+            conditionMet = checkResults.every(check => check.result);
+            console.log(`Opérateur AND: toutes les conditions doivent être remplies. Résultat: ${conditionMet ? "rempli" : "non rempli"}`);
+          } else if (condition.operator === "OR") {
+            conditionMet = checkResults.some(check => check.result);
+            console.log(`Opérateur OR: au moins une condition doit être remplie. Résultat: ${conditionMet ? "rempli" : "non rempli"}`);
+          }
+          
+          // Construire l'explication détaillée
+          const checkDescriptions = checkResults.map(check => 
+            `"${check.title}" ${check.expected ? 'présente' : 'absente'}: ${check.result ? '✓' : '✗'}`
+          );
+          
+          conditionDescription = `Condition testée (${condition.operator}): ${checkDescriptions.join(' ET ')}`;
+        }
+        // Condition par défaut
+        else if (condition.default) {
+          conditionMet = true;
+          conditionDescription = "Condition par défaut appliquée car aucune autre condition n'a été remplie.";
+          console.log("Condition par défaut appliquée");
+        }
+        
+        // Si la condition est remplie, stocker les effets à appliquer
+        if (conditionMet && condition.effects) {
+          effectsToApply = condition.effects;
+          console.log("Effets à appliquer:", effectsToApply);
+          break; // On a trouvé une condition qui s'applique, on arrête la recherche
+        }
+      }
+      
+      // Préparer le contenu de la carte et le résultat des conditions
+      const cardTitle = getCardTitle(actionCard);
+      const cardDescription = getCardDescription(actionCard);
+      
+      // Créer un message HTML pour afficher le contenu de la carte et le résultat des conditions
+      let htmlMessage = `
+        <div>
+          <h3 style="font-weight: bold; margin-bottom: 8px; font-size: 16px;">${cardTitle}</h3>
+          <p style="margin-bottom: 10px;">${cardDescription}</p>
+      `;
+      
+      // Ajouter le résultat des conditions
+      if (effectsToApply) {
+        // Ajouter le message spécifique de la condition
+        if (effectsToApply.message) {
+          htmlMessage += `
+            <p style="margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
+              ${effectsToApply.message}
+            </p>
+          `;
+          
+          // Stocker le résultat des conditions dans un attribut personnalisé de la carte
+          // pour l'afficher dans le panneau latéral
+          const cardIndex = cards.findIndex(c => c.id === actionCard.id);
+          if (cardIndex !== -1) {
+            // Créer une copie de la carte avec les informations de condition
+            const updatedCard = {
+              ...cards[cardIndex],
+              conditionResult: {
+                message: effectsToApply.message,
+                budget: effectsToApply.budget,
+                time: effectsToApply.time,
+                value: effectsToApply.value
+              }
+            };
+            
+            // Mettre à jour la carte dans le tableau
+            const newCards = [...cards];
+            newCards[cardIndex] = updatedCard;
+            
+            // Mettre à jour l'état global des cartes
+            if (onMoveCard) {
+              // Utiliser onMoveCard pour mettre à jour la carte (même si on ne change pas sa position)
+              onMoveCard(actionCard.id, updatedCard.position || { x: 0, y: 0 });
+              
+              // Forcer la mise à jour de l'affichage du panneau latéral
+              setTimeout(() => {
+                // Fermer et rouvrir le panneau pour forcer le rafraîchissement
+                const currentActiveCardId = activeCardId;
+                setActiveCardId(null);
+                setTimeout(() => {
+                  setActiveCardId(currentActiveCardId);
+                }, 50);
+              }, 100);
+            }
+          }
+        } else {
+          // Message par défaut si pas de message spécifique
+          htmlMessage += `
+            <p style="margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
+              ${conditionDescription}
+            </p>
+          `;
+        }
+        
+        // Ajouter les badges d'impact
+        htmlMessage += `
+          <div style="display: flex; gap: 10px; margin-top: 5px;">
+            ${effectsToApply.budget !== undefined ? 
+              `<span style="padding: 3px 8px; border-radius: 12px; background-color: ${effectsToApply.budget >= 0 ? '#f44336' : '#4caf50'}; color: white; font-size: 12px;">
+                ${effectsToApply.budget >= 0 ? '+' : ''}${effectsToApply.budget}K€
+              </span>` : ''}
+            ${effectsToApply.time !== undefined ? 
+              `<span style="padding: 3px 8px; border-radius: 12px; background-color: ${effectsToApply.time >= 0 ? '#f44336' : '#4caf50'}; color: white; font-size: 12px;">
+                ${effectsToApply.time >= 0 ? '+' : ''}${effectsToApply.time} jours
+              </span>` : ''}
+            ${effectsToApply.value !== undefined ? 
+              `<span style="padding: 3px 8px; border-radius: 12px; background-color: #4caf50; color: white; font-size: 12px;">
+                +${effectsToApply.value} points
+              </span>` : ''}
+          </div>
+        `;
+        
+        // Afficher le message
+        showImpactNotificationHTML(htmlMessage);
+        
+        // Appliquer l'impact sur le budget
+        if (effectsToApply.budget !== undefined && onModifyBudget) {
+          console.log(`Applying cost impact: ${effectsToApply.budget}K€`);
+          onModifyBudget(effectsToApply.budget);
+          
+          // Afficher une animation pour l'impact sur le coût
+          showCounterAnimation('budget', effectsToApply.budget);
+        }
+        
+        // Appliquer l'impact sur le délai
+        if (effectsToApply.time !== undefined && onModifyTime) {
+          console.log(`Applying time impact: ${effectsToApply.time} months`);
+          onModifyTime(effectsToApply.time);
+          
+          // Afficher une animation pour l'impact sur le délai
+          showCounterAnimation('time', effectsToApply.time);
+        }
+        
+        // Appliquer l'impact sur la valeur du projet
+        if (effectsToApply.value !== undefined && onAddValuePoints) {
+          console.log(`Applying value impact: ${effectsToApply.value} points`);
+          onAddValuePoints(effectsToApply.value);
+          
+          // Afficher une animation pour l'impact sur la valeur
+          showCounterAnimation('points', effectsToApply.value);
+        }
+      } else {
+        // Si aucune condition n'est remplie, afficher un message par défaut
+        htmlMessage += `
+          <p style="margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
+            Aucune condition n'a été remplie pour cette carte action.
+          </p>
+        </div>
+        `;
+        
+        // Afficher le message
+        showImpactNotificationHTML(htmlMessage);
+      }
+    } else {
+      // Si la carte n'a pas de conditions, afficher un message d'erreur
+      console.error("La carte action n'a pas de conditions mais handleActionCardConditions a été appelé");
+    }
   };
 
   // Card Selector Component
@@ -671,49 +901,51 @@ const GameBoard: React.FC<GameBoardProps> = ({
             </div>
             
             {/* Filter tabs */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              {/* Phase Filter Toggle */}
-              {currentPhase && (
+            {debugMode && (
+              <div className="flex flex-wrap gap-2 mt-4">
+                {/* Phase Filter Toggle */}
+                {currentPhase && (
+                  <button
+                    onClick={() => setShowCurrentPhaseOnly(!showCurrentPhaseOnly)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
+                      ${showCurrentPhaseOnly 
+                        ? 'bg-yellow-500 text-white' 
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                  >
+                    {showCurrentPhaseOnly ? 'Toutes les phases' : `Phase ${currentPhase}`}
+                  </button>
+                )}
+                
+                {/* Card Type Tabs */}
                 <button
-                  onClick={() => setShowCurrentPhaseOnly(!showCurrentPhaseOnly)}
+                  onClick={() => setLocalSelectedType('action')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                    ${showCurrentPhaseOnly 
-                      ? 'bg-yellow-500 text-white' 
+                    ${localSelectedType === 'action' 
+                      ? 'bg-blue-500 text-white' 
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
                 >
-                  {showCurrentPhaseOnly ? 'Toutes les phases' : `Phase ${currentPhase}`}
+                  Cartes Action
                 </button>
-              )}
-              
-              {/* Card Type Tabs */}
-              <button
-                onClick={() => setLocalSelectedType('action')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                  ${localSelectedType === 'action' 
-                    ? 'bg-blue-500 text-white' 
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-              >
-                Cartes Action
-              </button>
-              <button
-                onClick={() => setLocalSelectedType('event')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                  ${localSelectedType === 'event' 
-                    ? 'bg-purple-500 text-white' 
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-              >
-                Cartes Événement
-              </button>
-              <button
-                onClick={() => setLocalSelectedType('quiz')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                  ${localSelectedType === 'quiz' 
-                    ? 'bg-green-500 text-white' 
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-              >
-                Cartes Quiz
-              </button>
-            </div>
+                <button
+                  onClick={() => setLocalSelectedType('event')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
+                    ${localSelectedType === 'event' 
+                      ? 'bg-purple-500 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                >
+                  Cartes Événement
+                </button>
+                <button
+                  onClick={() => setLocalSelectedType('quiz')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors
+                    ${localSelectedType === 'quiz' 
+                      ? 'bg-green-500 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                >
+                  Cartes Quiz
+                </button>
+              </div>
+            )}
           </div>
           
           {/* Afficher le bouton d'ajout pour la carte action sélectionnée */}
@@ -818,6 +1050,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         cards={cards}
         getCardColors={getCardColors}
         onClose={() => setActiveCardId(null)}
+        allCards={allCards}
       />
     );
   };
@@ -839,12 +1072,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   // Fonction pour gérer les effets des cartes événement
   const handleEventCardEffect = (eventCard: Card) => {
-    console.log("=== ÉVÉNEMENT DÉCLENCHÉ ===");
+    console.log("=== ÉVÉNEMENT AVEC CONDITIONS DÉCLENCHÉ ===");
     console.log("Carte complète:", JSON.stringify(eventCard, null, 2));
     console.log("Type:", getCardType(eventCard));
     console.log("Titre:", getCardTitle(eventCard));
     console.log("A des conditions:", hasCardConditions(eventCard));
-    console.log("Conditions brutes:", eventCard.conditions);
     
     // Vérifier si la carte a des conditions
     if (hasCardConditions(eventCard)) {
@@ -888,25 +1120,28 @@ const GameBoard: React.FC<GameBoardProps> = ({
           
           // Vérifier chaque sous-condition
           for (const check of condition.checks) {
-            const cardPresent = boardCardIds.includes(check.cardId);
-            
-            // Trouver la carte correspondante
-            const cardObj = allCards.find(c => c.id === check.cardId);
-            const cardTitle = cardObj ? getCardTitle(cardObj) : `Carte #${check.cardId}`;
-            
-            console.log(`Vérification de la sous-condition pour la carte "${cardTitle}" (${check.cardId}):`);
-            console.log(`- La carte est ${cardPresent ? "présente" : "absente"} sur le plateau`);
-            console.log(`- La condition attend que la carte soit ${check.present ? "présente" : "absente"}`);
-            console.log(`- Résultat: sous-condition ${(cardPresent === check.present) ? "remplie" : "non remplie"}`);
-            
-            // Ajouter le résultat au tableau
-            checkResults.push({
-              cardId: check.cardId,
-              expected: check.present,
-              actual: cardPresent,
-              result: cardPresent === check.present,
-              title: cardTitle
-            });
+            if (check.cardId && check.present !== undefined) {
+              const cardPresent = boardCardIds.includes(check.cardId);
+              const result = (cardPresent === check.present);
+              
+              // Trouver le titre de la carte pour l'explication
+              const cardTitle = allCards.find(c => c.id === check.cardId)
+                ? getCardTitle(allCards.find(c => c.id === check.cardId)!)
+                : `Carte #${check.cardId}`;
+                
+              checkResults.push({
+                cardId: check.cardId,
+                title: cardTitle,
+                expected: check.present,
+                actual: cardPresent,
+                result
+              });
+              
+              console.log(`Vérification de la sous-condition pour la carte ${check.cardId}:`);
+              console.log(`- La carte est ${cardPresent ? "présente" : "absente"} sur le plateau`);
+              console.log(`- La condition attend que la carte soit ${check.present ? "présente" : "absente"}`);
+              console.log(`- Résultat: sous-condition ${result ? "remplie" : "non remplie"}`);
+            }
           }
           
           // Appliquer l'opérateur logique
@@ -940,56 +1175,163 @@ const GameBoard: React.FC<GameBoardProps> = ({
         }
       }
       
-      // Appliquer les effets si une condition a été remplie
+      // Préparer le contenu de la carte et le résultat des conditions
+      const cardTitle = getCardTitle(eventCard);
+      const cardDescription = getCardDescription(eventCard);
+      
+      // Créer un message HTML pour afficher le contenu de la carte et le résultat des conditions
+      let htmlMessage = `
+        <div>
+          <h3 style="font-weight: bold; margin-bottom: 8px; font-size: 16px;">${cardTitle}</h3>
+          <p style="margin-bottom: 10px;">${cardDescription}</p>
+      `;
+      
+      // Ajouter le résultat des conditions
       if (effectsToApply) {
-        // Appliquer l'impact sur le budget
+        // Ajouter le message spécifique de la condition
+        if (effectsToApply.message) {
+          htmlMessage += `
+            <p style="margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
+              ${effectsToApply.message}
+            </p>
+          `;
+        } else {
+          // Message par défaut si pas de message spécifique
+          htmlMessage += `
+            <p style="margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
+              ${conditionDescription}
+            </p>
+          `;
+        }
+        
+        // Ajouter les badges d'impact
+        htmlMessage += `
+          <div style="display: flex; gap: 10px; margin-top: 5px;">
+            ${effectsToApply.budget !== undefined ? 
+              `<span style="padding: 3px 8px; border-radius: 12px; background-color: ${effectsToApply.budget >= 0 ? '#f44336' : '#4caf50'}; color: white; font-size: 12px;">
+                ${effectsToApply.budget >= 0 ? '+' : ''}${effectsToApply.budget}K€
+              </span>` : ''}
+            ${effectsToApply.time !== undefined ? 
+              `<span style="padding: 3px 8px; border-radius: 12px; background-color: ${effectsToApply.time >= 0 ? '#f44336' : '#4caf50'}; color: white; font-size: 12px;">
+                ${effectsToApply.time >= 0 ? '+' : ''}${effectsToApply.time} jours
+              </span>` : ''}
+            ${effectsToApply.value !== undefined ? 
+              `<span style="padding: 3px 8px; border-radius: 12px; background-color: #4caf50; color: white; font-size: 12px;">
+                +${effectsToApply.value} points
+              </span>` : ''}
+          </div>
+        `;
+        
+        // Stocker le résultat des conditions dans un attribut personnalisé de la carte
+        const cardIndex = cards.findIndex(c => c.id === eventCard.id);
+        if (cardIndex !== -1) {
+          // Créer une copie de la carte avec les informations de condition
+          const updatedCard = {
+            ...cards[cardIndex],
+            conditionResult: {
+              message: effectsToApply.message || conditionDescription,
+              budget: effectsToApply.budget,
+              time: effectsToApply.time,
+              value: effectsToApply.value,
+              htmlContent: htmlMessage // Stocker le message HTML complet
+            }
+          };
+          
+          // Mettre à jour la carte dans le tableau
+          const newCards = [...cards];
+          newCards[cardIndex] = updatedCard;
+          
+          // Mettre à jour l'état global des cartes
+          if (onMoveCard) {
+            // Utiliser onMoveCard pour mettre à jour la carte (même si on ne change pas sa position)
+            onMoveCard(eventCard.id, updatedCard.position || { x: 0, y: 0 });
+            
+            // Forcer la mise à jour de l'affichage du panneau latéral
+            setTimeout(() => {
+              // Fermer et rouvrir le panneau pour forcer le rafraîchissement
+              const currentActiveCardId = activeCardId;
+              setActiveCardId(null);
+              setTimeout(() => {
+                setActiveCardId(currentActiveCardId);
+              }, 50);
+            }, 100);
+          }
+        }
+        
+        // Appliquer les effets
         if (effectsToApply.budget !== undefined && onModifyBudget) {
-          console.log(`Applying cost impact: ${effectsToApply.budget}K€`);
+          console.log(`Applying budget impact: ${effectsToApply.budget}K€`);
           onModifyBudget(effectsToApply.budget);
           
-          // Afficher une animation pour l'impact sur le coût
+          // Afficher une animation pour l'impact sur le budget
           showCounterAnimation('budget', effectsToApply.budget);
         }
         
         // Appliquer l'impact sur le délai
         if (effectsToApply.time !== undefined && onModifyTime) {
-          console.log(`Applying time impact: ${effectsToApply.time} months`);
+          console.log(`Applying time impact: ${effectsToApply.time} days`);
           onModifyTime(effectsToApply.time);
           
           // Afficher une animation pour l'impact sur le délai
           showCounterAnimation('time', effectsToApply.time);
         }
         
-        return; // Sortir de la fonction après avoir appliqué les effets conditionnels
-      }
-    }
-    
-    // Traitement standard si pas de conditions ou si aucune condition n'est remplie
-    // Appliquer les impacts sur le coût et le délai
-    if (eventCard.coût) {
-      // Extraire la valeur numérique du coût (peut être positif ou négatif)
-      const costMatch = eventCard.coût.match(/([+-]?\d+)/);
-      if (costMatch && costMatch[1] && onModifyBudget) {
-        const costImpact = parseInt(costMatch[1], 10);
-        console.log(`Applying cost impact: ${costImpact}K€`);
-        onModifyBudget(costImpact);
+        // Appliquer l'impact sur la valeur du projet
+        if (effectsToApply.value !== undefined && onAddValuePoints) {
+          console.log(`Applying value impact: ${effectsToApply.value} points`);
+          onAddValuePoints(effectsToApply.value);
+          
+          // Afficher une animation pour l'impact sur la valeur
+          showCounterAnimation('points', effectsToApply.value);
+        }
+      } else {
+        // Si aucune condition n'est remplie, afficher un message par défaut
+        htmlMessage += `
+          <p style="margin-bottom: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
+            Aucune condition n'a été remplie pour cette carte événement.
+          </p>
+        </div>
+        `;
         
-        // Afficher une animation pour l'impact sur le coût
-        showCounterAnimation('budget', costImpact);
+        // Stocker le message dans la carte
+        const cardIndex = cards.findIndex(c => c.id === eventCard.id);
+        if (cardIndex !== -1) {
+          // Créer une copie de la carte avec les informations de condition
+          const updatedCard = {
+            ...cards[cardIndex],
+            conditionResult: {
+              message: "Aucune condition n'a été remplie pour cette carte événement.",
+              htmlContent: htmlMessage
+            }
+          };
+          
+          // Mettre à jour la carte dans le tableau
+          const newCards = [...cards];
+          newCards[cardIndex] = updatedCard;
+          
+          // Mettre à jour l'état global des cartes
+          if (onMoveCard) {
+            // Utiliser onMoveCard pour mettre à jour la carte (même si on ne change pas sa position)
+            onMoveCard(eventCard.id, updatedCard.position || { x: 0, y: 0 });
+            
+            // Forcer la mise à jour de l'affichage du panneau latéral
+            setTimeout(() => {
+              // Fermer et rouvrir le panneau pour forcer le rafraîchissement
+              const currentActiveCardId = activeCardId;
+              setActiveCardId(null);
+              setTimeout(() => {
+                setActiveCardId(currentActiveCardId);
+              }, 50);
+            }, 100);
+          }
+        }
       }
-    }
-    
-    if (eventCard.délai) {
-      // Extraire la valeur numérique du délai (peut être positif ou négatif)
-      const timeMatch = eventCard.délai.match(/([+-]?\d+)/);
-      if (timeMatch && timeMatch[1] && onModifyTime) {
-        const timeImpact = parseInt(timeMatch[1], 10);
-        console.log(`Applying time impact: ${timeImpact} months`);
-        onModifyTime(timeImpact);
-        
-        // Afficher une animation pour l'impact sur le délai
-        showCounterAnimation('time', timeImpact);
-      }
+      
+      // Ouvrir la carte dans le panneau latéral pour afficher les informations
+      setActiveCardId(eventCard.id);
+    } else {
+      // Si la carte n'a pas de conditions, afficher un message d'erreur
+      console.error("La carte événement n'a pas de conditions mais handleEventCardEffect a été appelé");
     }
   };
 
@@ -1026,37 +1368,102 @@ const GameBoard: React.FC<GameBoardProps> = ({
   
   // Fonction pour afficher une notification d'impact avec du HTML
   const showImpactNotificationHTML = (htmlMessage: string) => {
+    // Créer un conteneur pour la notification
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '9999';
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.3s ease';
+    
+    // Créer la notification
     const notification = document.createElement('div');
     notification.innerHTML = htmlMessage;
-    notification.style.position = 'fixed';
-    notification.style.bottom = '20px';
-    notification.style.right = '20px';
     notification.style.backgroundColor = '#263238';
     notification.style.color = 'white';
-    notification.style.padding = '15px';
+    notification.style.padding = '20px';
     notification.style.borderRadius = '8px';
-    notification.style.zIndex = '9999';
-    notification.style.opacity = '0';
-    notification.style.transition = 'opacity 0.5s';
-    notification.style.maxWidth = '400px';
-    notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+    notification.style.maxWidth = '500px';
+    notification.style.width = '80%';
+    notification.style.maxHeight = '80vh';
+    notification.style.overflowY = 'auto';
+    notification.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
     notification.style.fontSize = '14px';
     notification.style.lineHeight = '1.5';
+    notification.style.position = 'relative';
     
-    document.body.appendChild(notification);
+    // Ajouter un bouton de fermeture
+    const closeButton = document.createElement('button');
+    closeButton.innerHTML = '×';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '10px';
+    closeButton.style.right = '10px';
+    closeButton.style.backgroundColor = 'transparent';
+    closeButton.style.border = 'none';
+    closeButton.style.color = 'white';
+    closeButton.style.fontSize = '24px';
+    closeButton.style.cursor = 'pointer';
+    closeButton.style.padding = '0';
+    closeButton.style.width = '30px';
+    closeButton.style.height = '30px';
+    closeButton.style.display = 'flex';
+    closeButton.style.justifyContent = 'center';
+    closeButton.style.alignItems = 'center';
+    closeButton.style.borderRadius = '50%';
+    closeButton.style.transition = 'background-color 0.2s';
     
-    // Afficher la notification
-    setTimeout(() => {
-      notification.style.opacity = '1';
-    }, 100);
+    closeButton.onmouseover = () => {
+      closeButton.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+    };
     
-    // Supprimer la notification après 8 secondes (plus long pour lire le détail)
-    setTimeout(() => {
-      notification.style.opacity = '0';
+    closeButton.onmouseout = () => {
+      closeButton.style.backgroundColor = 'transparent';
+    };
+    
+    // Fonction pour fermer la notification
+    const closeNotification = () => {
+      overlay.style.opacity = '0';
       setTimeout(() => {
-        document.body.removeChild(notification);
-      }, 500);
-    }, 8000);
+        if (document.body.contains(overlay)) {
+          document.body.removeChild(overlay);
+        }
+      }, 300);
+    };
+    
+    closeButton.onclick = closeNotification;
+    
+    // Fermer également en cliquant sur l'overlay
+    overlay.onclick = (e) => {
+      if (e.target === overlay) {
+        closeNotification();
+      }
+    };
+    
+    // Ajouter le bouton à la notification
+    notification.appendChild(closeButton);
+    
+    // Ajouter la notification à l'overlay
+    overlay.appendChild(notification);
+    
+    // Ajouter l'overlay au DOM
+    document.body.appendChild(overlay);
+    
+    // Afficher la notification avec une animation
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+    }, 10);
+    
+    // Fermer automatiquement après 10 secondes
+    setTimeout(() => {
+      closeNotification();
+    }, 10000);
   };
 
   // Fonction pour ajouter des points de valeur lorsqu'une réponse à un quiz est correcte
@@ -1272,24 +1679,28 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 <div className="text-sm font-medium text-center whitespace-normal break-words">
                   {getCardTitle(card)}
                 </div>
+                {/* Afficher plus d'informations directement sur la carte */}
+                <div className="text-xs mt-1 text-center opacity-75 line-clamp-2">
+                  {getCardDescription(card).substring(0, 60)}
+                  {getCardDescription(card).length > 60 ? '...' : ''}
+                </div>
+                {/* Afficher les coûts et temps si disponibles */}
+                <div className="flex justify-center mt-2 gap-1">
+                  {getCardCost(card) && (
+                    <div className="text-xs px-2 py-0.5 rounded-full bg-white/20">
+                      💰 {getCardCost(card)}
+                    </div>
+                  )}
+                  {getCardTime(card) && (
+                    <div className="text-xs px-2 py-0.5 rounded-full bg-white/20">
+                      ⏱️ {getCardTime(card)}
+                    </div>
+                  )}
+                </div>
                 {debugMode && <div className="text-xs text-white/50 truncate">ID: {card.id.substring(0, 4)}</div>}
               </div>
             );
           })}
-          
-          {/* Tooltip - Ne pas afficher pour les cartes action */}
-          {hoveredCard && !draggingCard && activeCardId !== hoveredCard.id && getCardType(hoveredCard) !== 'action' && (
-            <div 
-              className="absolute z-20 w-64 p-4 bg-gray-800 backdrop-blur-md rounded-xl shadow-xl border border-gray-700 text-white"
-              style={{
-                left: `${hoveredCard.position?.x || 0}px`,
-                top: `${(hoveredCard.position?.y || 0) - 120}px`,
-              }}
-            >
-              <h3 className="font-bold mb-1">{getCardTitle(hoveredCard)}</h3>
-              <p className="text-sm opacity-80">{getCardDescription(hoveredCard).substring(0, 100)}...</p>
-            </div>
-          )}
           
           {/* Message d'état vide */}
           {cards.length === 0 && (
@@ -1314,6 +1725,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           cards={cards}
           getCardColors={getCardColors}
           onClose={() => setActiveCardId(null)}
+          allCards={allCards}
         />
       )}
     </div>
