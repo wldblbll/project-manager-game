@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 interface GameHeaderProps {
   budget: number;
@@ -10,6 +10,9 @@ interface GameHeaderProps {
   onToggleFullScreen?: () => void;
   projectName?: string;
   onMilestoneStep?: () => void;
+  budgetChange?: number | null;
+  timeChange?: number | null;
+  valueChange?: number | null;
 }
 
 const GameHeader: React.FC<GameHeaderProps> = ({ 
@@ -21,8 +24,41 @@ const GameHeader: React.FC<GameHeaderProps> = ({
   isFullScreen,
   onToggleFullScreen,
   projectName = "PM Cards",
-  onMilestoneStep
+  onMilestoneStep,
+  budgetChange,
+  timeChange,
+  valueChange
 }) => {
+  // Références pour les compteurs
+  const budgetRef = useRef<HTMLSpanElement>(null);
+  const timeRef = useRef<HTMLSpanElement>(null);
+  const valueRef = useRef<HTMLSpanElement>(null);
+
+  // Effet pour animer les compteurs lorsqu'ils changent
+  useEffect(() => {
+    if (budgetChange !== null && budgetChange !== 0 && budgetRef.current) {
+      budgetRef.current.classList.remove('counter-change');
+      void budgetRef.current.offsetWidth; // Force reflow
+      budgetRef.current.classList.add('counter-change');
+    }
+  }, [budget, budgetChange]);
+
+  useEffect(() => {
+    if (timeChange !== null && timeChange !== 0 && timeRef.current) {
+      timeRef.current.classList.remove('counter-change');
+      void timeRef.current.offsetWidth; // Force reflow
+      timeRef.current.classList.add('counter-change');
+    }
+  }, [time, timeChange]);
+
+  useEffect(() => {
+    if (valueChange !== null && valueChange !== 0 && valueRef.current) {
+      valueRef.current.classList.remove('counter-change');
+      void valueRef.current.offsetWidth; // Force reflow
+      valueRef.current.classList.add('counter-change');
+    }
+  }, [valuePoints, valueChange]);
+
   // Ajouter dynamiquement les keyframes au document
   useEffect(() => {
     // Vérifier si le style existe déjà
@@ -38,6 +74,22 @@ const GameHeader: React.FC<GameHeaderProps> = ({
         }
         .pulse-attention-button {
           animation: pulseAttention 1.5s infinite;
+        }
+        @keyframes valueChange {
+          0% { transform: translateY(0); opacity: 1; }
+          50% { transform: translateY(-10px); opacity: 0.5; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+        .value-change {
+          animation: valueChange 1s ease-out;
+        }
+        @keyframes counterChange {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.2); }
+          100% { transform: scale(1); }
+        }
+        .counter-change {
+          animation: counterChange 0.5s ease-out;
         }
       `;
       document.head.appendChild(style);
@@ -76,17 +128,51 @@ const GameHeader: React.FC<GameHeaderProps> = ({
 
           {/* Stats du jeu */}
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full relative">
               <span className="text-yellow-300">💰</span>
-              <span className="text-white font-medium">{budget}</span>
+              <span 
+                ref={budgetRef} 
+                className={`text-white font-medium transition-all duration-300 ${budgetChange && budgetChange < 0 ? 'text-green-300' : budgetChange && budgetChange > 0 ? 'text-red-300' : ''}`}
+              >
+                {budget}
+              </span>
+              {budgetChange !== null && budgetChange !== 0 && (
+                <span className={`absolute -top-6 left-1/2 transform -translate-x-1/2 text-sm font-bold value-change ${
+                  budgetChange > 0 ? 'text-red-500' : 'text-green-500'
+                }`}>
+                  {budgetChange > 0 ? '+' : ''}{budgetChange}K€
+                </span>
+              )}
             </div>
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full relative">
               <span className="text-blue-300">⏱️</span>
-              <span className="text-white font-medium">{time}</span>
+              <span 
+                ref={timeRef} 
+                className={`text-white font-medium transition-all duration-300 ${timeChange && timeChange < 0 ? 'text-green-300' : timeChange && timeChange > 0 ? 'text-red-300' : ''}`}
+              >
+                {time}
+              </span>
+              {timeChange !== null && timeChange !== 0 && (
+                <span className={`absolute -top-6 left-1/2 transform -translate-x-1/2 text-sm font-bold value-change ${
+                  timeChange > 0 ? 'text-red-500' : 'text-green-500'
+                }`}>
+                  {timeChange > 0 ? '+' : ''}{timeChange} jours
+                </span>
+              )}
             </div>
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full relative">
               <span className="text-green-300">⭐</span>
-              <span className="text-white font-medium">{valuePoints}</span>
+              <span 
+                ref={valueRef} 
+                className={`text-white font-medium transition-all duration-300 ${valueChange && valueChange > 0 ? 'text-green-300' : ''}`}
+              >
+                {valuePoints}
+              </span>
+              {valueChange !== null && valueChange !== 0 && (
+                <span className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-sm font-bold text-green-500 value-change">
+                  +{valueChange} points
+                </span>
+              )}
             </div>
           </div>
 

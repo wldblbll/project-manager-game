@@ -1637,7 +1637,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
             <div className="flex items-center gap-3 mt-3">
               {/* Boutons d'ajout de cartes */}
               <div className="flex items-center gap-3">
-                <button
+              <button
                   onClick={() => {
                     setSelectedCardType('action');
                     setShowCardSelector(true);
@@ -1647,7 +1647,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 >
                   <span className="mr-2">🛠️</span>
                   Actions ({cardLimits.action - cardUsage.action} restantes)
-                </button>
+              </button>
                 
                 {debugMode && (
                   <>

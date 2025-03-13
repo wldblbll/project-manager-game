@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography, Modal, Paper, Radio, RadioGroup, FormControlLabel, FormControl, Alert } from '@mui/material';
+import { Box, Button, Typography, Modal, Paper, Radio, RadioGroup, FormControlLabel, FormControl, Alert, Chip, Stack } from '@mui/material';
 import { styled, keyframes } from '@mui/system';
 import { Card } from "@/pages/GamePage";
 import { 
@@ -556,8 +556,8 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
                                 : `Carte #${conditionToShow.cardId}`;
                                 
                               conditionText = conditionToShow.present 
-                                ? `La carte "${cardTitle}" est présente sur votre plateau`
-                                : `La carte "${cardTitle}" est absente de votre plateau`;
+                                ? `La carte "${cardTitle}" est présente sur votre plateau, cela impliquera :`
+                                : `La carte "${cardTitle}" étant absente de votre jeu, cela impliquera :`;
                             }
                             // Condition avec opérateur logique
                             else if (conditionToShow.operator && conditionToShow.checks) {
@@ -588,6 +588,10 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
                                 effects.push(`Délai: ${conditionToShow.effects.time > 0 ? '+' : ''}${conditionToShow.effects.time} mois`);
                               }
                               
+                              if (conditionToShow.effects.value !== undefined) {
+                                effects.push(`Valeur: ${conditionToShow.effects.value > 0 ? '+' : ''}${conditionToShow.effects.value} points`);
+                              }
+
                               if (conditionToShow.effects.message) {
                                 effects.push(conditionToShow.effects.message);
                               }
@@ -607,9 +611,59 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
                                 <Typography variant="body2" sx={{ fontWeight: 'bold', mb: 1 }}>
                                   {conditionText}
                                 </Typography>
-                                <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
-                                  {effectsText}
-                                </Typography>
+                                
+                                {/* Afficher les badges pour les effets */}
+                                {conditionToShow.effects && (
+                                  <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
+                                    {conditionToShow.effects.budget !== undefined && conditionToShow.effects.budget !== 0 && (
+                                      <Chip
+                                        label={`💰 ${conditionToShow.effects.budget > 0 ? '+' : ''}${conditionToShow.effects.budget}K€`}
+                                        color={conditionToShow.effects.budget < 0 ? 'error' : 'success'}
+                                        size="small"
+                                        variant="filled"
+                                        sx={{ 
+                                          fontWeight: 'bold',
+                                          bgcolor: conditionToShow.effects.budget < 0 ? 'error.main' : 'success.main',
+                                          color: 'white'
+                                        }}
+                                      />
+                                    )}
+                                    
+                                    {conditionToShow.effects.time !== undefined && conditionToShow.effects.time !== 0 && (
+                                      <Chip
+                                        label={`⏱️ ${conditionToShow.effects.time > 0 ? '+' : ''}${conditionToShow.effects.time} mois`}
+                                        color={conditionToShow.effects.time < 0 ? 'error' : 'success'}
+                                        size="small"
+                                        variant="filled"
+                                        sx={{ 
+                                          fontWeight: 'bold',
+                                          bgcolor: conditionToShow.effects.time < 0 ? 'error.main' : 'success.main',
+                                          color: 'white'
+                                        }}
+                                      />
+                                    )}
+                                    
+                                    {conditionToShow.effects.value !== undefined && conditionToShow.effects.value !== 0 && (
+                                      <Chip
+                                        label={`⭐ ${conditionToShow.effects.value > 0 ? '+' : ''}${conditionToShow.effects.value} points`}
+                                        color={conditionToShow.effects.value < 0 ? 'error' : 'success'}
+                                        size="small"
+                                        variant="filled"
+                                        sx={{ 
+                                          fontWeight: 'bold',
+                                          bgcolor: conditionToShow.effects.value < 0 ? 'error.main' : 'success.main',
+                                          color: 'white'
+                                        }}
+                                      />
+                                    )}
+                                  </Stack>
+                                )}
+                                
+                                {conditionToShow.effects && conditionToShow.effects.message && (
+                                  <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+                                    {conditionToShow.effects.message}
+                                  </Typography>
+                                )}
                               </Box>
                             );
                           })()}
@@ -617,27 +671,33 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
                       ) : (
                         // Affichage standard pour les cartes sans conditions
                         <>
-                          {selectedCard && selectedCard.coût && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                              <Typography variant="subtitle2" color="text.secondary" sx={{ fontWeight: 'bold', minWidth: 80 }}>
-                                Impact budget:
-                              </Typography>
-                              <Typography variant="body1" color={selectedCard.coût.includes('-') ? 'error.main' : 'success.main'} sx={{ fontWeight: 'bold' }}>
-                                {selectedCard.coût}
-                              </Typography>
-                            </Box>
-                          )}
-                          
-                          {selectedCard && selectedCard.délai && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                              <Typography variant="subtitle2" color="text.secondary" sx={{ fontWeight: 'bold', minWidth: 80 }}>
-                                Impact délai:
-                              </Typography>
-                              <Typography variant="body1" color={selectedCard.délai.includes('-') ? 'success.main' : 'error.main'} sx={{ fontWeight: 'bold' }}>
-                                {selectedCard.délai}
-                              </Typography>
-                            </Box>
-                          )}
+                          <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
+                            {selectedCard && selectedCard.coût && selectedCard.coût !== '0' && selectedCard.coût !== '+0' && (
+                              <Chip
+                                label={`💰 ${selectedCard.coût}`}
+                                size="small"
+                                variant="filled"
+                                sx={{ 
+                                  fontWeight: 'bold',
+                                  bgcolor: selectedCard.coût.includes('-') ? 'error.main' : 'success.main',
+                                  color: 'white'
+                                }}
+                              />
+                            )}
+                            
+                            {selectedCard && selectedCard.délai && selectedCard.délai !== '0' && selectedCard.délai !== '+0' && (
+                              <Chip
+                                label={`⏱️ ${selectedCard.délai}`}
+                                size="small"
+                                variant="filled"
+                                sx={{ 
+                                  fontWeight: 'bold',
+                                  bgcolor: selectedCard.délai.includes('-') ? 'error.main' : 'success.main',
+                                  color: 'white'
+                                }}
+                              />
+                            )}
+                          </Stack>
                         </>
                       )}
                     </Box>

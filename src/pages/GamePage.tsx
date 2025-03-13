@@ -179,6 +179,11 @@ const GamePage = () => {
   const [requiredCards, setRequiredCards] = useState<Record<string, string[]>>({});
   const [phasePenalties, setPhasePenalties] = useState<Record<string, { time: number; budget: number; message: string }>>({});
   
+  // États pour suivre les changements de valeurs
+  const [budgetChange, setBudgetChange] = useState<number | null>(null);
+  const [timeChange, setTimeChange] = useState<number | null>(null);
+  const [valueChange, setValueChange] = useState<number | null>(null);
+  
   // Initialize game state
   const [gameState, setGameState] = useState<GameState>({
     budget: INITIAL_BUDGET,
@@ -802,6 +807,10 @@ const GamePage = () => {
   // Handle adding value points (for quiz answers, etc.)
   const handleAddValuePoints = (points: number) => {
     console.log(`Adding ${points} value points to current value: ${gameState.valuePoints}`);
+    // Ne pas déclencher de changement si points est égal à 0
+    if (points !== 0) {
+      setValueChange(points);
+    }
     setGameState(prev => {
       const newState = {
         ...prev,
@@ -815,6 +824,10 @@ const GamePage = () => {
   // Handle modifying budget (for event cards)
   const handleModifyBudget = (amount: number) => {
     console.log(`Modifying budget by ${amount}K€ from current value: ${gameState.budget}K€`);
+    // Ne pas déclencher de changement si amount est égal à 0
+    if (amount !== 0) {
+      setBudgetChange(amount);
+    }
     setGameState(prev => {
       const newState = {
         ...prev,
@@ -828,6 +841,10 @@ const GamePage = () => {
   // Handle modifying time (for event cards)
   const handleModifyTime = (amount: number) => {
     console.log(`Modifying time by ${amount} months from current value: ${gameState.time} months`);
+    // Ne pas déclencher de changement si amount est égal à 0
+    if (amount !== 0) {
+      setTimeChange(amount);
+    }
     setGameState(prev => {
       const newState = {
         ...prev,
@@ -906,6 +923,7 @@ const GamePage = () => {
     };
   }, []);
 
+  /*
   // Effect to monitor changes in value points
   useEffect(() => {
     console.log("Value points updated:", gameState.valuePoints);
@@ -941,6 +959,18 @@ const GamePage = () => {
       }, 3000);
     }
   }, [gameState.valuePoints]);
+  */
+
+  // Effet pour réinitialiser les changements de valeurs après l'animation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setBudgetChange(null);
+      setTimeChange(null);
+      setValueChange(null);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [budgetChange, timeChange, valueChange]);
 
   // Afficher un écran de chargement ou d'erreur si nécessaire
   if (isLoading) {
@@ -1024,6 +1054,9 @@ const GamePage = () => {
         onToggleFullScreen={handleToggleFullScreen}
         projectName={selectedProject?.name || "PM Cards"}
         onMilestoneStep={handlePhaseMilestone}
+        budgetChange={budgetChange}
+        timeChange={timeChange}
+        valueChange={valueChange}
       />
       
       {/* Ne rendre Timeline que si les phases sont chargées */}

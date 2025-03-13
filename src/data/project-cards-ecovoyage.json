@@ -1310,9 +1310,9 @@
         "present": false,
         "effects": {
           "budget": -10,
-          "time": 1,
+          "time": -1,
           "value": -10,
-          "message": "Le succès viral a généré une surcharge imprévue, nécessitant une mise à l'échelle rapide de l'infrastructure et un coût supplémentaire important."
+          "message": "Le succès viral peut générer une surcharge imprévue de vos serveur nécessitant une mise à l'échelle rapide de l'infrastructure et un coût supplémentaire."
         }
       }
     ]
