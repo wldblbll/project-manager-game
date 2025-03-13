@@ -973,18 +973,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
           
           {/* Afficher le bouton d'ajout pour la carte action sélectionnée */}
           {localSelectedType === 'action' && selectedActionCards.length > 0 && (
-            <div className="mt-4 p-3 bg-blue-50 rounded-lg flex justify-between items-center">
-              <span className="text-blue-700 font-medium">
-                Carte sélectionnée : {getCardTitle(selectedActionCards[0])}
-              </span>
-                <button
+            <div className="mt-4 mb-4 p-4">
+              <button
                 onClick={handleAddSelectedActionCard}
-                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium"
-                >
+                className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-base font-medium transition-colors duration-200 shadow-sm flex items-center justify-center"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
                 Ajouter cette carte
-                </button>
+              </button>
             </div>
-              )}
+          )}
           
           {/* Results count */}
           <div className="mb-4 text-sm text-gray-500">
@@ -1685,7 +1685,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                              text-sm font-medium transition-all duration-200 flex items-center shadow-md"
                   >
                     <span className="mr-2">✨</span>
-                    Passer à l'étape jalon
+                    Passer à la prochaine phase projet
                   </button>
                 )}
               </div>

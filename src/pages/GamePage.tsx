@@ -9,6 +9,7 @@ import gameConfig from "@/data/game-config.json";
 import { Project } from "@/components/ProjectSelector";
 import { getCardTitle, getCardDomain, getCardType } from "@/utils/cardHelpers";
 import { useIsMobile } from "@/hooks/use-mobile";
+import ReactMarkdown from 'react-markdown';
 
 // Define types for our game
 export type Card = {
@@ -492,31 +493,29 @@ const GamePage = () => {
   const generatePositiveMessage = (phase: string, fulfilled: boolean, missingCards: string[]) => {
     if (fulfilled) {
       const messages = [
-        `🌟 Félicitations ! Vous avez brillamment complété la phase ${phase} !`,
-        `🎯 Excellent travail ! La phase ${phase} est un véritable succès !`,
-        `🚀 Phase ${phase} validée avec brio ! Continuez sur cette lancée !`,
-        `✨ Superbe performance ! La phase ${phase} est un franc succès !`
+        `🌟 **Félicitations !** Vous avez brillamment complété la phase ${phase} !`,
+        `🎯 **Excellent travail !** La phase ${phase} est un véritable succès !`,
+        `🚀 **Phase ${phase} validée avec brio !** Continuez sur cette lancée !`,
+        `✨ **Superbe performance !** La phase ${phase} est un franc succès !`
       ];
       return messages[Math.floor(Math.random() * messages.length)];
     }
 
     // Messages pour les phases incomplètes
-    let message = `🎮 La phase ${phase} présente encore quelques défis à relever ! `;
+    let message = `🎮 **La phase ${phase} présente encore quelques défis à relever !** `;
     
     if (missingCards.length > 0) {
       const opportunities = [
-        `Voici une opportunité d'amélioration : ${missingCards.join(", ")}`,
-        `Pour optimiser votre score, pensez à : ${missingCards.join(", ")}`,
-        `Conseil stratégique : considérez d'ajouter ${missingCards.join(", ")}`,
+        `En optant pour les cartes suivantes, vous auriez pu obtenir un score plus élevé : *${missingCards.join(", ")}*`,
+        `Vous auriez pu marquer plus de points en optant pour les cartes suivantes : *${missingCards.join(", ")}*`,
       ];
       message += opportunities[Math.floor(Math.random() * opportunities.length)];
     }
 
     const encouragements = [
-      "\n💪 Chaque défi est une opportunité d'apprentissage !",
-      "\n🌟 Vous avez les capacités pour surmonter ces obstacles !",
-      "\n✨ C'est en relevant ces défis que vous deviendrez un meilleur chef de projet !",
-      "\n🎯 Voyez ces ajustements comme une chance de perfectionner votre stratégie !"
+      "\n\n💪 **Félicitations** pour avoir terminé cette phase du projet. Poursuivez sur cette lancée !",
+      "\n\n🌟 **Bravo** pour l'achèvement de cette étape du projet. Continuez ainsi !",
+      "\n\n✨ **Excellente réalisation** pour cette phase du projet. Continuez ainsi !",
     ];
     
     return message + encouragements[Math.floor(Math.random() * encouragements.length)];
@@ -855,7 +854,7 @@ const GamePage = () => {
     });
   };
 
-  // Mise à jour du composant MilestoneDialog pour un style plus positif
+  // Composant pour afficher le dialogue de jalon
   const MilestoneDialog = () => {
     if (!gameState.showMilestone) return null;
     
@@ -865,10 +864,12 @@ const GamePage = () => {
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
           <h2 className="text-xl font-bold mb-4 text-center">
-            {isGameOver ? "🏆 Fin de l'Aventure !" : `🎯 Point d'Étape : ${gameState.currentPhase}`}
+            {isGameOver ? "🏆 Fin de l'Aventure !" : `🎯 Jalon fin de phase : ${gameState.currentPhase}`}
           </h2>
           
-          <p className="mb-4 text-center">{gameState.milestoneMessage}</p>
+          <div className="mb-4 text-center">
+            <ReactMarkdown>{gameState.milestoneMessage}</ReactMarkdown>
+          </div>
           
           {gameState.pendingPenalties && (gameState.pendingPenalties.time > 0 || gameState.pendingPenalties.budget > 0) && (
             <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
