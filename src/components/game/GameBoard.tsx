@@ -30,6 +30,8 @@ interface GameBoardProps {
   cardLimits?: { action: number; event: number; quiz: number }; // Card limits for current phase
   cardUsage?: { action: number; event: number; quiz: number }; // Current card usage
   onRandomCardSelected?: (card: Card) => void; // Nouvelle prop pour les cartes aléatoires
+  onMilestoneStep?: () => void; // Callback pour passer à l'étape jalon
+  remainingTurns?: number; // Nombre de tours restants
 }
 
 type CardType = 'action' | 'event' | 'quiz';
@@ -57,7 +59,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
   onModifyTime,
   cardLimits = { action: 0, event: 0, quiz: 0 },
   cardUsage = { action: 0, event: 0, quiz: 0 },
-  onRandomCardSelected
+  onRandomCardSelected,
+  onMilestoneStep,
+  remainingTurns = 0
 }) => {
   const [draggingCard, setDraggingCard] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -1633,7 +1637,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
             <div className="flex items-center gap-3 mt-3">
               {/* Boutons d'ajout de cartes */}
               <div className="flex items-center gap-3">
-              <button
+                <button
                   onClick={() => {
                     setSelectedCardType('action');
                     setShowCardSelector(true);
@@ -1643,7 +1647,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 >
                   <span className="mr-2">🛠️</span>
                   Actions ({cardLimits.action - cardUsage.action} restantes)
-              </button>
+                </button>
                 
                 {debugMode && (
                   <>
@@ -1671,6 +1675,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
                       Quiz ({cardLimits.quiz - cardUsage.quiz} restantes)
                     </button>
                   </>
+                )}
+                
+                {/* Bouton pour passer à l'étape jalon */}
+                {remainingTurns === 0 && onMilestoneStep && (
+                  <button
+                    onClick={onMilestoneStep}
+                    className="pulse-attention-button px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg 
+                             text-sm font-medium transition-all duration-200 flex items-center shadow-md"
+                  >
+                    <span className="mr-2">✨</span>
+                    Passer à l'étape jalon
+                  </button>
                 )}
               </div>
                             

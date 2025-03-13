@@ -637,35 +637,9 @@ const GamePage = () => {
     setGameState(prevState => {
       const { newCardUsage, newRemainingTurns } = updateCardUsageAndTurns(cardType, prevState);
       
-      // Vérifier d'abord si on doit passer à la phase suivante
-      if (newRemainingTurns <= 0) {
-        const currentPhase = prevState.currentPhase;
-        const penalties = applyPhasePenalties(currentPhase);
-        
-        // Get the next phase
-        const currentPhaseIndex = prevState.phases.indexOf(currentPhase);
-        const nextPhase = currentPhaseIndex < prevState.phases.length - 1 
-          ? prevState.phases[currentPhaseIndex + 1] 
-          : null;
-        
-        console.log("Forcing milestone transition:", {
-          currentPhase,
-          nextPhase,
-          remainingTurns: newRemainingTurns
-        });
-        
-        // Forcer le passage au jalon
-        return {
-          ...prevState,
-          showMilestone: true,
-          milestoneMessage: penalties.message,
-          pendingNextPhase: nextPhase,
-          pendingPenalties: { time: penalties.time, budget: penalties.budget },
-          remainingTurns: 0,
-          cardUsage: newCardUsage
-        };
-      }
-
+      // Ne plus forcer le passage à la phase suivante, juste mettre à jour le nombre de tours restants
+      // même s'il est à zéro, pour permettre à l'utilisateur de cliquer sur le bouton
+      
       // Créer la notification pour les tours restants
       const showTurnsNotification = () => {
         const animation = document.createElement('div');
@@ -673,7 +647,7 @@ const GamePage = () => {
           animation.textContent = `${newRemainingTurns} tour${newRemainingTurns > 1 ? 's' : ''} restant${newRemainingTurns > 1 ? 's' : ''}`;
           animation.style.backgroundColor = newRemainingTurns <= 2 ? '#ff9800' : '#2196f3';
         } else {
-          animation.textContent = "Dernier tour de la phase !";
+          animation.textContent = "Cliquez sur le bouton 'Passer à l'étape jalon' pour continuer";
           animation.style.backgroundColor = '#f44336';
         }
         
@@ -702,7 +676,7 @@ const GamePage = () => {
           setTimeout(() => {
             document.body.removeChild(animation);
           }, 300);
-        }, 2000);
+        }, 3000);
       };
 
       // Afficher la notification
@@ -763,33 +737,9 @@ const GamePage = () => {
         }, 3000);
       }
 
-      // Si le nombre de tours restants est 0, déclencher automatiquement le jalon
-      if (newRemainingTurns === 0) {
-        const currentPhase = newState.currentPhase;
-        const penalties = applyPhasePenalties(currentPhase);
-        
-        // Get the next phase
-        const currentPhaseIndex = newState.phases.indexOf(currentPhase);
-        const nextPhase = currentPhaseIndex < newState.phases.length - 1 
-          ? newState.phases[currentPhaseIndex + 1] 
-          : null;
-        
-        console.log("Triggering milestone transition:", {
-          currentPhase,
-          nextPhase,
-          remainingTurns: newRemainingTurns
-        });
-        
-        // Mettre à jour l'état avec le jalon
-        return {
-          ...newState,
-          showMilestone: true,
-          milestoneMessage: penalties.message,
-          pendingNextPhase: nextPhase,
-          pendingPenalties: { time: penalties.time, budget: penalties.budget }
-        };
-      }
-
+      // Ne plus déclencher automatiquement le jalon quand le nombre de tours est 0
+      // Laisser l'utilisateur cliquer sur le bouton
+      
       return newState;
     });
   };
@@ -1053,6 +1003,8 @@ const GamePage = () => {
           cardLimits={getCurrentPhaseLimits()}
           cardUsage={gameState.cardUsage}
           onRandomCardSelected={handleRandomCardSelected}
+          onMilestoneStep={handlePhaseMilestone}
+          remainingTurns={gameState.remainingTurns}
         />
         <MilestoneDialog />
       </>
@@ -1107,6 +1059,8 @@ const GamePage = () => {
               cardLimits={getCurrentPhaseLimits()}
               cardUsage={gameState.cardUsage}
               onRandomCardSelected={handleRandomCardSelected}
+              onMilestoneStep={handlePhaseMilestone}
+              remainingTurns={gameState.remainingTurns}
             />
           </>
         )}
@@ -1142,6 +1096,8 @@ const GamePage = () => {
             cardLimits={getCurrentPhaseLimits()}
             cardUsage={gameState.cardUsage}
             onRandomCardSelected={handleRandomCardSelected}
+            onMilestoneStep={handlePhaseMilestone}
+            remainingTurns={gameState.remainingTurns}
           />
         </div>
       )}

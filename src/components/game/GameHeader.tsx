@@ -71,16 +71,6 @@ const GameHeader: React.FC<GameHeaderProps> = ({
                   </span>
                 )}
               </span>
-              {remainingTurns === 0 && onMilestoneStep && (
-                <button
-                  onClick={onMilestoneStep}
-                  className="pulse-attention-button bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-full text-sm font-medium
-                           transition-all duration-200 shadow-lg relative overflow-hidden"
-                >
-                  <span className="relative z-10">Passer à l'étape jalon ✨</span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-600 opacity-0 hover:opacity-100 transition-opacity duration-300"></span>
-                </button>
-              )}
             </div>
           )}
 
