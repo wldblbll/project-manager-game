@@ -1195,7 +1195,7 @@
     "id": "estimer-les-ressources-necessaires",
     "type": "action",
     "title": "Estimer les ressources nécessaires",
-    "description": "Identifier et allouer les ressources nécessaires pour la réalisation du projet, incluant les développeurs, les experts en tourisme durable, les spécialistes du marketing et autres. Assurer une répartition optimale des ressources pour éviter les goulets d'étranglement.",
+    "description": "Identifier et allouer les ressources nécessaires pour la réalisation du projet, incluant les développeurs, les experts en tourisme durable, les spécialistes du marketing et autres. Assurer une répartition optimale des ressources pour éviter les goulots d'étranglement.",
     "domain": "Gestion des ressources",
     "info": "L'estimation des ressources nécessaires garantit que le projet dispose de suffisamment de compétences et de moyens pour atteindre ses objectifs. Une mauvaise estimation peut entraîner des retards et des dépassements de coûts.",
     "phase": [
@@ -1450,115 +1450,6 @@
           "time": -1,
           "value": -10,
           "message": "L'absence d'audit de transparence a nui à la réputation de l'application et a entraîné une perte de confiance des utilisateurs."
-        }
-      }
-    ]
-  },
-  {
-    "id": "audit-transparence",
-    "type": "action",
-    "title": "Mener un audit de transparence",
-    "description": "Engager un organisme indépendant pour auditer les pratiques durables de l'application et publier un rapport de transparence.",
-    "domain": "Gestion de la communication",
-    "info": "Un audit de transparence permet de renforcer la crédibilité de l'application et de démontrer son engagement envers le tourisme durable.",
-    "phase": [
-      "Planification",
-      "Exécution"
-    ],
-    "délai": "-0.5",
-    "cout": "200"
-  },
-  {
-    "id": "audit-de-securite-des-donnees",
-    "type": "event",
-    "title": "Audit de sécurité des données",
-    "description": "Événement : Un audit de sécurité révèle des vulnérabilités potentielles dans la protection des données utilisateurs.\n\nL'impact dépend de vos actions précédentes. Si vous avez à la fois défini le périmètre du projet et élaboré la charte, vous serez bien préparé. Si vous avez fait l'un des deux, l'impact sera modéré. Sans ces préparations, l'impact sera sévère.",
-    "domain": "Gestion des risques",
-    "info": "La sécurité des données est un aspect critique des applications modernes, particulièrement pour celles qui traitent des informations personnelles comme les itinéraires de voyage.",
-    "phase": [
-      "Planification",
-      "Exécution"
-    ],
-    "délai": "Variable",
-    "coût": "Variable",
-    "conditions": [
-      {
-        "operator": "AND",
-        "checks": [
-          {
-            "cardId": "1",
-            "present": true
-          },
-          {
-            "cardId": "8",
-            "present": true
-          }
-        ],
-        "effects": {
-          "budget": -5,
-          "time": -1,
-          "message": "Grâce à votre charte de projet et à la définition claire du périmètre, vous aviez anticipé les exigences de sécurité. Impact minimal: -5K€ et -1 mois."
-        }
-      },
-      {
-        "operator": "OR",
-        "checks": [
-          {
-            "cardId": "1",
-            "present": true
-          },
-          {
-            "cardId": "8",
-            "present": true
-          }
-        ],
-        "effects": {
-          "budget": -15,
-          "time": -2,
-          "message": "L'une de vos mesures préventives a permis de limiter l'impact: -15K€ et -2 mois."
-        }
-      },
-      {
-        "default": true,
-        "effects": {
-          "budget": -30,
-          "time": -4,
-          "message": "Sans préparation adéquate, l'audit de sécurité a révélé des problèmes majeurs: -30K€ et -4 mois pour les corrections."
-        }
-      }
-    ]
-  },
-  {
-    "id": "partie-prenante-enthousiaste-1",
-    "type": "event",
-    "title": "Partie prenante enthousiaste",
-    "description": "Événement : Une partie prenante clé (par exemple, une ONG ou un investisseur privé) exprime un intérêt accru pour le projet après avoir vu le premier prototype.\n- Impact : Support financier ou en ressources supplémentaires pour renforcer le développement.",
-    "domain": "Gestion des parties prenantes",
-    "info": "L'engagement des parties prenantes est essentiel pour garantir la stabilité du projet. Les parties prenantes enthousiastes peuvent faciliter le financement et l'adhésion au projet.",
-    "phase": [
-      "Planification"
-    ],
-    "délai": "Variable",
-    "coût": "Variable",
-    "conditions": [
-      {
-        "cardId": "obtenir-un-financement",
-        "present": true,
-        "effects": {
-          "budget": 100,
-          "time": 0,
-          "value": 20,
-          "message": "Grâce à votre action d'obtenir un financement, cette partie prenante vous soutient financièrement pour un meilleur développement."
-        }
-      },
-      {
-        "cardId": "obtenir-un-financement",
-        "present": false,
-        "effects": {
-          "budget": 0,
-          "time": 0,
-          "value": 0,
-          "message": "Il semble que vous n'ayez pas bien défini les parties prenantes clés. Une opportunité de financement a été manquée."
         }
       }
     ]

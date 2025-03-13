@@ -717,38 +717,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
     
     // Fonction pour gérer la sélection d'une carte
     const handleCardSelection = (card: Card) => {
-      const cardType = getCardType(card);
-      
-      if (cardType === 'action') {
-        // Pour les cartes action, remplacer la sélection actuelle par cette carte
-        // (une seule carte action à la fois)
-        setSelectedActionCards([card]);
-        
-        // Option: ajouter automatiquement la carte au tableau après sélection
-        // handleAddCard(card);
-      } else {
-        // Pour les autres types, ajouter directement au tableau
-        handleAddCard(card);
-      }
+      // Pour tous les types de cartes, ajouter directement au tableau
+      handleAddCard(card);
     };
     
     // Vérifier si une carte est sélectionnée
     const isCardSelected = (cardId: string) => {
-      return selectedActionCards.some(card => card.id === cardId);
+      return false; // Plus besoin de sélection, toutes les cartes sont ajoutées directement
     };
     
     // Fonction pour ajouter la carte action sélectionnée
     const handleAddSelectedActionCard = () => {
-      if (selectedActionCards.length === 0) {
-        showImpactNotification("Aucune carte action sélectionnée");
-        return;
-      }
-      
-      // Ajouter la carte sélectionnée
-      handleAddCard(selectedActionCards[0]);
-      
-      // Réinitialiser la sélection
-      setSelectedActionCards([]);
+      // Cette fonction n'est plus utilisée
     };
     
     return (
@@ -778,7 +758,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
               {/* Close button */}
               <button
                 onClick={() => {
-                  setSelectedActionCards([]);
                   setShowCardSelector(false);
                 }}
                 className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700"
@@ -792,9 +771,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
             
             <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
               <p className="text-sm text-gray-500">
-                {localSelectedType === 'action' 
-                  ? 'Sélectionnez une carte action à ajouter au tableau.' 
-                  : 'Cliquez sur une carte pour l\'ajouter au tableau.'}
+                Cliquez sur une carte pour l'ajouter directement au tableau.
               </p>
               
               {/* Search input */}
@@ -862,21 +839,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
             )}
           </div>
           
-          {/* Afficher le bouton d'ajout pour la carte action sélectionnée */}
-          {localSelectedType === 'action' && selectedActionCards.length > 0 && (
-            <div className="mt-4 mb-4 p-4">
-              <button
-                onClick={handleAddSelectedActionCard}
-                className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-base font-medium transition-colors duration-200 shadow-sm flex items-center justify-center"
-              >
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-                Ajouter cette carte
-              </button>
-            </div>
-          )}
-          
           {/* Results count */}
           <div className="mb-4 text-sm text-gray-500">
             {filteredCards.length} carte{filteredCards.length !== 1 ? 's' : ''} trouvée{filteredCards.length !== 1 ? 's' : ''}
@@ -913,17 +875,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                             {isOnBoard && <span className="ml-2 text-xs">(déjà sur le tableau)</span>}
                           </h5>
                           
-                          {localSelectedType === 'action' && (
-                            <div className={`w-5 h-5 rounded-full border ${
-                              isSelected ? 'bg-blue-500 border-blue-500' : 'border-gray-300'
-                            } flex items-center justify-center`}>
-                              {isSelected && (
-                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                            </div>
-                          )}
+                          {/* Suppression du bouton de sélection pour les cartes action */}
                           </div>
                           
                         <p className="text-sm text-gray-600 mt-1 line-clamp-2">
