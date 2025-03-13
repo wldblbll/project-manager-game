@@ -86,10 +86,22 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // Liste globale des cartes utilisées (placées sur le plateau)
   const [usedCards, setUsedCards] = useState<string[]>([]);
   
+  // Liste globale de toutes les cartes tirées (même celles qui ne sont plus sur le plateau)
+  const [allUsedCards, setAllUsedCards] = useState<string[]>([]);
+  
   // Mettre à jour la liste des cartes utilisées lorsque les cartes changent
   useEffect(() => {
     const cardIds = cards.map(card => card.id);
     setUsedCards(cardIds);
+    
+    // Ajouter les cartes actuelles à la liste de toutes les cartes tirées
+    setAllUsedCards(prev => {
+      const newCards = cardIds.filter(id => !prev.includes(id));
+      if (newCards.length > 0) {
+        return [...prev, ...newCards];
+      }
+      return prev;
+    });
     
     if (debugMode) {
       console.log("Liste des cartes utilisées mise à jour:", cardIds);
@@ -149,10 +161,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
         totalCards: allCards.length,
         cardsOnBoard: cards.length,
         cardIdsOnBoard: cards.map(c => c.id),
+        allUsedCards,
         currentPhase
       });
     }
-  }, [debugMode, cards, allCards, currentPhase]);
+  }, [debugMode, cards, allCards, allUsedCards, currentPhase]);
   
   // Ajouter un effet pour vérifier les cartes au chargement du composant
   useEffect(() => {
@@ -434,6 +447,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
       position
     };
     
+    // Ajouter la carte à la liste de toutes les cartes tirées
+    if (!allUsedCards.includes(card.id)) {
+      setAllUsedCards(prev => [...prev, card.id]);
+      debugLog(`Card ${card.id} added to allUsedCards. Total: ${allUsedCards.length + 1}`);
+    }
+    
     // Ajouter la carte au tableau
     if (onSelectCard) {
       onSelectCard(newCard);
@@ -470,9 +489,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
     if (hasCardConditions(actionCard)) {
       console.log("Conditions détectées:", JSON.stringify(getCardConditions(actionCard), null, 2));
       
-      // Utiliser la liste globale des cartes utilisées
-      const boardCardIds = usedCards;
-      console.log("Cartes sur le plateau:", boardCardIds);
+      // Utiliser la liste globale de toutes les cartes tirées
+      const boardCardIds = allUsedCards;
+      console.log("Toutes les cartes tirées:", boardCardIds);
       
       // Variable pour stocker les effets à appliquer
       let effectsToApply = null;
@@ -1082,9 +1101,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
     if (hasCardConditions(eventCard)) {
       console.log("Conditions détectées:", JSON.stringify(getCardConditions(eventCard), null, 2));
       
-      // Utiliser la liste globale des cartes utilisées
-      const boardCardIds = usedCards;
-      console.log("Cartes sur le plateau:", boardCardIds);
+      // Utiliser la liste globale de toutes les cartes tirées
+      const boardCardIds = allUsedCards;
+      console.log("Toutes les cartes tirées:", boardCardIds);
       
       // Variable pour stocker les effets à appliquer
       let effectsToApply = null;
@@ -1638,7 +1657,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 onCardSelected={onRandomCardSelected}
                 cardLimits={cardLimits}
                 cardUsage={cardUsage}
-                usedCards={usedCards}
+                usedCards={allUsedCards}
               />
             </div>
           </div>
