@@ -34,6 +34,13 @@ interface GameBoardProps {
   onRandomCardSelected?: (card: Card) => void; // Nouvelle prop pour les cartes aléatoires
   onMilestoneStep?: () => void; // Callback pour passer à l'étape jalon
   remainingTurns?: number; // Nombre de tours restants
+  onResetGame?: () => void; // Callback pour réinitialiser le jeu
+  gameState?: {
+    budget: number;
+    time: number;
+    valuePoints: number;
+    phase: string;
+  }; // État actuel du jeu pour la sauvegarde
 }
 
 type CardType = 'action' | 'event' | 'quiz';
@@ -72,7 +79,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
   cardUsage = { action: 0, event: 0, quiz: 0 },
   onRandomCardSelected,
   onMilestoneStep,
-  remainingTurns = 0
+  remainingTurns = 0,
+  onResetGame,
+  gameState
 }) => {
   const [draggingCard, setDraggingCard] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -854,7 +863,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           <div className="mb-4 text-sm text-gray-500">
             {filteredCards.length} carte{filteredCards.length !== 1 ? 's' : ''} trouvée{filteredCards.length !== 1 ? 's' : ''}
             {searchQuery && <span> pour "<strong>{searchQuery}</strong>"</span>}
-            </div>
+          </div>
           
           {/* Card grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
@@ -890,9 +899,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
                           </div>
                           
                         <div className="text-sm text-gray-600 mt-1 line-clamp-2">
-                          {getCardDescription(card)}
-                        </div>
+                            {getCardDescription(card)}
                           </div>
+                            </div>
                       );
                     })}
                   </div>
@@ -920,7 +929,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       displayCardInModal(card);
     } else {
       // Pour les autres types de cartes, ouvrir ou fermer le panneau latéral
-      setActiveCardId(activeCardId === cardId ? null : cardId);
+    setActiveCardId(activeCardId === cardId ? null : cardId);
     }
   };
 
@@ -1774,6 +1783,38 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   };
 
+  // Sauvegarder l'état du jeu dans le localStorage
+  useEffect(() => {
+    if (!cards.length) return; // Ne pas sauvegarder si aucune carte n'est présente
+    
+    const gameData = {
+      cards,
+      usedCards,
+      allUsedCards,
+      gameState,
+      currentPhase,
+      cardUsage,
+      remainingTurns
+    };
+    
+    localStorage.setItem('projectManagerGameData', JSON.stringify(gameData));
+    debugLog('Game data saved to localStorage');
+  }, [cards, usedCards, allUsedCards, gameState, currentPhase, cardUsage, remainingTurns]);
+  
+  // Fonction pour réinitialiser le jeu
+  const handleResetGame = () => {
+    // Afficher une confirmation avant de réinitialiser
+    if (window.confirm('Êtes-vous sûr de vouloir recommencer une nouvelle partie ? Toutes vos données actuelles seront perdues.')) {
+      // Supprimer les données du localStorage
+      localStorage.removeItem('projectManagerGameData');
+      
+      // Appeler le callback de réinitialisation
+      if (onResetGame) {
+        onResetGame();
+      }
+    }
+  };
+
   return (
     <div className="h-full flex flex-col">
       <div 
@@ -1899,7 +1940,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 {/* Afficher la description avec support Markdown */}
                 <div className="text-sm text-gray-600 mt-1 line-clamp-2">
                   {getCardDescription(card)}
-                </div>
+              </div>
                 {/* Afficher les coûts et temps si disponibles */}
                 <div className="flex justify-center mt-2 gap-1">
                   {getCardCost(card) && (

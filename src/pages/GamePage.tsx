@@ -973,6 +973,88 @@ const GamePage = () => {
     return () => clearTimeout(timer);
   }, [budgetChange, timeChange, valueChange]);
 
+  // Fonction pour réinitialiser le jeu
+  const resetGame = useCallback(() => {
+    // Supprimer les données du localStorage
+    localStorage.removeItem('projectManagerGameData');
+    
+    setGameState({
+      budget: INITIAL_BUDGET,
+      time: INITIAL_TIME,
+      valuePoints: 0,
+      currentPhase: phases[0] || "",
+      remainingTurns: phases[0] ? turnsPerPhase[phases[0]] : 0,
+      selectedCards: [],
+      boardCards: [],
+      showMilestone: false,
+      milestoneMessage: "",
+      phases: [...phases],
+      pendingNextPhase: null,
+      pendingPenalties: null,
+      cardUsage: {
+        action: 0,
+        event: 0,
+        quiz: 0
+      }
+    });
+    
+    // Réinitialiser les changements de valeurs
+    setBudgetChange(null);
+    setTimeChange(null);
+    setValueChange(null);
+    
+    console.log("Jeu réinitialisé avec succès");
+  }, [phases, turnsPerPhase]);
+
+  // Charger les données sauvegardées au démarrage
+  useEffect(() => {
+    const loadSavedGameData = () => {
+      try {
+        const savedData = localStorage.getItem('projectManagerGameData');
+        if (savedData) {
+          const parsedData = JSON.parse(savedData);
+          
+          // Vérifier si les données sont valides
+          if (parsedData.cards && parsedData.gameState) {
+            console.log("Données de jeu chargées depuis le localStorage");
+            
+            // Mettre à jour l'état du jeu
+            setGameState(prevState => ({
+              ...prevState,
+              budget: parsedData.gameState.budget || INITIAL_BUDGET,
+              time: parsedData.gameState.time || INITIAL_TIME,
+              valuePoints: parsedData.gameState.valuePoints || 0,
+              currentPhase: parsedData.currentPhase || phases[0] || "",
+              remainingTurns: parsedData.remainingTurns || 0,
+              boardCards: parsedData.cards || [],
+              cardUsage: parsedData.cardUsage || {
+                action: 0,
+                event: 0,
+                quiz: 0
+              }
+            }));
+            
+            return true;
+          }
+        }
+        return false;
+      } catch (error) {
+        console.error("Erreur lors du chargement des données sauvegardées:", error);
+        return false;
+      }
+    };
+    
+    // Charger les données sauvegardées seulement après l'initialisation du jeu
+    if (phases.length > 0 && !isLoading) {
+      const dataLoaded = loadSavedGameData();
+      
+      // Si aucune donnée n'a été chargée, initialiser une nouvelle partie
+      if (!dataLoaded) {
+        resetGame();
+      }
+    }
+  }, [phases, isLoading, resetGame]);
+
   // Afficher un écran de chargement ou d'erreur si nécessaire
   if (isLoading) {
     return (
@@ -1036,6 +1118,13 @@ const GamePage = () => {
           onRandomCardSelected={handleRandomCardSelected}
           onMilestoneStep={handlePhaseMilestone}
           remainingTurns={gameState.remainingTurns}
+          onResetGame={resetGame}
+          gameState={{
+            budget: gameState.budget,
+            time: gameState.time,
+            valuePoints: gameState.valuePoints,
+            phase: gameState.currentPhase
+          }}
         />
         <MilestoneDialog />
       </>
@@ -1058,6 +1147,7 @@ const GamePage = () => {
         budgetChange={budgetChange}
         timeChange={timeChange}
         valueChange={valueChange}
+        onResetGame={resetGame}
       />
       
       {/* Ne rendre Timeline que si les phases sont chargées */}
@@ -1095,6 +1185,13 @@ const GamePage = () => {
               onRandomCardSelected={handleRandomCardSelected}
               onMilestoneStep={handlePhaseMilestone}
               remainingTurns={gameState.remainingTurns}
+              onResetGame={resetGame}
+              gameState={{
+                budget: gameState.budget,
+                time: gameState.time,
+                valuePoints: gameState.valuePoints,
+                phase: gameState.currentPhase
+              }}
             />
           </>
         )}
@@ -1113,6 +1210,10 @@ const GamePage = () => {
             onToggleFullScreen={handleToggleFullScreen}
             projectName={selectedProject?.name || "PM Cards"}
             onMilestoneStep={handlePhaseMilestone}
+            budgetChange={budgetChange}
+            timeChange={timeChange}
+            valueChange={valueChange}
+            onResetGame={resetGame}
           />
           
           <GameBoard
@@ -1132,6 +1233,13 @@ const GamePage = () => {
             onRandomCardSelected={handleRandomCardSelected}
             onMilestoneStep={handlePhaseMilestone}
             remainingTurns={gameState.remainingTurns}
+            onResetGame={resetGame}
+            gameState={{
+              budget: gameState.budget,
+              time: gameState.time,
+              valuePoints: gameState.valuePoints,
+              phase: gameState.currentPhase
+            }}
           />
         </div>
       )}

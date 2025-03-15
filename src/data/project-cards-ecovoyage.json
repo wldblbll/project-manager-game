@@ -423,7 +423,7 @@
     "domain": "Gestion de la qualité",
     "info": "Les tests d'intégration sont essentiels pour garantir la cohérence du produit, éviter des bugs coûteux et améliorer l'expérience utilisateur.",
     "phase": [
-      "Exécution", "DEBUG"
+      "Exécution"
     ],
     "délai": "-0.5",
     "coût": "-150"
@@ -1360,7 +1360,7 @@
     "description": "Événement : Un concurrent lance une campagne de recrutement agressive.\n- Impact : Retards dans la planification et le développement, perte de compétences clés.",
     "domain": "Gestion des ressources humaines",
     "info": "La gestion des talents est essentielle pour le succès du projet. La mise en place d'un programme de mentorat peut aider à retenir les employés et à développer les compétences internes.",
-    "phase": ["DEBUG",
+    "phase": [
       "Planification"
     ],
     "délai": "Variable",
@@ -1455,24 +1455,48 @@
     ]
   },
   {
-    "id": "besoin-filtrage-avance",
+    "id": "besoin-recherche-destinations",
     "type": "action",
     "title": "Decrire le besoin : Recherche de Destinations",
-    "description": "Les utilisateurs doivent pouvoir filtrer les destinations par critères spécifiques (type d'hébergement, activités, empreinte carbone, accessibilité, etc.) pour trouver des options correspondant à leurs préférences. La valeur ajoutée de ce besoin est estimée à ** 30 points **. # qzui \n- sdlk\n- sdlkj",
+    "description": "Les utilisateurs doivent pouvoir filtrer les destinations par critères spécifiques (type d'hébergement, activités, empreinte carbone, accessibilité, etc.) pour trouver des options correspondant à leurs préférences.",
     "domain": "Gestion des besoins, Fonctionnalités de l'application",
-    "info": "Ce besoin est essentiel pour offrir une expérience utilisateur personnalisée et faciliter la recherche de voyages éco-responsables.",
-    "phase": ["Planification", "Exécution", "DEBUG"],
+    "info": "Ce besoin est essentiel pour offrir une expérience utilisateur personnalisée et faciliter la recherche de voyages éco-responsables. La valeur ajoutée de ce besoin est estimée à 30 points.",
+    "phase": ["Planification", "Exécution"],
     "délai": "-0.1"
   },
   {
-    "id": "besoin-info-evaluation",
+    "id": "dev-recherche-destinations",
     "type": "action",
-    "title": "Décrire le besoin : Évaluation Écologique",
-    "description": "Les utilisateurs doivent pouvoir accéder à des informations sur l'empreinte carbone des voyages, les initiatives locales de développement durable, les évaluations écologiques des hébergements et activités, et des conseils pour des voyages responsables.",
-    "domain": "Gestion des besoins, Fonctionnalités de l'application",
-    "info": "Ce besoin permet de sensibiliser les utilisateurs et de les aider à prendre des décisions éclairées. Cette fonctionnalité, une fois développée, devrait rapporter 15 points de valeur.",
+    "title": "Développer la Recherche et Découverte de Destinations",
+    "description": "Implémenter les fonctionnalités de recherche par critères, de filtrage avancé, d'affichage sur carte, d'informations détaillées et de suggestions personnalisées.",
+    "domain": "Développement technique, Fonctionnalités de l'application",
+    "info": "Cette fonctionnalité est cruciale pour l'expérience utilisateur. Assurer une interface intuitive et des résultats pertinents.",
+    "phase": ["Exécution"],
+    "délai": "-2",
+    "cout": "-20",
+    "value": 30
+  },
+  {
+    "id": "besoin-algo-optimisation",
+    "type": "action",
+    "title": "Décrire le besoin : Algorithme d'Optimisation Écologique",
+    "description": "Développer un algorithme capable d'évaluer et d'optimiser le score écologique des voyages, en tenant compte des options de transport, d'hébergement et d'activités. L'algorithme doit proposer les options les plus durables pour chaque utilisateur.",
+    "domain": "Gestion des besoins, Fonctionnalités de l'application, Développement technique",
+    "info": "Cet algorithme est essentiel pour proposer aux utilisateurs les meilleures options de voyages éco-responsables. Il doit être précis, fiable et évolutif. Cette fonctionnalité, une fois développée, devrait rapporter 20 points de valeur.",
     "phase": ["Planification", "Exécution"],
-    "délai": "-0.1"
+    "délai": "-0.2"
+  },
+  {
+    "id": "dev-algo-optimisation",
+    "type": "action",
+    "title": "Développer l'Algorithme d'Optimisation Écologique",
+    "description": "Concevoir et implémenter l'algorithme d'évaluation et d'optimisation du score écologique des voyages, en tenant compte des options de transport, d'hébergement et d'activités.",
+    "domain": "Développement technique, Algorithmes, Fonctionnalités de l'application",
+    "info": "Cet algorithme est le cœur de l'application. Assurer sa précision, sa fiabilité et son évolutivité.",
+    "phase": ["Exécution"],
+    "délai": "-2",
+    "cout": "-10",
+    "value": 20
   },
   {
     "id": "besoin-planification-reservation",
@@ -1480,9 +1504,21 @@
     "title": "Décrire le besoin : Planification et Réservation de Voyages",
     "description": "Les utilisateurs doivent pouvoir planifier des itinéraires personnalisés, réserver des hébergements, des transports et des activités, gérer leurs réservations et suivre leurs dépenses et impacts environnementaux.",
     "domain": "Gestion des besoins, Fonctionnalités de l'application",
-    "info": "Ce besoin facilite l'organisation des voyages et offre une expérience utilisateur complète. Cette fonctionnalité, une fois développée, devrait rapporter 25 points de valeur.",
+    "info": "Ce besoin facilite l'organisation des voyages et offre une expérience utilisateur complète. Cette fonctionnalité, une fois développée, devrait rapporter 15 points de valeur.",
     "phase": ["Planification", "Exécution"],
     "délai": "-0.1"
+  },
+  {
+    "id": "dev-planification-reservation",
+    "type": "action",
+    "title": "Développer la Planification et Réservation de Voyages",
+    "description": "Implémenter les fonctionnalités de planification d'itinéraires, d'intégration des systèmes de réservation, de gestion des réservations et des paiements, et de suivi des dépenses et impacts environnementaux.",
+    "domain": "Développement technique, Intégration de systèmes, Fonctionnalités de l'application",
+    "info": "Cette fonctionnalité facilite l'organisation des voyages. Assurer une intégration fluide avec les partenaires.",
+    "phase": ["Exécution"],
+    "délai": "-1",
+    "cout": "-8",
+    "value": 15
   },
   {
     "id": "besoin-contenu-collaboratif",
@@ -1490,9 +1526,21 @@
     "title": "Décrire le besoin : Contenu Collaboratif et Communauté",
     "description": "Les utilisateurs doivent pouvoir partager leurs avis, photos et vidéos de voyages, participer à des forums de discussion et créer des itinéraires personnalisés.",
     "domain": "Gestion des besoins, Fonctionnalités de l'application",
-    "info": "Ce besoin favorise l'engagement des utilisateurs et la création d'une communauté active. Cette fonctionnalité, une fois développée, devrait rapporter 18 points de valeur.",
+    "info": "Ce besoin favorise l'engagement des utilisateurs et la création d'une communauté active. Cette fonctionnalité, une fois développée, devrait rapporter 10 points de valeur.",
     "phase": ["Planification", "Exécution"],
     "délai": "-0.1"
+  },
+  {
+    "id": "dev-contenu-collaboratif",
+    "type": "action",
+    "title": "Développer le Contenu Collaboratif et la Communauté",
+    "description": "Implémenter les fonctionnalités d'avis et de commentaires, de partage de photos et vidéos, de forums de discussion et de création d'itinéraires personnalisés.",
+    "domain": "Développement technique, Fonctionnalités communautaires, Fonctionnalités de l'application",
+    "info": "Cette fonctionnalité favorise l'engagement des utilisateurs. Assurer une interface conviviale et une modération efficace.",
+    "phase": ["Exécution"],
+    "délai": "-1",
+    "cout": "-15",
+    "value": 10
   },
   {
     "id": "besoin-profil-personnalisation",
@@ -1505,6 +1553,18 @@
     "délai": "-0.1"
   },
   {
+    "id": "dev-profil-personnalisation",
+    "type": "action",
+    "title": "Développer le Profil Utilisateur et la Personnalisation",
+    "description": "Implémenter les fonctionnalités de création et gestion de profil, de préférences de voyage, d'historique et de recommandations personnalisées.",
+    "domain": "Développement technique, Gestion des données, Fonctionnalités de l'application",
+    "info": "Cette fonctionnalité offre une expérience utilisateur personnalisée. Assurer la sécurité des données et la pertinence des recommandations.",
+    "phase": ["Exécution"],
+    "délai": "-2",
+    "cout": "-0.5",
+    "value": 12
+  },
+  {
     "id": "acceptance-filtrage-avance",
     "type": "action",
     "title": "Définir les critère d'acceptance pour la recherche de destinations",
@@ -1513,6 +1573,18 @@
     "info": "Valider formellement garantit que la fonctionnalité répond aux besoins et évite les modifications ultérieures.",
     "phase": ["Planification", "Exécution"],
     "délai": "-0.1"
+  },
+  {
+    "id": "dev-fonctionnalites-techniques",
+    "type": "action",
+    "title": "Développer les Fonctionnalités Techniques et la Performance",
+    "description": "Assurer la disponibilité de l'application sur mobile et web, l'intégration des données cartographiques, l'optimisation des performances et de la sécurité, et la gestion des données et de la confidentialité.",
+    "domain": "Développement technique, Infrastructure, Sécurité",
+    "info": "Cette fonctionnalité garantit la qualité technique de l'application. Assurer une architecture robuste et une sécurité optimale.",
+    "phase": ["Exécution"],
+    "délai": "-1.8",
+    "cout": "900",
+    "value": 10
   },
   {
     "id": "insatisfaction-chronique",
@@ -1550,7 +1622,7 @@
   {
     "id": "quel-document-est-cree-lors-de-la-phase-de-planification-pour-gerer-les-risques-",
     "type": "question",
-    "phase": ["DEBUG",
+    "phase": [
       "Planification"
     ],
     "title": "Quel document est créé lors de la phase de planification pour gérer les risques ?",

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { MinimizeIcon, MaximizeIcon } from "@tabler/icons-react";
 
 interface GameHeaderProps {
   budget: number;
@@ -13,6 +14,7 @@ interface GameHeaderProps {
   budgetChange?: number | null;
   timeChange?: number | null;
   valueChange?: number | null;
+  onResetGame?: () => void;
 }
 
 const GameHeader: React.FC<GameHeaderProps> = ({ 
@@ -27,7 +29,8 @@ const GameHeader: React.FC<GameHeaderProps> = ({
   onMilestoneStep,
   budgetChange,
   timeChange,
-  valueChange
+  valueChange,
+  onResetGame
 }) => {
   // Références pour les compteurs
   const budgetRef = useRef<HTMLSpanElement>(null);
@@ -185,6 +188,30 @@ const GameHeader: React.FC<GameHeaderProps> = ({
               {isFullScreen ? "⬆️" : "⤢"}
             </button>
           )}
+
+          {/* Boutons d'action */}
+          <div className="flex items-center space-x-4">
+            {remainingTurns === 0 && (
+              <button
+                onClick={onMilestoneStep}
+                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105"
+              >
+                Passer à l'étape jalon
+              </button>
+            )}
+            {onResetGame && (
+              <button
+                onClick={() => {
+                  if (window.confirm("Êtes-vous sûr de vouloir commencer une nouvelle partie ? Tout progrès non sauvegardé sera perdu.")) {
+                    onResetGame();
+                  }
+                }}
+                className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
+              >
+                Nouvelle partie
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
