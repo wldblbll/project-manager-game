@@ -14,6 +14,8 @@ import {
 } from "@/utils/cardHelpers";
 import RandomCardWheel from "./RandomCardWheel";
 import DetailSidePanel from "./DetailSidePanel";
+import ReactMarkdown from 'react-markdown';
+import type { Components } from 'react-markdown';
 
 interface GameBoardProps {
   cards: Card[];
@@ -44,6 +46,15 @@ const CARD_WIDTH = 180;
 const CARD_MIN_HEIGHT = 100;
 const CARD_MARGIN = 4;
 const BOARD_PADDING = 8;
+
+// Ajouter ce composant au début du fichier, après les imports
+const MarkdownContent = ({ content }: { content: string }) => {
+  return (
+    <div className="text-sm text-gray-600 mt-1 line-clamp-2">
+      {content}
+    </div>
+  );
+};
 
 const GameBoard: React.FC<GameBoardProps> = ({ 
   cards, 
@@ -878,9 +889,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
                           {/* Suppression du bouton de sélection pour les cartes action */}
                           </div>
                           
-                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                            {getCardDescription(card)}
-                        </p>
+                        <div className="text-sm text-gray-600 mt-1 line-clamp-2">
+                          {getCardDescription(card)}
+                        </div>
                           </div>
                       );
                     })}
@@ -1549,10 +1560,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
     content.style.flexGrow = '1';
     
     // Ajouter la description
-    const description = document.createElement('p');
+    const description = document.createElement('div');
     description.textContent = getCardDescription(card);
     description.style.marginBottom = '24px';
     description.style.lineHeight = '1.5';
+    description.style.whiteSpace = 'pre-wrap';
     
     // Ajouter les informations supplémentaires si disponibles
     const cardInfo = getCardInfo(card);
@@ -1884,11 +1896,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 <div className="text-sm font-medium text-center whitespace-normal break-words">
                   {getCardTitle(card)}
                 </div>
-                {/* Afficher plus d'informations directement sur la carte */}
-                <div className="text-xs mt-1 text-center opacity-75 line-clamp-2">
-                  {getCardDescription(card).substring(0, 60)}
-                  {getCardDescription(card).length > 60 ? '...' : ''}
-              </div>
+                {/* Afficher la description avec support Markdown */}
+                <div className="text-sm text-gray-600 mt-1 line-clamp-2">
+                  {getCardDescription(card)}
+                </div>
                 {/* Afficher les coûts et temps si disponibles */}
                 <div className="flex justify-center mt-2 gap-1">
                   {getCardCost(card) && (

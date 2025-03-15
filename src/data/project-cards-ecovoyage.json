@@ -423,7 +423,7 @@
     "domain": "Gestion de la qualité",
     "info": "Les tests d'intégration sont essentiels pour garantir la cohérence du produit, éviter des bugs coûteux et améliorer l'expérience utilisateur.",
     "phase": [
-      "Exécution"
+      "Exécution", "DEBUG"
     ],
     "délai": "-0.5",
     "coût": "-150"
@@ -1349,7 +1349,7 @@
     "description": "Associer les membres expérimentés de l'équipe à des employés plus jeunes pour favoriser le transfert de connaissances et le développement des compétences.",
     "domain": "Gestion des ressources humaines",
     "info": "Le mentorat permet de développer les compétences internes, d'améliorer la cohésion d'équipe et de fidéliser les employés.",
-    "phase": ["Planification", "DEBUG"],
+    "phase": ["Planification"],
     "délai": "-0.3",
     "cout": "-2"
   },
@@ -1450,6 +1450,99 @@
           "time": -1,
           "value": -10,
           "message": "L'absence d'audit de transparence a nui à la réputation de l'application et a entraîné une perte de confiance des utilisateurs."
+        }
+      }
+    ]
+  },
+  {
+    "id": "besoin-filtrage-avance",
+    "type": "action",
+    "title": "Decrire le besoin : Recherche de Destinations",
+    "description": "Les utilisateurs doivent pouvoir filtrer les destinations par critères spécifiques (type d'hébergement, activités, empreinte carbone, accessibilité, etc.) pour trouver des options correspondant à leurs préférences. La valeur ajoutée de ce besoin est estimée à ** 30 points **. # qzui \n- sdlk\n- sdlkj",
+    "domain": "Gestion des besoins, Fonctionnalités de l'application",
+    "info": "Ce besoin est essentiel pour offrir une expérience utilisateur personnalisée et faciliter la recherche de voyages éco-responsables.",
+    "phase": ["Planification", "Exécution", "DEBUG"],
+    "délai": "-0.1"
+  },
+  {
+    "id": "besoin-info-evaluation",
+    "type": "action",
+    "title": "Décrire le besoin : Évaluation Écologique",
+    "description": "Les utilisateurs doivent pouvoir accéder à des informations sur l'empreinte carbone des voyages, les initiatives locales de développement durable, les évaluations écologiques des hébergements et activités, et des conseils pour des voyages responsables.",
+    "domain": "Gestion des besoins, Fonctionnalités de l'application",
+    "info": "Ce besoin permet de sensibiliser les utilisateurs et de les aider à prendre des décisions éclairées. Cette fonctionnalité, une fois développée, devrait rapporter 15 points de valeur.",
+    "phase": ["Planification", "Exécution"],
+    "délai": "-0.1"
+  },
+  {
+    "id": "besoin-planification-reservation",
+    "type": "action",
+    "title": "Décrire le besoin : Planification et Réservation de Voyages",
+    "description": "Les utilisateurs doivent pouvoir planifier des itinéraires personnalisés, réserver des hébergements, des transports et des activités, gérer leurs réservations et suivre leurs dépenses et impacts environnementaux.",
+    "domain": "Gestion des besoins, Fonctionnalités de l'application",
+    "info": "Ce besoin facilite l'organisation des voyages et offre une expérience utilisateur complète. Cette fonctionnalité, une fois développée, devrait rapporter 25 points de valeur.",
+    "phase": ["Planification", "Exécution"],
+    "délai": "-0.1"
+  },
+  {
+    "id": "besoin-contenu-collaboratif",
+    "type": "action",
+    "title": "Décrire le besoin : Contenu Collaboratif et Communauté",
+    "description": "Les utilisateurs doivent pouvoir partager leurs avis, photos et vidéos de voyages, participer à des forums de discussion et créer des itinéraires personnalisés.",
+    "domain": "Gestion des besoins, Fonctionnalités de l'application",
+    "info": "Ce besoin favorise l'engagement des utilisateurs et la création d'une communauté active. Cette fonctionnalité, une fois développée, devrait rapporter 18 points de valeur.",
+    "phase": ["Planification", "Exécution"],
+    "délai": "-0.1"
+  },
+  {
+    "id": "besoin-profil-personnalisation",
+    "type": "action",
+    "title": "Décrire le besoin : Profil Utilisateur et Personnalisation",
+    "description": "Les utilisateurs doivent pouvoir créer et gérer leur profil, définir leurs préférences de voyage, consulter leur historique et recevoir des recommandations personnalisées.",
+    "domain": "Gestion des besoins, Fonctionnalités de l'application",
+    "info": "Ce besoin offre une expérience utilisateur personnalisée et améliore la pertinence des recommandations. Cette fonctionnalité, une fois développée, devrait rapporter 12 points de valeur.",
+    "phase": ["Planification", "Exécution"],
+    "délai": "-0.1"
+  },
+  {
+    "id": "acceptance-filtrage-avance",
+    "type": "action",
+    "title": "Définir les critère d'acceptance pour la recherche de destinations",
+    "description": "Définir précisément comment valider et considérer que la fonctionalité 'Recherche de destinations' est terminé. Cela implique d'obtenir l'accord formel des utilisateurs et des parties prenantes.",
+    "domain": "Gestion des livrables, Assurance qualité",
+    "info": "Valider formellement garantit que la fonctionnalité répond aux besoins et évite les modifications ultérieures.",
+    "phase": ["Planification", "Exécution"],
+    "délai": "-0.1"
+  },
+  {
+    "id": "insatisfaction-chronique",
+    "type": "event",
+    "title": "Insatisfaction Chronique de l'Utilisateur",
+    "description": "Un utilisateur clé demande des modifications incessantes sur la fonctionnalité de recherche de destinations pouvant entraîner des retards et des coûts supplémentaires.",
+    "domain": "Gestion du contenu",
+    "info": "L'absence d'acceptation formelle peut entraîner des demandes de modifications continues et une insatisfaction chronique.",
+    "phase": ["Planification", "Exécution"],
+    "délai": "Variable",
+    "coût": "Variable",
+    "conditions": [
+      {
+        "cardId": "acceptance-filtrage-avance",
+        "present": true,
+        "effects": {
+          "budget": 0,
+          "time": 0,
+          "value": 10,
+          "message": "L'acceptation formelle a permis de clarifier les attentes et de limiter les demandes de modifications."
+        }
+      },
+      {
+        "cardId": "acceptance-filtrage-avance",
+        "present": false,
+        "effects": {
+          "budget": -10,
+          "time": -2,
+          "value": -10,
+          "message": "L'absence d'acceptation formelle a entraîné des demandes de modifications incessantes et une perte de temps et d'argent."
         }
       }
     ]
