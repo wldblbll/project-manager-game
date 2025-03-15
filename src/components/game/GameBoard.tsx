@@ -1872,18 +1872,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
                     </button>
                   </>
                 )}
-                
-                {/* Bouton pour passer à l'étape jalon */}
-                {remainingTurns === 0 && onMilestoneStep && (
-                  <button
-                    onClick={onMilestoneStep}
-                    className="pulse-attention-button px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg 
-                             text-sm font-medium transition-all duration-200 flex items-center shadow-md"
-                  >
-                    <span className="mr-2">✨</span>
-                    Passer à la prochaine phase projet
-                  </button>
-                )}
               </div>
                             
               {/* Roue de cartes aléatoires */}
@@ -1898,6 +1886,19 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 cardUsage={cardUsage}
                 usedCards={allUsedCards}
               />
+
+                {/* Bouton pour passer à l'étape jalon */}
+                {remainingTurns === 0 && onMilestoneStep && (
+                  <button
+                    onClick={onMilestoneStep}
+                    className="pulse-attention-button px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg 
+                             text-sm font-medium transition-all duration-200 flex items-center shadow-md"
+                  >
+                    <span className="mr-2">✨</span>
+                    Passer à la prochaine phase projet
+                  </button>
+                )}
+                
                 </div>
                 </div>
         </div>

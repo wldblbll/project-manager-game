@@ -637,6 +637,27 @@ const GamePage = () => {
       return;
     }
 
+    // Traiter les impacts sur le budget et le délai pour les cartes action
+    if (cardType === 'action') {
+      // Impact sur le budget
+      if (card.coût) {
+        const budgetImpact = parseInt(card.coût);
+        if (!isNaN(budgetImpact)) {
+          handleModifyBudget(budgetImpact);
+        }
+      }
+
+      // Impact sur le délai
+      if (card.délai) {
+        const timeImpact = parseFloat(card.délai);
+        if (!isNaN(timeImpact)) {
+          // Convertir les mois en nombre entier (arrondi au supérieur)
+          const timeImpactMonths = Math.ceil(timeImpact);
+          handleModifyTime(timeImpactMonths);
+        }
+      }
+    }
+
     // Mettre à jour le compteur de cartes et les tours restants
     setGameState(prevState => {
       const { newCardUsage, newRemainingTurns } = updateCardUsageAndTurns(cardType, prevState);

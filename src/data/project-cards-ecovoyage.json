@@ -9,7 +9,7 @@
     "phase": [
       "Clôture"
     ],
-    "délai": "-0.3",
+    "délai": "-1",
     "cout": "300"
   },
   {
@@ -22,7 +22,7 @@
     "phase": [
       "Clôture"
     ],
-    "délai": "-0.2",
+    "délai": "-1",
     "cout": "400"
   },
   {
@@ -35,7 +35,7 @@
     "phase": [
       "Clôture"
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "coût": "-100"
   },
   {
@@ -256,7 +256,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "cout": "600"
   },
   {
@@ -269,7 +269,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.7",
+    "délai": "-1",
     "cout": "800"
   },
   {
@@ -334,7 +334,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.8",
+    "délai": "-1",
     "cout": "1800"
   },
   {
@@ -360,7 +360,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.3",
+    "délai": "-1",
     "cout": "1500"
   },
   {
@@ -373,7 +373,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "cout": "1200"
   },
   {
@@ -386,7 +386,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.4",
+    "délai": "-1",
     "cout": "800"
   },
   {
@@ -399,7 +399,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.3",
+    "délai": "-1",
     "cout": "1000"
   },
   {
@@ -412,7 +412,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.3",
+    "délai": "-1",
     "cout": "600"
   },
   {
@@ -425,7 +425,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "coût": "-150"
   },
   {
@@ -451,7 +451,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "coût": "-200"
   },
   {
@@ -464,7 +464,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "coût": "-5",
     "value": "-3",
     "conditions": [
@@ -473,7 +473,7 @@
         "present": true,
         "effects": {
           "budget": -5,
-          "time": -0.5,
+          "time": -1,
           "value": -3,
           "message": "En ayant pris cette action, vous avez réussi à négocier une réévaluation des priorités et ajusté le périmètre pour maîtriser l'impact sur les délais et le budget."
         }
@@ -490,7 +490,7 @@
     "phase": [
       "Exécution"
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "coût": "-5",
     "value": "0",
     "conditions": [
@@ -499,7 +499,7 @@
         "present": true,
         "effects": {
           "budget": -5,
-          "time": -0.5,
+          "time": -1,
           "value": 0,
           "message": "En appliquant cette action, vous avez limité l'impact du gold plating, réduisant ainsi le budget et le délai sans affecter la qualité du produit final."
         }
@@ -802,7 +802,7 @@
     "phase": [
       "Initiation"
     ],
-    "délai": "-0.25"
+    "délai": "-1"
   },
   {
     "id": "definir-les-criteres-de-succes",
@@ -814,44 +814,44 @@
     "phase": [
       "Initiation"
     ],
-    "délai": "-0.25"
+    "délai": "-1"
   },
   {
     "id": "identifier-les-principales-parties-prenantes",
     "type": "action",
     "title": "Identifier les principales parties prenantes",
-    "description": "Les principales parties prenantes du projet GreenTrip Finder sont :\n- **Ministère de l'Écologie** : Commanditaire du projet, garant des objectifs environnementaux.\n- **Équipe de développement** : Responsables de la conception et de la mise en œuvre de l'application mobile et web.\n- **Experts en tourisme durable** : Fournissent des recommandations et valident les critères écologiques des destinations.\n- **Utilisateurs finaux** : Voyageurs souhaitant organiser des voyages écologiques et donner leur avis sur les destinations.\n- **Partenaires touristiques** : Hôtels, agences de voyage et transporteurs proposant des services écoresponsables.\n- **Équipe marketing et communication** : Chargée de promouvoir l'application et d'attirer une communauté d'utilisateurs engagés.",
+    "description": "Les principales parties prenantes du projet GreenTrip Finder sont :\n- Ministère de l'Écologie : Commanditaire du projet, garant des objectifs environnementaux.\n- Équipe de développement : Responsables de la conception et de la mise en œuvre de l'application mobile et web.\n- Experts en tourisme durable : Fournissent des recommandations et valident les critères écologiques des destinations.\n- Utilisateurs finaux : Voyageurs souhaitant organiser des voyages écologiques et donner leur avis sur les destinations.\n- Partenaires touristiques : Hôtels, agences de voyage et transporteurs proposant des services écoresponsables.\n- Équipe marketing et communication : Chargée de promouvoir l'application et d'attirer une communauté d'utilisateurs engagés.",
     "domain": "Gestion des parties prenantes",
     "info": "L'identification des parties prenantes est essentielle pour comprendre les attentes et les influences de chacun sur le projet. Une bonne gestion des parties prenantes permet d'assurer l'adhésion, d'anticiper les risques et de faciliter la communication entre les différents acteurs impliqués.",
     "phase": [
       "Initiation"
     ],
-    "délai": "-0.25"
+    "délai": "-1"
   },
   {
     "id": "definir-le-perimetre-du-projet",
     "type": "action",
     "title": "Définir le périmètre du projet",
-    "description": "Le périmètre du projet GreenTrip Finder inclut :\n- La création d'une application mobile (iOS et Android) et web permettant de rechercher des destinations écologiques.\n- L'intégration d'une base de données répertoriant des destinations validées pour leur impact environnemental réduit.\n- Le développement de fonctionnalités clés : profil utilisateur, évaluation écologique, réservation, conseils et communauté.\n\nCe qui ne fait **pas** partie du périmètre du projet :\n- Le développement d'une plateforme de réservation complète (les réservations se feront via des partenaires externes).\n- La gestion des transports et des visas pour les utilisateurs.",
+    "description": "Le périmètre du projet GreenTrip Finder inclut :\n- La création d'une application mobile (iOS et Android) et web permettant de rechercher des destinations écologiques.\n- L'intégration d'une base de données répertoriant des destinations validées pour leur impact environnemental réduit.\n- Le développement de fonctionnalités clés : profil utilisateur, évaluation écologique, réservation, conseils et communauté.\n\nCe qui ne fait pas partie du périmètre du projet :\n- Le développement d'une plateforme de réservation complète (les réservations se feront via des partenaires externes).\n- La gestion des transports et des visas pour les utilisateurs.",
     "domain": "Gestion du périmètre",
     "info": "Définir clairement le périmètre du projet permet d'éviter le phénomène de 'scope creep' (dérive du périmètre) qui peut entraîner des retards et un dépassement des ressources. Une bonne définition du périmètre aide à aligner les attentes des parties prenantes et à éviter les dérives de l'objectif initial.",
     "phase": [
       "Initiation",
       "Planification"
     ],
-    "délai": "-0.4"
+    "délai": "-1"
   },
   {
     "id": "realiser-letude-economique-business-plan",
     "type": "action",
     "title": "Réaliser l'étude économique (Business Plan)",
-    "description": "L'étude économique du projet GreenTrip Finder doit inclure :\n- **Analyse du marché** : Identification des tendances du tourisme durable, de la concurrence et des attentes des utilisateurs.\n- **Modèle économique** : Définition des sources de revenus (partenariats avec acteurs du tourisme, abonnements premium, publicité éthique).\n- **Coûts prévisionnels** : Développement, hébergement, maintenance, marketing et support client.\n- **Analyse de rentabilité** : Estimation des revenus et évaluation du retour sur investissement.\n- **Risques financiers** : Identification des incertitudes économiques et des plans d'atténuation.",
+    "description": "L'étude économique du projet GreenTrip Finder doit inclure :\n- Analyse du marché : Identification des tendances du tourisme durable, de la concurrence et des attentes des utilisateurs.\n- Modèle économique : Définition des sources de revenus (partenariats avec acteurs du tourisme, abonnements premium, publicité éthique).\n- Coûts prévisionnels : Développement, hébergement, maintenance, marketing et support client.\n- Analyse de rentabilité : Estimation des revenus et évaluation du retour sur investissement.\n- Risques financiers : Identification des incertitudes économiques et des plans d'atténuation.",
     "domain": "Gestion financière",
     "info": "Le business plan est un élément clé pour justifier la viabilité économique du projet. Il permet d'aligner les parties prenantes sur les objectifs financiers et d'assurer une allocation efficace des ressources. Il est également essentiel pour convaincre d'éventuels investisseurs ou partenaires financiers.",
     "phase": [
       "Initiation"
     ],
-    "délai": "-0.6"
+    "délai": -2
   },
   {
     "id": "reduction-du-financement-par-un-investisseur",
@@ -1188,7 +1188,7 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-0.4",
+    "délai": "-1",
     "cout": "800"
   },
   {
@@ -1201,7 +1201,7 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-0.3",
+    "délai": "-1",
     "cout": "500"
   },
   {
@@ -1214,7 +1214,7 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-0.6",
+    "délai": "-1",
     "cout": "700"
   },
   {
@@ -1227,7 +1227,7 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "cout": "800"
   },
   {
@@ -1240,7 +1240,7 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-0.4",
+    "délai": "-1",
     "cout": "1000"
   },
   {
@@ -1253,7 +1253,7 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-0.3",
+    "délai": "-1",
     "cout": "700"
   },
   {
@@ -1266,7 +1266,7 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-0.2",
+    "délai": "-1",
     "cout": "600"
   },
   {
@@ -1279,7 +1279,7 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-0.4",
+    "délai": "-1",
     "cout": "500"
   },
   {
@@ -1339,7 +1339,7 @@
         }
       }
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "cout": "-10"
   },
   {
@@ -1350,7 +1350,7 @@
     "domain": "Gestion des ressources humaines",
     "info": "Le mentorat permet de développer les compétences internes, d'améliorer la cohésion d'équipe et de fidéliser les employés.",
     "phase": ["Planification"],
-    "délai": "-0.3",
+    "délai": "-1",
     "cout": "-2"
   },
   {
@@ -1462,7 +1462,7 @@
     "domain": "Gestion des besoins, Fonctionnalités de l'application",
     "info": "Ce besoin est essentiel pour offrir une expérience utilisateur personnalisée et faciliter la recherche de voyages éco-responsables. La valeur ajoutée de ce besoin est estimée à 30 points.",
     "phase": ["Planification", "Exécution"],
-    "délai": "-0.1"
+    "délai": "-1"
   },
   {
     "id": "dev-recherche-destinations",
@@ -1484,7 +1484,7 @@
     "domain": "Gestion des besoins, Fonctionnalités de l'application, Développement technique",
     "info": "Cet algorithme est essentiel pour proposer aux utilisateurs les meilleures options de voyages éco-responsables. Il doit être précis, fiable et évolutif. Cette fonctionnalité, une fois développée, devrait rapporter 20 points de valeur.",
     "phase": ["Planification", "Exécution"],
-    "délai": "-0.2"
+    "délai": "-1"
   },
   {
     "id": "dev-algo-optimisation",
@@ -1506,7 +1506,7 @@
     "domain": "Gestion des besoins, Fonctionnalités de l'application",
     "info": "Ce besoin facilite l'organisation des voyages et offre une expérience utilisateur complète. Cette fonctionnalité, une fois développée, devrait rapporter 15 points de valeur.",
     "phase": ["Planification", "Exécution"],
-    "délai": "-0.1"
+    "délai": "-1"
   },
   {
     "id": "dev-planification-reservation",
@@ -1528,7 +1528,7 @@
     "domain": "Gestion des besoins, Fonctionnalités de l'application",
     "info": "Ce besoin favorise l'engagement des utilisateurs et la création d'une communauté active. Cette fonctionnalité, une fois développée, devrait rapporter 10 points de valeur.",
     "phase": ["Planification", "Exécution"],
-    "délai": "-0.1"
+    "délai": "-1"
   },
   {
     "id": "dev-contenu-collaboratif",
@@ -1550,7 +1550,7 @@
     "domain": "Gestion des besoins, Fonctionnalités de l'application",
     "info": "Ce besoin offre une expérience utilisateur personnalisée et améliore la pertinence des recommandations. Cette fonctionnalité, une fois développée, devrait rapporter 12 points de valeur.",
     "phase": ["Planification", "Exécution"],
-    "délai": "-0.1"
+    "délai": "-1"
   },
   {
     "id": "dev-profil-personnalisation",
@@ -1561,7 +1561,7 @@
     "info": "Cette fonctionnalité offre une expérience utilisateur personnalisée. Assurer la sécurité des données et la pertinence des recommandations.",
     "phase": ["Exécution"],
     "délai": "-2",
-    "cout": "-0.5",
+    "cout": "-1",
     "value": 12
   },
   {
@@ -1572,7 +1572,7 @@
     "domain": "Gestion des livrables, Assurance qualité",
     "info": "Valider formellement garantit que la fonctionnalité répond aux besoins et évite les modifications ultérieures.",
     "phase": ["Planification", "Exécution"],
-    "délai": "-0.1"
+    "délai": "-1"
   },
   {
     "id": "dev-fonctionnalites-techniques",
@@ -1789,7 +1789,7 @@
     "phase": [
       "Surveillance et Maîtrise"
     ],
-    "délai": "-0.5",
+    "délai": "-1",
     "cout": "900"
   },
   {
@@ -1802,7 +1802,7 @@
     "phase": [
       "Surveillance et Maîtrise"
     ],
-    "délai": "-0.4",
+    "délai": "-1",
     "cout": "700"
   },
   {
