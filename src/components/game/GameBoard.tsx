@@ -466,6 +466,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   // Fonction pour ajouter une carte au tableau
   const handleAddCard = (card: Card) => {
+    console.log("=== AJOUT DE CARTE AU TABLEAU ===");
+    console.log("Type de carte:", getCardType(card));
+    console.log("Titre:", getCardTitle(card));
+    
     // Vérifier si la carte est déjà sur le tableau
     if (isCardOnBoard(card.id) && !altKeyPressed) {
       debugLog(`Card ${card.id} is already on the board. Skipping.`);
@@ -520,6 +524,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
       } else if (cardType === 'event' && hasCardConditions(card)) {
         console.log("Event card has conditions, processing them...");
         handleEventCardEffect(card);
+      } else if (cardType === 'quiz') {
+        // Pour les cartes quiz, on les affiche simplement
+        console.log("Quiz card added to board");
+        // Les points seront ajoutés via handleQuizCorrectAnswer quand l'utilisateur répond correctement
       }
     }
   };
@@ -527,9 +535,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // Fonction pour gérer les conditions des cartes action
   const handleActionCardConditions = (actionCard: Card) => {
     console.log("=== ACTION AVEC CONDITIONS DÉCLENCHÉE ===");
-    console.log("Carte complète:", JSON.stringify(actionCard, null, 2));
+    console.log("Carte:", getCardTitle(actionCard));
     console.log("Type:", getCardType(actionCard));
-    console.log("Titre:", getCardTitle(actionCard));
     console.log("A des conditions:", hasCardConditions(actionCard));
     console.log("Conditions brutes:", actionCard.conditions);
     
@@ -537,9 +544,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
     if (hasCardConditions(actionCard)) {
       console.log("Conditions détectées:", JSON.stringify(getCardConditions(actionCard), null, 2));
       
-      // Utiliser la liste globale de toutes les cartes tirées
-      const boardCardIds = allUsedCards;
-      console.log("Toutes les cartes tirées:", boardCardIds);
+      // Utiliser uniquement les cartes actuellement sur le plateau
+      const boardCardIds = cards.map(card => card.id);
+      console.log("Cartes actuellement sur le plateau:", boardCardIds);
       
       // Variable pour stocker les effets à appliquer
       let effectsToApply = null;
@@ -981,19 +988,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // Fonction pour gérer les effets des cartes événement
   const handleEventCardEffect = (eventCard: Card) => {
     console.log("=== ÉVÉNEMENT AVEC CONDITIONS DÉCLENCHÉ ===");
-    console.log("Carte complète:", JSON.stringify(eventCard, null, 2));
+    console.log("Carte:", getCardTitle(eventCard));
     console.log("Type:", getCardType(eventCard));
-    console.log("Titre:", getCardTitle(eventCard));
     console.log("A des conditions:", hasCardConditions(eventCard));
-    console.log("allUsedCards dans handleEventCardEffect:", allUsedCards);
     
     // Vérifier si la carte a des conditions
     if (hasCardConditions(eventCard)) {
       console.log("Conditions détectées:", JSON.stringify(getCardConditions(eventCard), null, 2));
       
-      // Utiliser la liste globale de toutes les cartes tirées
-      const boardCardIds = allUsedCards;
-      console.log("Toutes les cartes tirées:", boardCardIds);
+      // Utiliser uniquement les cartes actuellement sur le plateau
+      const boardCardIds = cards.map(card => card.id);
+      console.log("Cartes actuellement sur le plateau:", boardCardIds);
       
       // Variable pour stocker les effets à appliquer
       let effectsToApply = null;
@@ -1030,7 +1035,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           // Vérifier chaque sous-condition
           for (const check of condition.checks) {
             if (check.cardId && check.present !== undefined) {
-            const cardPresent = boardCardIds.includes(check.cardId);
+              const cardPresent = boardCardIds.includes(check.cardId);
               const result = (cardPresent === check.present);
               
               // Trouver le titre de la carte pour l'explication
@@ -1039,10 +1044,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 : `Carte #${check.cardId}`;
                 
               checkResults.push({
-              cardId: check.cardId,
+                cardId: check.cardId,
                 title: cardTitle,
-              expected: check.present,
-              actual: cardPresent,
+                expected: check.present,
+                actual: cardPresent,
                 result
               });
               
@@ -1188,10 +1193,21 @@ const GameBoard: React.FC<GameBoardProps> = ({
         // Appliquer l'impact sur la valeur du projet
         if (effectsToApply.value !== undefined && onAddValuePoints) {
           console.log(`Applying value impact: ${effectsToApply.value} points`);
-          onAddValuePoints(effectsToApply.value); // Ne pas inverser le signe ici
-          
-          // Afficher une animation pour l'impact sur la valeur
-          showCounterAnimation('points', effectsToApply.value);
+          // Vérifier que onAddValuePoints est bien une fonction
+          if (typeof onAddValuePoints === 'function') {
+            try {
+              onAddValuePoints(effectsToApply.value); // Ne pas inverser le signe ici
+              
+              // Afficher une animation pour l'impact sur la valeur
+              showCounterAnimation('points', effectsToApply.value);
+              
+              console.log(`${effectsToApply.value} points de valeur appliqués avec succès`);
+            } catch (error) {
+              console.error("Erreur lors de l'application des points de valeur:", error);
+            }
+          } else {
+            console.error("onAddValuePoints n'est pas une fonction valide");
+          }
         }
       } else {
         // Si aucune condition n'est remplie, afficher un message par défaut
@@ -1378,19 +1394,29 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // Fonction pour ajouter des points de valeur lorsqu'une réponse à un quiz est correcte
   const handleQuizCorrectAnswer = () => {
     console.log("=== RÉPONSE CORRECTE AU QUIZ ===");
-    if (onAddValuePoints) {
+    console.log("Tentative d'ajout de 10 points de valeur");
+    
+    if (!onAddValuePoints) {
+      console.error("onAddValuePoints n'est pas défini");
+      return;
+    }
+
+    try {
       // Ajouter 10 points pour une réponse correcte
       onAddValuePoints(10);
+      console.log("10 points ajoutés avec succès");
       
       // Afficher une animation pour les points gagnés
       showCounterAnimation('points', 10);
       
       // Afficher une notification de succès
       showImpactNotification("Bonne réponse ! +10 points");
-      
-      console.log("10 points ajoutés pour la bonne réponse au quiz");
-    } else {
-      console.error("onAddValuePoints n'est pas défini");
+    } catch (error) {
+      console.error("Erreur lors de l'ajout des points:", error);
+      console.error("Détails de l'erreur:", {
+        onAddValuePoints: !!onAddValuePoints,
+        error: error instanceof Error ? error.message : error
+      });
     }
   };
 
@@ -1509,6 +1535,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   // Fonction pour afficher une carte dans une jolie Box modale
   const displayCardInModal = (card: Card) => {
+    console.log("=== AFFICHAGE CARTE DANS MODAL ===");
+    console.log("Type:", getCardType(card));
+    console.log("Titre:", getCardTitle(card));
+    console.log("A des conditions:", hasCardConditions(card));
+    
     // Convertir le coût en nombre si c'est une chaîne
     const cost = card.coût;
     const costValue = typeof cost === 'string' ? 
@@ -1587,6 +1618,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   // Fonction pour afficher une carte dans une jolie Box modale (pour les cartes action avec conditions)
   const tempDisplayCardDetails = (actionCard: Card, effectsToApply: any, conditionDescription: string) => {
+    console.log("=== APPLICATION DES EFFETS DE CONDITION ===");
+    console.log("Carte:", getCardTitle(actionCard));
+    console.log("Effets à appliquer:", effectsToApply);
+    
     // Stocker le résultat des conditions dans un attribut personnalisé de la carte
     const cardIndex = cards.findIndex(c => c.id === actionCard.id);
     if (cardIndex !== -1) {
@@ -1633,8 +1668,21 @@ const GameBoard: React.FC<GameBoardProps> = ({
       // Appliquer l'impact sur la valeur du projet si nécessaire
       if (effectsToApply.value !== undefined && onAddValuePoints) {
         console.log(`Applying value impact: ${effectsToApply.value} points`);
-        onAddValuePoints(effectsToApply.value);
-        showCounterAnimation('points', effectsToApply.value);
+        // Vérifier que onAddValuePoints est bien une fonction
+        if (typeof onAddValuePoints === 'function') {
+          try {
+            onAddValuePoints(effectsToApply.value); // Ne pas inverser le signe ici
+            
+            // Afficher une animation pour l'impact sur la valeur
+            showCounterAnimation('points', effectsToApply.value);
+            
+            console.log(`${effectsToApply.value} points de valeur appliqués avec succès`);
+          } catch (error) {
+            console.error("Erreur lors de l'application des points de valeur:", error);
+          }
+        } else {
+          console.error("onAddValuePoints n'est pas une fonction valide");
+        }
       }
     }
   };
