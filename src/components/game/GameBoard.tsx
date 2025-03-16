@@ -1910,53 +1910,33 @@ const GameBoard: React.FC<GameBoardProps> = ({
           {/* Board cards */}
           {cards.map((card) => {
             const colors = getCardColors(getCardDomain(card) || "");
-            const cardType = getCardType(card);
-            
             return (
-              <div
-                key={card.id}
-                data-card-id={card.id}
-                className={`absolute p-3 rounded-xl shadow-lg transition-all cursor-move backdrop-blur-sm
-                          ${colors.bg} ${colors.text} 
-                          ${activeCardId === card.id ? 'ring-2 ring-white' : ''}
-                          hover:shadow-xl transform hover:scale-105`}
-                style={{
-                  width: `${CARD_WIDTH}px`,
-                  minHeight: `${CARD_MIN_HEIGHT}px`,
-                  height: 'auto',
-                  left: card.position?.x || 0,
-                  top: card.position?.y || 0,
-                  zIndex: draggingCard === card.id ? 10 : 1,
-                  transform: draggingCard === card.id ? 'scale(1.05)' : 'scale(1)',
-                  transition: draggingCard === card.id ? 'none' : 'all 0.2s ease-in-out'
-                }}
-                onMouseDown={(e) => handleCardMouseDown(e, card.id)}
-                onMouseEnter={() => setHoveredCard(card)}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={() => handleCardClick(card.id)}
-              >
-                <div className="text-sm font-medium text-center whitespace-normal break-words">
-                  {getCardTitle(card)}
+                <div
+                    key={card.id}
+                    data-card-id={card.id}
+                    className={`absolute p-3 rounded-xl shadow-lg transition-all cursor-move backdrop-blur-sm
+                              ${colors.bg} ${colors.text} 
+                              ${activeCardId === card.id ? 'ring-2 ring-white' : ''}
+                              hover:shadow-xl transform hover:scale-105`}
+                    style={{
+                        width: `${CARD_WIDTH}px`,
+                        minHeight: `${CARD_MIN_HEIGHT}px`,
+                        height: 'auto',
+                        left: card.position?.x || 0,
+                        top: card.position?.y || 0,
+                        zIndex: draggingCard === card.id ? 10 : 1,
+                        transform: draggingCard === card.id ? 'scale(1.05)' : 'scale(1)',
+                        transition: draggingCard === card.id ? 'none' : 'all 0.2s ease-in-out'
+                    }}
+                    onMouseDown={(e) => handleCardMouseDown(e, card.id)}
+                    onMouseEnter={() => setHoveredCard(card)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                    onClick={() => handleCardClick(card.id)}
+                >
+                    <div className="text-sm font-medium text-center whitespace-normal break-words">
+                        {getCardTitle(card)} {/* Affichage uniquement du titre */}
+                    </div>
                 </div>
-                {/* Afficher la description avec support Markdown */}
-                <div className="text-sm text-gray-600 mt-1 line-clamp-2">
-                  {getCardDescription(card)}
-              </div>
-                {/* Afficher les coûts et temps si disponibles */}
-                <div className="flex justify-center mt-2 gap-1">
-                  {getCardCost(card) && (
-                    <div className="text-xs px-2 py-0.5 rounded-full bg-white/20">
-                      💰 {getCardCost(card)}
-                  </div>
-                )}
-                  {getCardTime(card) && (
-                    <div className="text-xs px-2 py-0.5 rounded-full bg-white/20">
-                      ⏱️ {getCardTime(card)}
-                  </div>
-                )}
-              </div>
-                {debugMode && <div className="text-xs text-white/50 truncate">ID: {card.id.substring(0, 4)}</div>}
-            </div>
             );
           })}
           

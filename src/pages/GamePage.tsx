@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom";
 import GameHeader from "@/components/game/GameHeader";
 import Timeline from "@/components/game/Timeline";
 import GameBoard from "@/components/game/GameBoard";
-import defaultProjectCards from "@/data/project-cards-default.json";
-import ecovoyageProjectCards from "@/data/project-cards-ecovoyage.json";
 import gameConfig from "@/data/game-config.json";
-import { Project } from "@/components/ProjectSelector";
+import { Project } from "@/config/projects";
+import { PROJECT_FILES } from "@/config/projects";
 import { getCardTitle, getCardDomain, getCardType } from "@/utils/cardHelpers";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ReactMarkdown from 'react-markdown';
@@ -77,12 +76,6 @@ export type GameState = {
     event: number;
     quiz: number;
   };
-};
-
-// Define mapping between project files and their data
-const PROJECT_DATA: Record<string, any> = {
-  'project-cards-default.json': defaultProjectCards,
-  'project-cards-ecovoyage.json': ecovoyageProjectCards,
 };
 
 // Define types for game configuration
@@ -371,7 +364,7 @@ const GamePage = () => {
 
     try {
       // Get the project data based on the dataFile property
-      const projectCards = PROJECT_DATA[selectedProject.dataFile];
+      const projectCards = PROJECT_FILES[selectedProject.dataFile];
       
       if (!projectCards) {
         console.error(`No data found for project file: ${selectedProject.dataFile}`);
@@ -1154,7 +1147,7 @@ const GamePage = () => {
 
   // Normal view with all components
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-screen flex flex-col">
       <GameHeader 
         budget={gameState.budget} 
         time={gameState.time} 
@@ -1183,39 +1176,43 @@ const GamePage = () => {
         </div>
       )}
       
-      <div className="container mx-auto p-4 flex-grow overflow-auto">
-        {gameState.showMilestone ? (
-          <MilestoneDialog />
-        ) : (
-          <>
-            {/* Game Board */}
-            <GameBoard
-              cards={gameState.boardCards}
-              onMoveCard={handleMoveCard}
-              isFullScreen={isFullScreen}
-              onToggleFullScreen={handleToggleFullScreen}
-              domainColors={domainColors}
-              allCards={allCards}
-              onSelectCard={handleSelectCard}
-              currentPhase={gameState.currentPhase}
-              onAddValuePoints={handleAddValuePoints}
-              onModifyBudget={handleModifyBudget}
-              onModifyTime={handleModifyTime}
-              cardLimits={getCurrentPhaseLimits()}
-              cardUsage={gameState.cardUsage}
-              onRandomCardSelected={handleRandomCardSelected}
-              onMilestoneStep={handlePhaseMilestone}
-              remainingTurns={gameState.remainingTurns}
-              onResetGame={resetGame}
-              gameState={{
-                budget: gameState.budget,
-                time: gameState.time,
-                valuePoints: gameState.valuePoints,
-                phase: gameState.currentPhase
-              }}
-            />
-          </>
-        )}
+      <div className="flex-1 overflow-hidden">
+        <div className="h-full overflow-y-auto p-4">
+          <div className="container mx-auto">
+            {gameState.showMilestone ? (
+              <MilestoneDialog />
+            ) : (
+              <>
+                {/* Game Board */}
+                <GameBoard
+                  cards={gameState.boardCards}
+                  onMoveCard={handleMoveCard}
+                  isFullScreen={isFullScreen}
+                  onToggleFullScreen={handleToggleFullScreen}
+                  domainColors={domainColors}
+                  allCards={allCards}
+                  onSelectCard={handleSelectCard}
+                  currentPhase={gameState.currentPhase}
+                  onAddValuePoints={handleAddValuePoints}
+                  onModifyBudget={handleModifyBudget}
+                  onModifyTime={handleModifyTime}
+                  cardLimits={getCurrentPhaseLimits()}
+                  cardUsage={gameState.cardUsage}
+                  onRandomCardSelected={handleRandomCardSelected}
+                  onMilestoneStep={handlePhaseMilestone}
+                  remainingTurns={gameState.remainingTurns}
+                  onResetGame={resetGame}
+                  gameState={{
+                    budget: gameState.budget,
+                    time: gameState.time,
+                    valuePoints: gameState.valuePoints,
+                    phase: gameState.currentPhase
+                  }}
+                />
+              </>
+            )}
+          </div>
+        </div>
       </div>
       
       {/* Fullscreen Game Board */}

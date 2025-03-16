@@ -1,26 +1,26 @@
 {
   "gameSettings": {
-    "initialBudget": 200,
+    "initialBudget": 100,
     "initialTime": 24,
     "cardWidth": 180,
-    "cardHeight": 120,
+    "cardHeight": 60,
     "cardMargin": 20,
-    "cardsPerRow": 5,
+    "cardsPerRow": 6,
     "boardTopMargin": 100
   },
   "phases": [
     {
       "name": "Initiation",
       "order": 1,
-      "requiredCards": ["Développer la charte du projet"],
+      "requiredCards": ["Initier la charte projet"],
       "cardLimits": {
         "action": 5,
         "event": 2,
         "quiz": 0
       },
       "penalties": {
-        "time": 2,
-        "budget": 20,
+        "time": -2,
+        "budget": -5,
         "message": "La charte du projet n'a pas été définie correctement. Cela entraîne des retards et des coûts supplémentaires."
       }
     },
@@ -29,9 +29,9 @@
       "order": 2,
       "requiredCards": ["Créer la WBS", "Développer l'échéancier"],
       "cardLimits": {
-        "action": 5,
-        "event": 3,
-        "quiz": 3
+        "action": 7,
+        "event": 4,
+        "quiz": 0
       },
       "penalties": {
         "time": 3,
@@ -46,7 +46,7 @@
       "cardLimits": {
         "action": 5,
         "event": 3,
-        "quiz": 3
+        "quiz": 0
       },
       "penalties": {
         "time": 4,
@@ -61,7 +61,7 @@
       "cardLimits": {
         "action": 5,
         "event": 3,
-        "quiz": 3
+        "quiz": 0
       },
       "penalties": {
         "time": 2,
@@ -76,7 +76,7 @@
       "cardLimits": {
         "action": 5,
         "event": 3,
-        "quiz": 3
+        "quiz": 0
       },
       "penalties": {
         "time": 1,

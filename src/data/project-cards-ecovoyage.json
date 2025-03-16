@@ -351,71 +351,6 @@
     "cout": "2400"
   },
   {
-    "id": "attenuer-le-risque-dintegration-complexe-des-systemes",
-    "type": "action",
-    "title": "Atténuer le risque d'intégration complexe des systèmes",
-    "description": "Mettre en place des tests d'intégration continus et des revues de code régulières pour détecter rapidement les problèmes techniques. Embaucher un consultant externe spécialisé dans les intégrations complexes si nécessaire.",
-    "domain": "Gestion des risques",
-    "info": "Les tests continus et l'expertise externe peuvent réduire la probabilité de découvrir des problèmes graves tard dans le projet, permettant ainsi de corriger les erreurs à moindre coût et d'éviter des retards importants.",
-    "phase": [
-      "Exécution"
-    ],
-    "délai": "-1",
-    "cout": "1500"
-  },
-  {
-    "id": "attenuer-le-risque-de-faible-adoption-de-lapplication",
-    "type": "action",
-    "title": "Atténuer le risque de faible adoption de l'application",
-    "description": "Mener des tests d'acceptation utilisateur (UAT) avant le lancement, organiser des focus groups pour recueillir des retours sur l'interface utilisateur et les fonctionnalités, et améliorer la stratégie de marketing.",
-    "domain": "Gestion des risques",
-    "info": "Les tests d'acceptation et les focus groups permettent de corriger les problèmes de conception avant le lancement. Une bonne stratégie marketing permet également d'attirer les bons utilisateurs et de garantir l'engagement.",
-    "phase": [
-      "Exécution"
-    ],
-    "délai": "-1",
-    "cout": "1200"
-  },
-  {
-    "id": "attenuer-le-risque-de-nonconformite-aux-normes-environnementales",
-    "type": "action",
-    "title": "Atténuer le risque de non-conformité aux normes environnementales",
-    "description": "Travailler en collaboration avec des experts en écologie et des avocats spécialisés pour effectuer des audits réguliers des destinations proposées. Mettre en place des critères stricts pour l'ajout de nouvelles destinations.",
-    "domain": "Gestion des risques",
-    "info": "Les audits réguliers et les critères stricts permettent de s'assurer que toutes les destinations proposées respectent les normes écologiques, minimisant ainsi les risques juridiques et environnementaux.",
-    "phase": [
-      "Exécution"
-    ],
-    "délai": "-1",
-    "cout": "800"
-  },
-  {
-    "id": "attenuer-le-risque-de-mauvaise-gestion-des-donnees-personnelles",
-    "type": "action",
-    "title": "Atténuer le risque de mauvaise gestion des données personnelles",
-    "description": "Mettre en place des pratiques strictes de sécurité des données, incluant le chiffrement des informations sensibles, et obtenir des certifications de conformité aux réglementations sur la protection des données (ex. RGPD).",
-    "domain": "Gestion des risques",
-    "info": "Les mesures de sécurité et les certifications permettent de garantir que les données des utilisateurs sont protégées conformément à la loi et renforcent la confiance dans l'application.",
-    "phase": [
-      "Exécution"
-    ],
-    "délai": "-1",
-    "cout": "1000"
-  },
-  {
-    "id": "attenuer-le-risque-de-depassement-de-budget",
-    "type": "action",
-    "title": "Atténuer le risque de dépassement de budget",
-    "description": "Mettre en place un suivi strict des dépenses et des marges budgétaires, ainsi qu'une réserve financière pour les imprévus. Revoir régulièrement le plan de budget pour ajuster les prévisions.",
-    "domain": "Gestion des risques",
-    "info": "Un suivi rigoureux du budget permet de détecter rapidement les écarts et de prendre des mesures correctives avant qu'ils ne deviennent problématiques.",
-    "phase": [
-      "Exécution"
-    ],
-    "délai": "-1",
-    "cout": "600"
-  },
-  {
     "id": "effectuer-des-tests-dintegration",
     "type": "action",
     "title": "Effectuer des tests d'intégration",
@@ -427,19 +362,6 @@
     ],
     "délai": "-1",
     "coût": "-150"
-  },
-  {
-    "id": "mise-a-lechelle-de-linfrastructure",
-    "type": "action",
-    "title": "Mise à l'échelle de l'infrastructure",
-    "description": "Mettre en place une infrastructure évolutive capable de gérer un grand nombre d'utilisateurs en simultané.\n- Impact : Préparer le projet pour un afflux massif d'utilisateurs, ce qui permet une meilleure performance et réactivité de l'application.",
-    "domain": "Gestion des opérations",
-    "info": "Une infrastructure évolutive est cruciale pour gérer les pics d'utilisation et éviter les interruptions de service.",
-    "phase": [
-      "Exécution"
-    ],
-    "délai": "-1",
-    "coût": "-300"
   },
   {
     "id": "effectuer-des-tests-utilisateurs",
@@ -836,8 +758,7 @@
     "domain": "Gestion du périmètre",
     "info": "Définir clairement le périmètre du projet permet d'éviter le phénomène de 'scope creep' (dérive du périmètre) qui peut entraîner des retards et un dépassement des ressources. Une bonne définition du périmètre aide à aligner les attentes des parties prenantes et à éviter les dérives de l'objectif initial.",
     "phase": [
-      "Initiation",
-      "Planification"
+      "Initiation"
     ],
     "délai": "-1"
   },
@@ -1183,7 +1104,7 @@
     "type": "action",
     "title": "Définir la structure de découpage du travail (WBS)",
     "description": "La création d'une structure de découpage du travail (WBS) pour GreenTrip Finder détaillera toutes les tâches nécessaires pour compléter le projet. Cela inclut la création de l'application, la mise en place de la base de données, le marketing, etc.",
-    "domain": "Gestion de la portée",
+    "domain": "Gestion du contenu",
     "info": "Le WBS permet de décomposer le projet en tâches gérables, d'affecter les responsabilités et de s'assurer que rien d'important n'est oublié. Cela permet également d'estimer plus précisément les coûts et les délais.",
     "phase": [
       "Planification"
@@ -1215,72 +1136,84 @@
       "Planification"
     ],
     "délai": "-1",
-    "cout": "700"
+    "cout": "-5",
+    "value": 5
+  },  {
+    "id": "identifier-evaluer-risque-api-carto",
+    "type": "action",
+    "title": "Identifier et Évaluer le Risque : Panne du service de Cartographie",
+    "description": "Imaginez : votre application dépend d'un service (API) externe pour afficher les cartes écologiques. Si ce service tombe en panne (ce qui est assez probable, environ 70%), vos utilisateurs ne verront plus rien ! Identifiez et évaluez ce risque dès maintenant.",
+    "domain": "Gestion des risques",
+    "info": "Anticiper les problèmes techniques, c'est éviter la catastrophe. Cette action vous permet de préparer un plan de secours.",
+    "phase": ["Planification"],
+    "délai": "-1",
+    "cout": "-5"
   },
   {
-    "id": "identifier-et-evaluer-le-risque-dintegration-complexe-des-systemes",
+    "id": "identifier-evaluer-risque-partenaire",
     "type": "action",
-    "title": "Identifier et évaluer le risque d'intégration complexe des systèmes",
-    "description": "Identifier et évaluer le risque que l'intégration des différentes technologies (applications mobiles et web, base de données des destinations, systèmes de réservation) soit plus complexe que prévu, ce qui pourrait entraîner des retards et des coûts supplémentaires.",
+    "title": "Identifier et Évaluer le Risque : Défaillance d'un Partenaire",
+    "description": "Vos partenaires sont essentiels, mais que se passerait-il si l'un d'eux vous lâchait ? (C'est possible, environ 40%). Évaluez la fiabilité de vos partenaires et préparez-vous à toute éventualité.",
     "domain": "Gestion des risques",
-    "info": "L'intégration de systèmes multiples peut être complexe et pourrait provoquer des retards ou des échecs dans le projet. Il est crucial de bien comprendre ce risque afin d'allouer suffisamment de ressources et de temps pour cette tâche.",
-    "phase": [
-      "Planification"
-    ],
+    "info": "Mieux vaut prévenir que guérir ! Identifier les risques liés aux partenariats vous permet de sécuriser votre projet.",
+    "phase": ["Planification"],
     "délai": "-1",
-    "cout": "800"
+    "cout": "-5"
   },
   {
-    "id": "identifier-et-evaluer-le-risque-de-faible-adoption-de-lapplication-par-les-utilisateurs",
+    "id": "attenuer-risque-api-carto",
     "type": "action",
-    "title": "Identifier et évaluer le risque de faible adoption de l'application par les utilisateurs",
-    "description": "Identifier et évaluer le risque que l'application ne soit pas adoptée par les utilisateurs cibles en raison de problèmes d'ergonomie, de fonctionnalités manquantes ou d'une mauvaise communication marketing.",
+    "title": "Atténuer le Risque : Panne du service de Cartographie",
+    "description": "Cette action permet de mettre en place un système de bascule automatique vers un service de secours. Identifiez deux services alternatifs, testez leur compatibilité, et préparez un script de bascule instantanée. Votre service de cartographie restera toujours opérationnel.",
     "domain": "Gestion des risques",
-    "info": "Un faible taux d'adoption peut réduire considérablement le retour sur investissement du projet. Il est donc important de valider les hypothèses de conception avec des utilisateurs réels et de s'assurer que l'application répond à leurs besoins.",
-    "phase": [
-      "Planification"
-    ],
-    "délai": "-1",
-    "cout": "1000"
+    "info": "Cette action garantit la continuité de votre service de cartographie en cas de panne du service principale.",
+    "phase": ["Planification"],
+    "délai": "-2",
+    "cout": "-10"
   },
   {
-    "id": "identifier-et-evaluer-le-risque-de-nonconformite-aux-normes-environnementales",
+    "id": "attenuer-risque-partenaire",
     "type": "action",
-    "title": "Identifier et évaluer le risque de non-conformité aux normes environnementales",
-    "description": "Identifier et évaluer le risque que certaines destinations ou pratiques de l'application ne respectent pas les normes environnementales ou les réglementations locales en matière de durabilité et d'écologie.",
+    "title": "Atténuer le Risque : Défaillance d'un Partenaire",
+    "description": "Cette action permet de diversifier vos sources pour atténuer le risque de défaillance d'un partenaire clé. Identifiez deux partenaires de secours pour chaque partenaire stratégique. Négociez des accords-cadres, testez leur réactivité, et préparez des contrats de remplacement. Vos partenariats seront sécurisés.",
     "domain": "Gestion des risques",
-    "info": "La non-conformité aux réglementations écologiques peut entraîner des sanctions, des poursuites ou une mauvaise image de marque. Il est essentiel de vérifier régulièrement que les destinations proposées respectent les critères écologiques.",
-    "phase": [
-      "Planification"
-    ],
-    "délai": "-1",
-    "cout": "700"
+    "info": "Cette action réduit le risque de dépendance et sécurise vos partenariats clés en cas de défaillance d'un partenaire.",
+    "phase": ["Planification"],
+    "délai": "-2",
+    "cout": "-10"
   },
   {
-    "id": "identifier-et-evaluer-le-risque-de-mauvaise-gestion-des-donnees-personnelles",
-    "type": "action",
-    "title": "Identifier et évaluer le risque de mauvaise gestion des données personnelles",
-    "description": "Identifier et évaluer le risque de mauvaise gestion des données personnelles des utilisateurs, y compris la violation des lois sur la protection des données (RGPD) et la perte de données sensibles.",
+    "id": "panne-api-carto",
+    "type": "event",
+    "title": "Panne du service de Cartographie",
+    "description": "Le service (API) de cartographie écologique rencontre une panne majeure, empêchant l'affichage des informations sur les destinations. L'équipe doit mettre en œuvre le plan de secours.",
     "domain": "Gestion des risques",
-    "info": "La gestion incorrecte des données personnelles peut entraîner des amendes importantes et une perte de confiance des utilisateurs. Il est crucial de respecter toutes les réglementations relatives à la protection des données.",
-    "phase": [
-      "Planification"
-    ],
-    "délai": "-1",
-    "cout": "600"
-  },
-  {
-    "id": "identifier-et-evaluer-le-risque-de-depassement-de-budget",
-    "type": "action",
-    "title": "Identifier et évaluer le risque de dépassement de budget",
-    "description": "Identifier et évaluer le risque de dépassement du budget alloué au projet, incluant les coûts de développement, de marketing et les imprévus liés à l'intégration de nouvelles fonctionnalités.",
-    "domain": "Gestion des risques",
-    "info": "Les dépassements de budget peuvent compromettre la rentabilité du projet. Il est important de suivre de près les dépenses et de prévoir une marge pour les imprévus.",
-    "phase": [
-      "Planification"
-    ],
-    "délai": "-1",
-    "cout": "500"
+    "info": "La préparation d'un plan de secours permet de minimiser l'impact des imprévus et d'assurer la continuité du projet.",
+    "phase": ["Exécution"],
+    "délai": "Variable",
+    "cout": "Variable",
+    "conditions": [
+      {
+        "cardId": "attenuer-risque-api-carto",
+        "present": true,
+        "effects": {
+          "budget": 0,
+          "time": 0,
+          "value": 40,
+          "message": "Le plan de secours a permis de basculer rapidement vers une solution alternative, minimisant les retards et les impacts négatifs."
+        }
+      },
+      {
+        "cardId": "attenuer-risque-api-carto",
+        "present": false,
+        "effects": {
+          "budget": -10,
+          "time": -2,
+          "value": -20,
+          "message": "L'absence de plan de secours a entraîné des retards importants et une perte de confiance des utilisateurs."
+        }
+      }
+    ]
   },
   {
     "id": "influenceur-ecolo",
@@ -1395,7 +1328,7 @@
     "description": "Engager un organisme indépendant pour auditer les pratiques durables de l'application et publier un rapport de transparence.",
     "domain": "Gestion de la communication",
     "info": "Un audit de transparence permet de renforcer la crédibilité de l'application et de démontrer son engagement envers le tourisme durable. Il est particulièrement efficace en cas de scandale de greenwashing.",
-    "phase": ["Planification","Exécution","Clôture"],
+    "phase": ["Exécution","Clôture"],
     "délai": "-1",
     "cout": "-10",
     "conditions": [
@@ -1425,7 +1358,6 @@
     "domain": "Gestion de la communication",
     "info": "Un scandale de greenwashing peut nuire à la réputation de l'ensemble du secteur. Il est essentiel de renforcer la transparence et de communiquer sur les pratiques durables de l'application.",
     "phase": [
-      "Planification",
       "Exécution",
       "Clôture"
     ],
@@ -1459,7 +1391,7 @@
     "type": "action",
     "title": "Decrire le besoin : Recherche de Destinations",
     "description": "Les utilisateurs doivent pouvoir filtrer les destinations par critères spécifiques (type d'hébergement, activités, empreinte carbone, accessibilité, etc.) pour trouver des options correspondant à leurs préférences.",
-    "domain": "Gestion des besoins, Fonctionnalités de l'application",
+    "domain": "Gestion du contenu",
     "info": "Ce besoin est essentiel pour offrir une expérience utilisateur personnalisée et faciliter la recherche de voyages éco-responsables. La valeur ajoutée de ce besoin est estimée à 30 points.",
     "phase": ["Planification", "Exécution"],
     "délai": "-1"
@@ -1469,7 +1401,7 @@
     "type": "action",
     "title": "Développer la Recherche et Découverte de Destinations",
     "description": "Implémenter les fonctionnalités de recherche par critères, de filtrage avancé, d'affichage sur carte, d'informations détaillées et de suggestions personnalisées.",
-    "domain": "Développement technique, Fonctionnalités de l'application",
+    "domain": "Gestion du contenu",
     "info": "Cette fonctionnalité est cruciale pour l'expérience utilisateur. Assurer une interface intuitive et des résultats pertinents.",
     "phase": ["Exécution"],
     "délai": "-2",
@@ -1481,7 +1413,7 @@
     "type": "action",
     "title": "Décrire le besoin : Algorithme d'Optimisation Écologique",
     "description": "Développer un algorithme capable d'évaluer et d'optimiser le score écologique des voyages, en tenant compte des options de transport, d'hébergement et d'activités. L'algorithme doit proposer les options les plus durables pour chaque utilisateur.",
-    "domain": "Gestion des besoins, Fonctionnalités de l'application, Développement technique",
+    "domain": "Gestion du contenu",
     "info": "Cet algorithme est essentiel pour proposer aux utilisateurs les meilleures options de voyages éco-responsables. Il doit être précis, fiable et évolutif. Cette fonctionnalité, une fois développée, devrait rapporter 20 points de valeur.",
     "phase": ["Planification", "Exécution"],
     "délai": "-1"
@@ -1491,7 +1423,7 @@
     "type": "action",
     "title": "Développer l'Algorithme d'Optimisation Écologique",
     "description": "Concevoir et implémenter l'algorithme d'évaluation et d'optimisation du score écologique des voyages, en tenant compte des options de transport, d'hébergement et d'activités.",
-    "domain": "Développement technique, Algorithmes, Fonctionnalités de l'application",
+    "domain": "Gestion du contenu",
     "info": "Cet algorithme est le cœur de l'application. Assurer sa précision, sa fiabilité et son évolutivité.",
     "phase": ["Exécution"],
     "délai": "-2",
@@ -1503,7 +1435,7 @@
     "type": "action",
     "title": "Décrire le besoin : Planification et Réservation de Voyages",
     "description": "Les utilisateurs doivent pouvoir planifier des itinéraires personnalisés, réserver des hébergements, des transports et des activités, gérer leurs réservations et suivre leurs dépenses et impacts environnementaux.",
-    "domain": "Gestion des besoins, Fonctionnalités de l'application",
+    "domain": "Gestion du contenu",
     "info": "Ce besoin facilite l'organisation des voyages et offre une expérience utilisateur complète. Cette fonctionnalité, une fois développée, devrait rapporter 15 points de valeur.",
     "phase": ["Planification", "Exécution"],
     "délai": "-1"
@@ -1513,7 +1445,7 @@
     "type": "action",
     "title": "Développer la Planification et Réservation de Voyages",
     "description": "Implémenter les fonctionnalités de planification d'itinéraires, d'intégration des systèmes de réservation, de gestion des réservations et des paiements, et de suivi des dépenses et impacts environnementaux.",
-    "domain": "Développement technique, Intégration de systèmes, Fonctionnalités de l'application",
+    "domain": "Gestion du contenu",
     "info": "Cette fonctionnalité facilite l'organisation des voyages. Assurer une intégration fluide avec les partenaires.",
     "phase": ["Exécution"],
     "délai": "-1",
@@ -1525,7 +1457,7 @@
     "type": "action",
     "title": "Décrire le besoin : Contenu Collaboratif et Communauté",
     "description": "Les utilisateurs doivent pouvoir partager leurs avis, photos et vidéos de voyages, participer à des forums de discussion et créer des itinéraires personnalisés.",
-    "domain": "Gestion des besoins, Fonctionnalités de l'application",
+    "domain": "Gestion du contenu",
     "info": "Ce besoin favorise l'engagement des utilisateurs et la création d'une communauté active. Cette fonctionnalité, une fois développée, devrait rapporter 10 points de valeur.",
     "phase": ["Planification", "Exécution"],
     "délai": "-1"
@@ -1535,7 +1467,7 @@
     "type": "action",
     "title": "Développer le Contenu Collaboratif et la Communauté",
     "description": "Implémenter les fonctionnalités d'avis et de commentaires, de partage de photos et vidéos, de forums de discussion et de création d'itinéraires personnalisés.",
-    "domain": "Développement technique, Fonctionnalités communautaires, Fonctionnalités de l'application",
+    "domain": "Gestion du contenu",
     "info": "Cette fonctionnalité favorise l'engagement des utilisateurs. Assurer une interface conviviale et une modération efficace.",
     "phase": ["Exécution"],
     "délai": "-1",
@@ -1547,7 +1479,7 @@
     "type": "action",
     "title": "Décrire le besoin : Profil Utilisateur et Personnalisation",
     "description": "Les utilisateurs doivent pouvoir créer et gérer leur profil, définir leurs préférences de voyage, consulter leur historique et recevoir des recommandations personnalisées.",
-    "domain": "Gestion des besoins, Fonctionnalités de l'application",
+    "domain": "Gestion du contenu",
     "info": "Ce besoin offre une expérience utilisateur personnalisée et améliore la pertinence des recommandations. Cette fonctionnalité, une fois développée, devrait rapporter 12 points de valeur.",
     "phase": ["Planification", "Exécution"],
     "délai": "-1"
@@ -1557,7 +1489,7 @@
     "type": "action",
     "title": "Développer le Profil Utilisateur et la Personnalisation",
     "description": "Implémenter les fonctionnalités de création et gestion de profil, de préférences de voyage, d'historique et de recommandations personnalisées.",
-    "domain": "Développement technique, Gestion des données, Fonctionnalités de l'application",
+    "domain": "Gestion du contenu",
     "info": "Cette fonctionnalité offre une expérience utilisateur personnalisée. Assurer la sécurité des données et la pertinence des recommandations.",
     "phase": ["Exécution"],
     "délai": "-2",
@@ -1569,7 +1501,7 @@
     "type": "action",
     "title": "Définir les critère d'acceptance pour la recherche de destinations",
     "description": "Définir précisément comment valider et considérer que la fonctionalité 'Recherche de destinations' est terminé. Cela implique d'obtenir l'accord formel des utilisateurs et des parties prenantes.",
-    "domain": "Gestion des livrables, Assurance qualité",
+    "domain": "Gestion du contenu",
     "info": "Valider formellement garantit que la fonctionnalité répond aux besoins et évite les modifications ultérieures.",
     "phase": ["Planification", "Exécution"],
     "délai": "-1"
@@ -1579,7 +1511,7 @@
     "type": "action",
     "title": "Développer les Fonctionnalités Techniques et la Performance",
     "description": "Assurer la disponibilité de l'application sur mobile et web, l'intégration des données cartographiques, l'optimisation des performances et de la sécurité, et la gestion des données et de la confidentialité.",
-    "domain": "Développement technique, Infrastructure, Sécurité",
+    "domain": "Gestion du contenu",
     "info": "Cette fonctionnalité garantit la qualité technique de l'application. Assurer une architecture robuste et une sécurité optimale.",
     "phase": ["Exécution"],
     "délai": "-1.8",
