@@ -1377,15 +1377,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   // Fonction pour ajouter des points de valeur lorsqu'une réponse à un quiz est correcte
   const handleQuizCorrectAnswer = () => {
-    debugLog("Réponse correcte au quiz, ajout de 10 points de valeur");
+    console.log("=== RÉPONSE CORRECTE AU QUIZ ===");
     if (onAddValuePoints) {
-      console.log("Appel de onAddValuePoints avec 10 points");
+      // Ajouter 10 points pour une réponse correcte
       onAddValuePoints(10);
       
-      // Afficher une animation pour les points de valeur
+      // Afficher une animation pour les points gagnés
       showCounterAnimation('points', 10);
       
-      console.log("onAddValuePoints appelé avec succès");
+      // Afficher une notification de succès
+      showImpactNotification("Bonne réponse ! +10 points");
+      
+      console.log("10 points ajoutés pour la bonne réponse au quiz");
     } else {
       console.error("onAddValuePoints n'est pas défini");
     }
