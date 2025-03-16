@@ -15,23 +15,7 @@ const Hero = () => {
     e.preventDefault();
     console.log("Bouton de démarrage cliqué");
     
-    // Vérifier si un projet est déjà sélectionné
-    const storedProject = localStorage.getItem('selectedProject');
-    
-    if (storedProject) {
-      // Si un projet est déjà sélectionné, naviguer vers la page de jeu
-      setTimeout(() => {
-        navigate('/game');
-      }, 100);
-    } else {
-      // Sinon, afficher le sélecteur de projet
-      setShowProjectSelector(true);
-    }
-  };
-  
-  // Fonction pour effacer le projet sélectionné
-  const handleClearProject = () => {
-    localStorage.removeItem('selectedProject');
+    // Toujours afficher le sélecteur de projet quand on clique sur "Commencer à jouer"
     setShowProjectSelector(true);
   };
   
@@ -62,34 +46,13 @@ const Hero = () => {
 
         {/* CTA Button */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          {isMobile ? (
-            <button
-              onClick={() => setShowProjectSelector(true)}
-              className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
-                       shadow-lg hover:shadow-xl transform transition-all duration-300 
-                       hover:scale-105 hover:bg-indigo-50 inline-block"
-            >
-              Commencer à jouer 🎮
-            </button>
-          ) : (
-            <button
-              onClick={handleStartGame}
-              className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
-                       shadow-lg hover:shadow-xl transform transition-all duration-300 
-                       hover:scale-105 hover:bg-indigo-50"
-            >
-              Commencer à jouer 🎮
-            </button>
-          )}
-          
-          {/* Bouton pour changer de projet */}
           <button
-            onClick={handleClearProject}
-            className="bg-transparent border border-white text-white px-6 py-3 rounded-full text-sm font-medium
+            onClick={handleStartGame}
+            className="bg-white text-indigo-600 px-8 py-4 rounded-full text-lg font-semibold 
                      shadow-lg hover:shadow-xl transform transition-all duration-300 
-                     hover:scale-105 hover:bg-white/10"
+                     hover:scale-105 hover:bg-indigo-50"
           >
-            Changer de projet 🔄
+            Commencer à jouer 🎮
           </button>
         </div>
       </div>

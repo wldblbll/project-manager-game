@@ -63,6 +63,22 @@ const MarkdownContent = ({ content }: { content: string }) => {
   );
 };
 
+// Ajouter cette interface avant le composant GameBoard
+interface ModalContent {
+  title: string;
+  description: string;
+  cost: number;
+  delay: number;
+  type: string;
+  domain: string;
+  phase: string | string[];
+  options: string[];
+  correct_answer: string;
+  comment: string;
+  conditions: any[];
+  info?: string;
+}
+
 const GameBoard: React.FC<GameBoardProps> = ({ 
   cards, 
   onMoveCard, 
@@ -112,6 +128,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
   
   // Liste globale de toutes les cartes tirées (même celles qui ne sont plus sur le plateau)
   const [allUsedCards, setAllUsedCards] = useState<string[]>([]);
+  
+  // Ajouter ces deux nouveaux états
+  const [modalContent, setModalContent] = useState<ModalContent | null>(null);
+  const [showModal, setShowModal] = useState(false);
   
   // Mettre à jour la liste des cartes utilisées lorsque les cartes changent
   useEffect(() => {
@@ -493,13 +513,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
       if (cardType === 'action') {
         // Afficher toutes les cartes action dans la jolie Box modale
         console.log("Displaying action card in modal...");
-        displayCardInModal(card);
         
-        // Si la carte a des conditions, les traiter également
-        if (hasCardConditions(card)) {
-          console.log("Action card has conditions, processing them...");
-          handleActionCardConditions(card);
-        }
+        // Les conditions seront gérées dans displayCardInModal
+        // pour éviter la double application des effets
+        displayCardInModal(card);
       } else if (cardType === 'event' && hasCardConditions(card)) {
         console.log("Event card has conditions, processing them...");
         handleEventCardEffect(card);
@@ -1171,7 +1188,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         // Appliquer l'impact sur la valeur du projet
         if (effectsToApply.value !== undefined && onAddValuePoints) {
           console.log(`Applying value impact: ${effectsToApply.value} points`);
-          onAddValuePoints(effectsToApply.value);
+          onAddValuePoints(effectsToApply.value); // Ne pas inverser le signe ici
           
           // Afficher une animation pour l'impact sur la valeur
           showCounterAnimation('points', effectsToApply.value);
@@ -1489,211 +1506,48 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   // Fonction pour afficher une carte dans une jolie Box modale
   const displayCardInModal = (card: Card) => {
-    console.log("=== AFFICHAGE CARTE DANS MODAL ===");
-    console.log("Carte:", getCardTitle(card));
-    
-    // Créer un conteneur pour la modal
-    const overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    overlay.style.display = 'flex';
-    overlay.style.justifyContent = 'center';
-    overlay.style.alignItems = 'center';
-    overlay.style.zIndex = '9999';
-    overlay.style.opacity = '0';
-    overlay.style.transition = 'opacity 0.3s ease';
-    
-    // Créer la modal
-    const modal = document.createElement('div');
-    modal.style.width = '90%';
-    modal.style.maxWidth = '600px';
-    modal.style.maxHeight = '80vh';
-    modal.style.display = 'flex';
-    modal.style.flexDirection = 'column';
-    modal.style.borderRadius = '12px';
-    modal.style.overflow = 'hidden';
-    modal.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
-    modal.style.backgroundColor = 'white';
-    
-    // Créer l'en-tête de la carte
-    const header = document.createElement('div');
-    header.style.padding = '24px';
-    header.style.background = 'linear-gradient(135deg, #3b82f6, #1e40af)';
-    header.style.color = 'white';
-    header.style.position = 'relative';
-    header.style.overflow = 'hidden';
-    
-    // Ajouter un cercle décoratif
-    const decorativeCircle = document.createElement('div');
-    decorativeCircle.style.position = 'absolute';
-    decorativeCircle.style.top = '-20px';
-    decorativeCircle.style.right = '-20px';
-    decorativeCircle.style.width = '100px';
-    decorativeCircle.style.height = '100px';
-    decorativeCircle.style.borderRadius = '50%';
-    decorativeCircle.style.background = 'rgba(255, 255, 255, 0.1)';
-    decorativeCircle.style.zIndex = '0';
-    
-    // Ajouter le titre
-    const title = document.createElement('h2');
-    title.textContent = getCardTitle(card);
-    title.style.fontWeight = 'bold';
-    title.style.fontSize = '1.25rem';
-    title.style.position = 'relative';
-    title.style.zIndex = '1';
-    title.style.margin = '0';
-    
-    // Ajouter le type de carte
-    const cardType = document.createElement('p');
-    cardType.textContent = 'Action';
-    cardType.style.marginTop = '8px';
-    cardType.style.opacity = '0.9';
-    cardType.style.fontSize = '0.875rem';
-    cardType.style.position = 'relative';
-    cardType.style.zIndex = '1';
-    cardType.style.margin = '8px 0 0 0';
-    
-    // Ajouter les éléments à l'en-tête
-    header.appendChild(decorativeCircle);
-    header.appendChild(title);
-    header.appendChild(cardType);
-    
-    // Créer le contenu de la carte
-    const content = document.createElement('div');
-    content.style.padding = '24px';
-    content.style.overflowY = 'auto';
-    content.style.flexGrow = '1';
-    
-    // Ajouter la description
-    const description = document.createElement('div');
-    description.textContent = getCardDescription(card);
-    description.style.marginBottom = '24px';
-    description.style.lineHeight = '1.5';
-    description.style.whiteSpace = 'pre-wrap';
-    
-    // Ajouter les informations supplémentaires si disponibles
+    // Convertir le coût en nombre si c'est une chaîne
+    const cost = card.coût;
+    const costValue = typeof cost === 'string' ? 
+      parseInt(cost.replace(/[^0-9-]/g, '')) : 
+      typeof cost === 'number' ? 
+        cost : 
+        0;
+
+    // Convertir le délai en nombre si c'est une chaîne
+    const delay = card.délai;
+    const delayValue = typeof delay === 'string' ? 
+      parseInt(delay.replace(/[^0-9-]/g, '')) : 
+      typeof delay === 'number' ? 
+        delay : 
+        0;
+
+    // Récupérer les informations supplémentaires
     const cardInfo = getCardInfo(card);
-    if (cardInfo) {
-      const info = document.createElement('p');
-      info.textContent = cardInfo;
-      info.style.fontStyle = 'italic';
-      info.style.marginBottom = '16px';
-      info.style.padding = '12px';
-      info.style.backgroundColor = 'rgba(0, 0, 0, 0.03)';
-      info.style.borderRadius = '8px';
-      content.appendChild(info);
+
+    // Vérifier si la carte a des conditions et n'est pas déjà sur le tableau
+    // Uniquement pour les nouvelles cartes ajoutées (pas les cartes déjà placées)
+    if (hasCardConditions(card) && !isCardOnBoard(card.id)) {
+      console.log("Processing conditions for new card in displayCardInModal");
+      handleActionCardConditions(card);
     }
-    
-    // Ajouter les badges pour le coût et le délai si disponibles
-    const cost = getCardCost(card);
-    const time = getCardTime(card);
-    
-    if (cost || time) {
-      const badgesContainer = document.createElement('div');
-      badgesContainer.style.display = 'flex';
-      badgesContainer.style.gap = '8px';
-      badgesContainer.style.marginTop = '16px';
-      
-      if (cost) {
-        const costValue = parseInt(cost.replace(/[^0-9-]/g, '')) || 0;
-        const costBadge = document.createElement('span');
-        costBadge.textContent = `💰 ${cost}`;
-        costBadge.style.padding = '4px 12px';
-        costBadge.style.borderRadius = '16px';
-        costBadge.style.backgroundColor = costValue >= 0 ? '#f44336' : '#4caf50';
-        costBadge.style.color = 'white';
-        costBadge.style.fontSize = '0.875rem';
-        costBadge.style.fontWeight = '500';
-        badgesContainer.appendChild(costBadge);
-      }
-      
-      if (time) {
-        const timeValue = parseInt(time.replace(/[^0-9-]/g, '')) || 0;
-        const timeBadge = document.createElement('span');
-        timeBadge.textContent = `⏱️ ${time}`;
-        timeBadge.style.padding = '4px 12px';
-        timeBadge.style.borderRadius = '16px';
-        timeBadge.style.backgroundColor = timeValue >= 0 ? '#f44336' : '#4caf50';
-        timeBadge.style.color = 'white';
-        timeBadge.style.fontSize = '0.875rem';
-        timeBadge.style.fontWeight = '500';
-        badgesContainer.appendChild(timeBadge);
-      }
-      
-      content.appendChild(badgesContainer);
-    }
-    
-    // Ajouter la description au contenu
-    content.insertBefore(description, content.firstChild);
-    
-    // Ajouter un bouton de fermeture
-    const closeButton = document.createElement('button');
-    closeButton.innerHTML = '×';
-    closeButton.style.position = 'absolute';
-    closeButton.style.top = '12px';
-    closeButton.style.right = '12px';
-    closeButton.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-    closeButton.style.border = 'none';
-    closeButton.style.color = 'white';
-    closeButton.style.fontSize = '24px';
-    closeButton.style.width = '32px';
-    closeButton.style.height = '32px';
-    closeButton.style.borderRadius = '50%';
-    closeButton.style.display = 'flex';
-    closeButton.style.justifyContent = 'center';
-    closeButton.style.alignItems = 'center';
-    closeButton.style.cursor = 'pointer';
-    closeButton.style.zIndex = '2';
-    closeButton.style.transition = 'background-color 0.2s';
-    
-    closeButton.onmouseover = () => {
-      closeButton.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-    };
-    
-    closeButton.onmouseout = () => {
-      closeButton.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-    };
-    
-    // Fonction pour fermer la modal
-    const closeModal = () => {
-      overlay.style.opacity = '0';
-      setTimeout(() => {
-        if (document.body.contains(overlay)) {
-          document.body.removeChild(overlay);
-        }
-      }, 300);
-    };
-    
-    closeButton.onclick = closeModal;
-    
-    // Fermer également en cliquant sur l'overlay
-    overlay.onclick = (e) => {
-      if (e.target === overlay) {
-        closeModal();
-      }
-    };
-    
-    // Ajouter le bouton de fermeture à l'en-tête
-    header.appendChild(closeButton);
-    
-    // Ajouter l'en-tête et le contenu à la modal
-    modal.appendChild(header);
-    modal.appendChild(content);
-    
-    // Ajouter la modal à l'overlay
-    overlay.appendChild(modal);
-    
-    // Ajouter l'overlay au DOM
-    document.body.appendChild(overlay);
-    
-    // Afficher la modal avec une animation
-    setTimeout(() => {
-      overlay.style.opacity = '1';
-    }, 10);
+
+    // Mettre à jour les compteurs
+    setModalContent({
+      title: getCardTitle(card),
+      description: getCardDescription(card),
+      cost: costValue,
+      delay: delayValue,
+      type: getCardType(card),
+      domain: getCardDomain(card),
+      phase: getCardPhase(card),
+      options: card.options || [],
+      correct_answer: card.correct_answer || '',
+      comment: card.comment || '',
+      conditions: card.conditions || [],
+      info: cardInfo || ''
+    });
+    setShowModal(true);
   };
 
   // Fonction pour afficher une carte action dans une fenêtre
@@ -1755,31 +1609,30 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }
     }
     
-    // Appliquer l'impact sur le budget si nécessaire
-    if (effectsToApply?.budget !== undefined && onModifyBudget) {
-      console.log(`Applying cost impact: ${effectsToApply.budget}K€`);
-      onModifyBudget(effectsToApply.budget);
+    // Appliquer les effets dans l'ordre : budget, temps, valeur
+    if (effectsToApply) {
+      console.log("Applying effects:", effectsToApply);
       
-      // Afficher une animation pour l'impact sur le coût
-      showCounterAnimation('budget', effectsToApply.budget);
-    }
-    
-    // Appliquer l'impact sur le délai si nécessaire
-    if (effectsToApply?.time !== undefined && onModifyTime) {
-      console.log(`Applying time impact: ${effectsToApply.time} months`);
-      onModifyTime(effectsToApply.time);
+      // Appliquer l'impact sur le budget si nécessaire
+      if (effectsToApply.budget !== undefined && onModifyBudget) {
+        console.log(`Applying budget impact: ${effectsToApply.budget}K€`);
+        onModifyBudget(effectsToApply.budget);
+        showCounterAnimation('budget', effectsToApply.budget);
+      }
       
-      // Afficher une animation pour l'impact sur le délai
-      showCounterAnimation('time', effectsToApply.time);
-    }
-    
-    // Appliquer l'impact sur la valeur du projet si nécessaire
-    if (effectsToApply?.value !== undefined && onAddValuePoints) {
-      console.log(`Applying value impact: ${effectsToApply.value} points`);
-      onAddValuePoints(effectsToApply.value);
+      // Appliquer l'impact sur le délai si nécessaire
+      if (effectsToApply.time !== undefined && onModifyTime) {
+        console.log(`Applying time impact: ${effectsToApply.time} days`);
+        onModifyTime(effectsToApply.time);
+        showCounterAnimation('time', effectsToApply.time);
+      }
       
-      // Afficher une animation pour l'impact sur la valeur
-      showCounterAnimation('points', effectsToApply.value);
+      // Appliquer l'impact sur la valeur du projet si nécessaire
+      if (effectsToApply.value !== undefined && onAddValuePoints) {
+        console.log(`Applying value impact: ${effectsToApply.value} points`);
+        onAddValuePoints(effectsToApply.value);
+        showCounterAnimation('points', effectsToApply.value);
+      }
     }
   };
 
@@ -1933,8 +1786,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
                     onMouseLeave={() => setHoveredCard(null)}
                     onClick={() => handleCardClick(card.id)}
                 >
-                    <div className="text-sm font-medium text-center whitespace-normal break-words">
-                        {getCardTitle(card)} {/* Affichage uniquement du titre */}
+                    <div className="flex flex-col h-full justify-center items-center">
+                        <div className="text-sm font-medium text-center">
+                            {getCardTitle(card)}
+                        </div>
                     </div>
                 </div>
             );
@@ -1965,6 +1820,134 @@ const GameBoard: React.FC<GameBoardProps> = ({
           onClose={() => setActiveCardId(null)}
           allCards={allCards}
         />
+      )}
+
+      {/* Modal pour afficher les détails de la carte */}
+      {showModal && modalContent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] flex flex-col">
+            <div className="p-6 overflow-y-auto">
+              <div className="flex justify-between items-start mb-4 sticky top-0 bg-white z-10 pb-2">
+                <h3 className="text-xl font-bold text-gray-900">{modalContent.title}</h3>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="text-gray-400 hover:text-gray-500 rounded-full hover:bg-gray-100 p-2 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              <div className="prose max-w-none">
+                <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                  <ReactMarkdown>{modalContent.description}</ReactMarkdown>
+                  
+                  {modalContent.type === 'action' && (
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {modalContent.cost !== 0 && (
+                        <span className={`px-2 py-1 rounded text-sm ${
+                          modalContent.cost > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                        }`}>
+                          Coût: {modalContent.cost > 0 ? '+' : ''}{modalContent.cost}K€
+                        </span>
+                      )}
+                      {modalContent.delay !== 0 && (
+                        <span className={`px-2 py-1 rounded text-sm ${
+                          modalContent.delay > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                        }`}>
+                          Délai: {modalContent.delay > 0 ? '+' : ''}{modalContent.delay} semaines
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+                
+                {modalContent.conditions && modalContent.conditions.length > 0 && (
+                  <div className="mt-4 space-y-3">
+                    {modalContent.conditions.map((condition, index) => (
+                      <div key={index} className="bg-blue-50 rounded-lg p-3">
+                        {condition.cardId && (
+                          <p className="text-sm text-blue-800">
+                            Requiert : <span className="font-medium">"{allCards.find(c => c.id === condition.cardId)?.title || `Carte #${condition.cardId}`}"</span>
+                            <span className="text-blue-600 ml-1">
+                              ({condition.present ? 'présente' : 'absente'})
+                            </span>
+                          </p>
+                        )}
+
+                        {condition.operator && condition.checks && (
+                          <div className="text-sm">
+                            <p className="text-blue-800">
+                              Requiert {condition.operator === 'AND' ? 'toutes' : 'au moins une'} :
+                            </p>
+                            <div className="ml-2 space-y-1 mt-1">
+                              {condition.checks.map((check, checkIndex) => (
+                                <p key={checkIndex} className="text-blue-800">
+                                  • "{allCards.find(c => c.id === check.cardId)?.title || `Carte #${check.cardId}`}"
+                                  <span className="text-blue-600 ml-1">
+                                    ({check.present ? 'présente' : 'absente'})
+                                  </span>
+                                </p>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {condition.effects && (
+                          <div className="mt-2 bg-white/50 rounded p-2 text-sm">
+                            {condition.effects.message && (
+                              <p className="text-gray-700 mb-2">{condition.effects.message}</p>
+                            )}
+                            <div className="flex flex-wrap gap-2">
+                              {condition.effects.budget !== undefined && (
+                                <span className={`px-2 py-1 rounded ${
+                                  condition.effects.budget > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                                }`}>
+                                  Budget: {condition.effects.budget > 0 ? '+' : ''}{condition.effects.budget}K€
+                                </span>
+                              )}
+                              {condition.effects.time !== undefined && (
+                                <span className={`px-2 py-1 rounded ${
+                                  condition.effects.time > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                                }`}>
+                                  Délai: {condition.effects.time > 0 ? '+' : ''}{condition.effects.time} jours
+                                </span>
+                              )}
+                              {condition.effects.value !== undefined && (
+                                <span className={`px-2 py-1 rounded ${
+                                  condition.effects.value > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                }`}>
+                                  Valeur: {condition.effects.value > 0 ? '+' : ''}{condition.effects.value} points
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {modalContent.info && (
+                  <div className="mt-4 bg-gray-50 rounded-lg p-3 text-sm">
+                    <h4 className="font-semibold mb-1">Informations complémentaires</h4>
+                    <ReactMarkdown>{modalContent.info}</ReactMarkdown>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div className="bg-gray-50 px-6 py-3 flex justify-end">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

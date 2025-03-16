@@ -6,63 +6,10 @@
     "description": "GreenTrip Finder est un projet visant à créer une application mobile et web qui aide les utilisateurs à découvrir des destinations de voyage écologiques et durables en fonction de leurs intérêts personnels, tout en promouvant le tourisme responsable.\n\nPortée du projet:\n1. Fonctionnalités principales:\n   - Profil Utilisateur\n   - Recherche de Destinations\n   - Évaluation Écologique\n   - Réservations\n   - Conseils et Astuces\n   - Communauté et Avis\n\n2. Livrables:\n   - Application mobile (iOS et Android)\n   - Application web\n   - Base de données des destinations écologiques\n   - Documentation utilisateur et guide de démarrage\n   - Plan de communication et de marketing",
     "domain": "Gestion du contenu",
     "info": "La charte du projet est un document clé qui officialise son existence et fixe ses objectifs. Elle permet d'autoriser formellement le projet et documente les exigences initiales pour répondre aux besoins des parties prenantes. Ce document doit inclure la justification du projet, ses objectifs, les principaux livrables, les parties prenantes impliquées, les contraintes et hypothèses, ainsi que les critères de succès.",
-    "phase": ["Initiation"],
+    "phase": [
+      "Initiation"
+    ],
     "délai": "-1"
-  },
-  
-  {
-    "id": "creation-logo-site-web",
-    "type": "action",
-    "title": "Concevoir le Logo et le Site Web de GreenTrip Finder",
-    "description": "Créer un logo attrayant et un site web détaillé pour promouvoir l'application auprès des utilisateurs et des partenaires.",
-    "domain": "Gestion des communications du projet",
-    "phase": ["Initiation"],
-    "délai": -1,
-    "coût": -5,
-    "conditions": [
-      {
-        "cardId": "initier-la-charte-projet",
-        "present": false,
-        "effects": {
-          "value": -10,
-          "message": "Concentrer les efforts sur le logo et le site web détourne des ressources de la définition des bases du projet."
-        }
-      }
-    ],
-    "info": "Bien que la communication soit importante, se concentrer sur le logo et le site web en phase d'initiation peut détourner des ressources de la définition des bases du projet."
-  },
-  {
-    "id": "organisation-fete-lancement",
-    "type": "action",
-    "title": "Organiser une Fête de Lancement",
-    "description": "Planifier et organiser une fête de lancement avec des invités de marque, des discours et des animations pour célébrer le début du projet.",
-    "domain": "Gestion des communications du projet",
-    "phase": ["Initiation"],
-    "délai": -1,
-    "coût": -4,
-    "conditions": [
-      {
-        "cardId": "initier-la-charte-projet",
-        "present": false,
-        "effects": {
-        "value": -5,
-          "message": "Concentrer les efforts sur une fête de lancement détourne des ressources de la définition des bases du projet et de la planification."
-        }
-      }
-    ],
-    "info": "Bien que la communication soit importante, organiser une fête de lancement coûteuse en phase d'initiation est prématuré et peut nuire à la réussite du projet."
-  },
-  {
-    "id": "suivi-quotidien-concurrents",
-    "type": "action",
-    "title": "Mettre en Place un Système de Suivi Quotidien des Concurrents",
-    "description": "Établir un processus de veille concurrentielle quotidienne pour analyser les stratégies et les actions des autres applications de voyage durable.",
-    "domain": "Gestion des risques du projet",
-    "phase": ["Initiation"],
-    "délai": -1,
-    "coût": -2,
-    "value": -5,
-    "info": "Bien que la veille concurrentielle soit importante, un suivi quotidien en phase d'initiation est excessif et peut détourner des ressources des tâches essentielles."
   },
   {
     "id": "definir-les-criteres-de-succes",
@@ -191,7 +138,7 @@
       "Planification"
     ],
     "délai": "-1",
-    "coût": "800"
+    "cout": "800"
   },
   {
     "id": "estimer-les-ressources-necessaires",
@@ -204,7 +151,7 @@
       "Planification"
     ],
     "délai": "-1",
-    "coût": "500"
+    "cout": "500"
   },
   {
     "id": "elaborer-le-plan-de-gestion-des-risques",
@@ -217,7 +164,7 @@
       "Planification"
     ],
     "délai": "-1",
-    "coût": "-5",
+    "cout": "-5",
     "value": 5
   },
   {
@@ -231,7 +178,7 @@
       "Planification"
     ],
     "délai": "-1",
-    "coût": "-5"
+    "cout": "-5"
   },
   {
     "id": "identifier-evaluer-risque-partenaire",
@@ -244,7 +191,7 @@
       "Planification"
     ],
     "délai": "-1",
-    "coût": "-5"
+    "cout": "-5"
   },
   {
     "id": "attenuer-risque-api-carto",
@@ -257,7 +204,7 @@
       "Planification"
     ],
     "délai": "-2",
-    "coût": "-10"
+    "cout": "-10"
   },
   {
     "id": "panne-api-carto",
@@ -268,7 +215,7 @@
     "info": "La préparation d'un plan de secours permet de minimiser l'impact des imprévus et d'assurer la continuité du projet.",
     "phase": ["Exécution"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "attenuer-risque-api-carto",
@@ -303,7 +250,7 @@
       "Planification"
     ],
     "délai": "-2",
-    "coût": "-10"
+    "cout": "-10"
   },
   {
     "id": "influenceur-ecolo",
@@ -363,7 +310,7 @@
       }
     ],
     "délai": "-1",
-    "coût": "-10"
+    "cout": "-10"
   },
   {
     "id": "programme-mentorat",
@@ -376,7 +323,7 @@
       "Planification"
     ],
     "délai": "-1",
-    "coût": "-2"
+    "cout": "-2"
   },
   {
     "id": "crise-des-talents",
@@ -420,7 +367,10 @@
     "description": "Les utilisateurs doivent pouvoir filtrer les destinations par critères spécifiques (type d'hébergement, activités, empreinte carbone, accessibilité, etc.) pour trouver des options correspondant à leurs préférences.",
     "domain": "Gestion du contenu",
     "info": "Ce besoin est essentiel pour offrir une expérience utilisateur personnalisée et faciliter la recherche de voyages éco-responsables. La valeur ajoutée de ce besoin est estimée à 30 points.",
-    "phase": ["Planification"],
+    "phase": [
+      "Planification",
+      "Exécution"
+    ],
     "délai": "-1"
   },
   {
@@ -430,7 +380,10 @@
     "description": "Développer un algorithme capable d'évaluer et d'optimiser le score écologique des voyages, en tenant compte des options de transport, d'hébergement et d'activités. L'algorithme doit proposer les options les plus durables pour chaque utilisateur.",
     "domain": "Gestion du contenu",
     "info": "Cet algorithme est essentiel pour proposer aux utilisateurs les meilleures options de voyages éco-responsables. Il doit être précis, fiable et évolutif. Cette fonctionnalité, une fois développée, devrait rapporter 20 points de valeur.",
-    "phase": ["Planification"],
+    "phase": [
+      "Planification",
+      "Exécution"
+    ],
     "délai": "-1"
   },
   {
@@ -440,7 +393,10 @@
     "description": "Les utilisateurs doivent pouvoir planifier des itinéraires personnalisés, réserver des hébergements, des transports et des activités, gérer leurs réservations et suivre leurs dépenses et impacts environnementaux.",
     "domain": "Gestion du contenu",
     "info": "Ce besoin facilite l'organisation des voyages et offre une expérience utilisateur complète. Cette fonctionnalité, une fois développée, devrait rapporter 15 points de valeur.",
-    "phase": ["Planification"],
+    "phase": [
+      "Planification",
+      "Exécution"
+    ],
     "délai": "-1"
   },
   {
@@ -450,7 +406,10 @@
     "description": "Les utilisateurs doivent pouvoir partager leurs avis, photos et vidéos de voyages, participer à des forums de discussion et créer des itinéraires personnalisés.",
     "domain": "Gestion du contenu",
     "info": "Ce besoin favorise l'engagement des utilisateurs et la création d'une communauté active. Cette fonctionnalité, une fois développée, devrait rapporter 10 points de valeur.",
-    "phase": ["Planification"],
+    "phase": [
+      "Planification",
+      "Exécution"
+    ],
     "délai": "-1"
   },
   {
@@ -460,7 +419,10 @@
     "description": "Les utilisateurs doivent pouvoir créer et gérer leur profil, définir leurs préférences de voyage, consulter leur historique et recevoir des recommandations personnalisées.",
     "domain": "Gestion du contenu",
     "info": "Ce besoin offre une expérience utilisateur personnalisée et améliore la pertinence des recommandations. Cette fonctionnalité, une fois développée, devrait rapporter 12 points de valeur.",
-    "phase": ["Planification"],
+    "phase": [
+      "Planification",
+      "Exécution"
+    ],
     "délai": "-1"
   },
   {
@@ -521,7 +483,7 @@
     "info": "Une interface utilisateur réussie est la clé de l'adoption de l'application. Ne négligez aucun détail !",
     "phase": ["Exécution"],
     "délai": "-4",
-    "coût": "-12"
+    "cout": "-12"
   },
   {
     "id": "integration-systemes-externes",
@@ -532,7 +494,7 @@
     "info": "L'intégration réussie des systèmes externes est essentielle pour offrir une expérience de réservation complète.",
     "phase": ["Exécution"],
     "délai": "-5",
-    "coût": "-15"
+    "cout": "-15"
   },
   {
     "id": "campagne-marketing-influenceurs",
@@ -543,7 +505,7 @@
     "info": "Une campagne marketing réussie avec des influenceurs peut booster la visibilité et l'adoption de l'application.",
     "phase": ["Exécution"],
     "délai": "-3",
-    "coût": "-10"
+    "cout": "-10"
   },
   {
     "id": "formation-equipe-support",
@@ -554,7 +516,7 @@
     "info": "Une équipe de support bien formée est essentielle pour assurer la satisfaction des utilisateurs.",
     "phase": ["Exécution"],
     "délai": "-2",
-    "coût": "-5"
+    "cout": "-5"
   },
   {
     "id": "audit-securite-donnees",
@@ -565,7 +527,7 @@
     "info": "La sécurité des données est primordiale pour gagner la confiance des utilisateurs.",
     "phase": ["Exécution"],
     "délai": "-3",
-    "coût": "-8"
+    "cout": "-8"
   },
   {
     "id": "atelier-co-creation-utilisateurs",
@@ -576,7 +538,7 @@
     "info": "La co-création avec les utilisateurs favorise l'adoption et l'engagement à long terme.",
     "phase": ["Exécution"],
     "délai": "-2",
-    "coût": "-5"
+    "cout": "-5"
   },
   {
     "id": "optimisation-performances-app",
@@ -587,7 +549,7 @@
     "info": "Des performances optimales sont essentielles pour éviter la frustration des utilisateurs et les abandons.",
     "phase": ["Exécution"],
     "délai": "-3",
-    "coût": "-8"
+    "cout": "-8"
   },
   {
     "id": "panne-serveur-critique",
@@ -598,7 +560,7 @@
     "info": "Les pannes de serveur peuvent nuire gravement à la réputation de l'application. Le déploiement continu permet de réagir rapidement.",
     "phase": ["Exécution"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "deploiement-continu-integration-continue",
@@ -631,7 +593,7 @@
     "info": "Les conflits d'équipe peuvent nuire à la productivité et à l'ambiance de travail. La médiation et le mentorat sont essentiels.",
     "phase": ["Exécution"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "programme-mentorat",
@@ -664,7 +626,7 @@
     "info": "Les attaques de cybersécurité sont une menace constante. Un audit de sécurité régulier est essentiel pour protéger les données.",
     "phase": ["Exécution"],
     "délai": "Variable",
-  "coût": "Variable",
+  "cout": "Variable",
   "conditions": [
   {
   "cardId": "audit-securite-donnees",
@@ -697,7 +659,7 @@
   "info": "Une communication claire et une collaboration étroite avec les partenaires sont essentielles pour éviter les problèmes d'intégration.",
   "phase": ["Exécution"],
   "délai": "Variable",
-  "coût": "Variable",
+  "cout": "Variable",
   "conditions": [
   {
   "cardId": "atelier-co-creation-utilisateurs",
@@ -730,7 +692,7 @@
     "info": "Un suivi rigoureux de l'avancement permet de détecter les dérives et de garantir le respect des objectifs.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-1",
-    "coût": "-3"
+    "cout": "-3"
   },
   {
     "id": "reunions-suivi-regulieres",
@@ -741,7 +703,7 @@
     "info": "Les réunions de suivi régulières permettent de maintenir l'équipe alignée et de résoudre les problèmes rapidement.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-1",
-    "coût": "-2"
+    "cout": "-2"
   },
   {
     "id": "controle-qualite-code",
@@ -752,7 +714,7 @@
     "info": "Des contrôles de qualité réguliers garantissent la stabilité et la maintenabilité de l'application.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-2",
-    "coût": "-5"
+    "cout": "-5"
   },
   {
     "id": "tests-securite-reguliers",
@@ -763,7 +725,7 @@
     "info": "Des tests de sécurité réguliers sont essentiels pour prévenir les attaques et protéger les données sensibles.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-2",
-    "coût": "-5"
+    "cout": "-5"
   },
   {
     "id": "suivi-satisfaction-utilisateurs",
@@ -774,7 +736,7 @@
     "info": "Le suivi de la satisfaction des utilisateurs permet d'adapter l'application à leurs besoins et de fidéliser les utilisateurs.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-1",
-    "coût": "-3"
+    "cout": "-3"
   },
   {
     "id": "controle-respect-budget",
@@ -785,7 +747,7 @@
     "info": "Un contrôle rigoureux du budget permet d'éviter les dépassements et de garantir la viabilité financière du projet.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-1",
-    "coût": "-3"
+    "cout": "-3"
   },
   {
     "id": "suivi-delais-taches",
@@ -796,7 +758,7 @@
     "info": "Un suivi rigoureux des délais permet d'éviter les retards et de garantir le respect du calendrier du projet.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-1",
-    "coût": "-2"
+    "cout": "-2"
   },
   {
     "id": "controle-respect-normes-reglementaires",
@@ -807,7 +769,7 @@
     "info": "Le respect des normes et réglementations est essentiel pour garantir la conformité et la sécurité de l'application.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-2",
-    "coût": "-5"
+    "cout": "-5"
   },
   {
     "id": "gestion-changements-projet",
@@ -818,7 +780,7 @@
     "info": "Un processus de gestion des changements permet de maîtriser les évolutions du projet et de minimiser les risques.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-1",
-    "coût": "-3"
+    "cout": "-3"
   },
   {
     "id": "audit-interne-projet",
@@ -829,7 +791,7 @@
     "info": "Un audit interne permet d'identifier les axes d'amélioration et de garantir la qualité du projet.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "-2",
-    "coût": "-5"
+    "cout": "-5"
   },
   {
     "id": "retard-livraison-composants-cles",
@@ -840,7 +802,7 @@
     "info": "Les retards de livraison peuvent avoir un impact majeur sur le calendrier et le budget du projet. Un plan de gestion des risques permet d'anticiper et de gérer ces situations.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "plan-gestion-risques",
@@ -873,7 +835,7 @@
     "info": "Un suivi budgétaire rigoureux permet de détecter les écarts et de prendre des mesures correctives pour éviter les dépassements.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "controle-respect-budget",
@@ -906,7 +868,7 @@
     "info": "La défection d'un membre clé de l'équipe peut avoir un impact majeur sur le projet. Un plan de gestion des ressources humaines permet d'anticiper et de gérer ces situations.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "plan-gestion-ressources-humaines",
@@ -939,7 +901,7 @@
     "info": "Le respect des normes et réglementations est essentiel pour la conformité et la sécurité de l'application. Une veille réglementaire permet d'anticiper les changements.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "controle-respect-normes-reglementaires",
@@ -972,7 +934,7 @@
     "info": "Le suivi de la satisfaction des utilisateurs permet d'identifier les problèmes et de prendre des mesures correctives pour améliorer l'application.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "suivi-satisfaction-utilisateurs",
@@ -1005,7 +967,7 @@
     "info": "La rétrospective est essentielle pour améliorer les processus et les performances de l'équipe.",
     "phase": ["Clôture"],
     "délai": "-1",
-    "coût": "-2"
+    "cout": "-2"
   },
   {
     "id": "redaction-rapport-final",
@@ -1016,7 +978,7 @@
     "info": "Le rapport final est un livrable clé pour la clôture du projet. Il doit être clair, concis et complet.",
     "phase": ["Clôture"],
     "délai": "-1",
-    "coût": "-3"
+    "cout": "-3"
   },
   {
     "id": "cloture-administrative-financiere",
@@ -1027,7 +989,7 @@
     "info": "La clôture administrative et financière garantit la bonne gestion des ressources et la conformité aux procédures.",
     "phase": ["Clôture"],
     "délai": "-1",
-    "coût": "-2"
+    "cout": "-2"
   },
   {
     "id": "transfert-connaissances-maintenance",
@@ -1038,7 +1000,7 @@
     "info": "Le transfert de connaissances et la préparation de la maintenance sont essentiels pour assurer la continuité du service.",
     "phase": ["Clôture"],
     "délai": "-2",
-    "coût": "-4"
+    "cout": "-4"
   },
   {
     "id": "enquete-satisfaction-parties-prenantes",
@@ -1049,7 +1011,7 @@
     "info": "L'enquête de satisfaction permet de mesurer l'impact du projet et d'améliorer les relations avec les parties prenantes.",
     "phase": ["Clôture"],
     "délai": "-1",
-    "coût": "-2"
+    "cout": "-2"
   },
   {
     "id": "temoignages-utilisateurs-positifs",
@@ -1060,7 +1022,7 @@
     "info": "Les témoignages positifs renforcent la crédibilité de l'application et favorisent son adoption.",
     "phase": ["Clôture"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "enquete-satisfaction-parties-prenantes",
@@ -1093,7 +1055,7 @@
     "info": "La clôture administrative et financière garantit le paiement des factures et évite les litiges.",
     "phase": ["Clôture"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "cloture-administrative-financiere",
@@ -1126,7 +1088,7 @@
     "info": "La réunion de retour d'expérience permet de recueillir les idées d'amélioration et de planifier les prochaines évolutions de l'application.",
     "phase": ["Clôture"],
     "délai": "Variable",
-    "coût": "Variable",
+    "cout": "Variable",
     "conditions": [
       {
         "cardId": "reunion-retour-experience",
@@ -1363,7 +1325,7 @@
   {
     "id": "scenario-ecart-budgetaire",
     "type": "question",
-    "phase": ["Surveillance et maîtrise"],
+    "phase": ["Contrôle et surveillance"],
     "title": "Le budget du projet dépasse de 10% les prévisions, et les dépenses continuent d'augmenter. Comment identifiez-vous les causes de cet écart et prenez-vous des mesures correctives ?",
     "options": [
       "A. Ignorer l'écart, il se résoudra de lui-même.",
@@ -1377,7 +1339,7 @@
   {
     "id": "scenario-retard-livraison-fonctionnalite",
     "type": "question",
-    "phase": ["Surveillance et maîtrise"],
+    "phase": ["Contrôle et surveillance"],
     "title": "La livraison d'une fonctionnalité clé est retardée de plusieurs semaines, menaçant le respect des délais du projet. Comment analysez-vous les causes du retard et mettez-vous en place un plan de rattrapage ?",
     "options": [
       "A. Accélérer le développement en sacrifiant les tests.",
@@ -1391,7 +1353,7 @@
   {
     "id": "scenario-insatisfaction-utilisateurs",
     "type": "question",
-    "phase": ["Surveillance et maîtrise"],
+    "phase": ["Contrôle et surveillance"],
     "title": "Les retours des utilisateurs révèlent une insatisfaction concernant l'ergonomie de l'application. Comment recueillez-vous les retours, analysez-vous les problèmes et mettez-vous en place des améliorations ?",
     "options": [
       "A. Ignorer les retours des utilisateurs, ils sont trop subjectifs.",
@@ -1405,7 +1367,7 @@
   {
     "id": "scenario-risque-securite",
     "type": "question",
-    "phase": ["Surveillance et maîtrise"],
+    "phase": ["Contrôle et surveillance"],
     "title": "Un risque de sécurité majeur est identifié, menaçant les données sensibles des utilisateurs. Comment évaluez-vous le risque, mettez-vous en place des mesures de sécurité et communiquez-vous avec les parties prenantes ?",
     "options": [
       "A. Ignorer le risque, il est peu probable qu'il se produise.",
@@ -1419,7 +1381,7 @@
   {
     "id": "scenario-changement-reglementaire",
     "type": "question",
-    "phase": ["Surveillance et maîtrise"],
+    "phase": ["Contrôle et surveillance"],
     "title": "Une nouvelle réglementation entre en vigueur, impactant les fonctionnalités de l'application. Comment analysez-vous l'impact de la réglementation, mettez-vous en conformité et informez-vous les utilisateurs ?",
     "options": [
       "A. Ignorer la réglementation, elle est trop complexe.",

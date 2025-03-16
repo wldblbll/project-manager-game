@@ -27,16 +27,16 @@
     {
       "name": "Planification",
       "order": 2,
-      "requiredCards": ["Créer la WBS", "Développer l'échéancier"],
+      "requiredCards": ["Définir la structure de découpage du travail (WBS)"],
       "cardLimits": {
         "action": 7,
         "event": 4,
         "quiz": 2
       },
       "penalties": {
-        "time": 3,
-        "budget": 50,
-        "message": "La planification a été incomplète. Le projet manque de structure et de calendrier clair."
+        "time": -3,
+        "budget": -5,
+        "message": "La structure de découpage (WBS) n'a pas été définie correctement. Cela entraîne des retards et des coûts supplémentaires."
       }
     },
     {

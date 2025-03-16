@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import defaultProjectCards from "@/data/project-cards-default.json";
-import ecovoyageProjectCards from "@/data/project-cards-ecovoyage.json";
+import { PROJECTS, DEFAULT_PROJECT_ID } from "@/config/projects";
 import { Card } from "@/pages/GamePage";
 import { getCardTitle, getCardDescription, getCardDomain, getCardType, getCardPhase } from "@/utils/cardHelpers";
 
 const AdminPage = () => {
   const navigate = useNavigate();
-  const [selectedProject, setSelectedProject] = useState<string>("default");
+  const [selectedProject, setSelectedProject] = useState<string>(DEFAULT_PROJECT_ID);
   const [selectedPhase, setSelectedPhase] = useState<string>("all");
   const [selectedType, setSelectedType] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -15,15 +14,26 @@ const AdminPage = () => {
   
   // Charger les cartes en fonction du projet sélectionné
   useEffect(() => {
-    let projectCards: Card[] = [];
-    
-    if (selectedProject === "default") {
-      projectCards = defaultProjectCards as Card[];
-    } else if (selectedProject === "ecovoyage") {
-      projectCards = ecovoyageProjectCards as Card[];
+    const project = PROJECTS.find(p => p.id === selectedProject);
+    if (project && project.cards) {
+      // Convertir les types si nécessaire pour assurer la compatibilité avec Card
+      const typedCards = project.cards.map(card => {
+        // Si délai est un nombre, convertir en string pour être compatible avec Card
+        if (typeof card.délai === 'number') {
+          return {
+            ...card,
+            délai: String(card.délai)
+          } as Card;
+        }
+        return card as Card;
+      });
+      
+      setCards(typedCards);
+      console.log(`Chargement de ${typedCards.length} cartes pour le projet ${project.name}`);
+    } else {
+      console.warn(`Aucune carte trouvée pour le projet ${selectedProject}`);
+      setCards([]);
     }
-    
-    setCards(projectCards);
   }, [selectedProject]);
   
   // Obtenir toutes les phases uniques
@@ -94,21 +104,26 @@ const AdminPage = () => {
       <main className="container mx-auto py-8 px-4">
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            {/* Sélection du projet */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Projet</label>
-              <select
-                value={selectedProject}
-                onChange={(e) => setSelectedProject(e.target.value)}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              >
-                <option value="default">Projet par défaut</option>
-                <option value="ecovoyage">EcoVoyage</option>
-              </select>
-            </div>
+            {/* Sélection du projet - Afficher seulement si plusieurs projets */}
+            {PROJECTS.length > 1 && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Projet</label>
+                <select
+                  value={selectedProject}
+                  onChange={(e) => setSelectedProject(e.target.value)}
+                  className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                >
+                  {PROJECTS.map((project) => (
+                    <option key={project.id} value={project.id}>
+                      {project.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             
             {/* Sélection de la phase */}
-            <div>
+            <div className={PROJECTS.length > 1 ? "" : "md:col-span-2"}>
               <label className="block text-sm font-medium text-gray-700 mb-1">Phase</label>
               <select
                 value={selectedPhase}
