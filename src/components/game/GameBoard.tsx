@@ -77,7 +77,13 @@ interface ModalContent {
   comment: string;
   conditions: any[];
   info?: string;
+  value?: number; // Ajouter l'attribut value pour l'impact sur la valeur
 }
+
+// Ajouter cette définition après la déclaration de MarkdownContent
+const markdownComponents: Components = {
+  p: ({ node, ...props }) => <p className="text-purple-900 mt-1" {...props} />
+};
 
 const GameBoard: React.FC<GameBoardProps> = ({ 
   cards, 
@@ -132,6 +138,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
   // Ajouter ces deux nouveaux états
   const [modalContent, setModalContent] = useState<ModalContent | null>(null);
   const [showModal, setShowModal] = useState(false);
+  
+  // Ajouter ces états au début du composant, avec les autres états
+  const [clickStartPosition, setClickStartPosition] = useState({ x: 0, y: 0 });
+  const [isClick, setIsClick] = useState(false);
   
   // Mettre à jour la liste des cartes utilisées lorsque les cartes changent
   useEffect(() => {
@@ -222,10 +232,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
     }
   }, [allCards, cards]);
 
-  // Approche complètement revue pour le déplacement des cartes
+  // Modifier la fonction handleCardMouseDown
   const handleCardMouseDown = (e: React.MouseEvent, cardId: string) => {
     e.preventDefault();
     e.stopPropagation();
+    
+    // Enregistrer la position initiale du clic
+    setClickStartPosition({ x: e.clientX, y: e.clientY });
+    setIsClick(true);
     
     // Trouver la carte à déplacer
     const card = cards.find(c => c.id === cardId);
@@ -252,77 +266,87 @@ const GameBoard: React.FC<GameBoardProps> = ({
     document.body.style.cursor = 'grabbing';
   };
   
-  // Fonction de déplacement complètement revue pour un mouvement 1:1 avec la souris
+  // Modifier la fonction handleMouseMove
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!draggingCard || !isDragging || !boardRef.current) return;
+    
+    // Calculer la distance parcourue depuis le début du clic
+    const moveDistance = Math.sqrt(
+      Math.pow(e.clientX - clickStartPosition.x, 2) + 
+      Math.pow(e.clientY - clickStartPosition.y, 2)
+    );
+    
+    // Si le mouvement dépasse 5 pixels, ce n'est plus un clic
+    if (moveDistance > 5) {
+      setIsClick(false);
+    }
     
     // Calculer le delta (différence) du mouvement de la souris
     const deltaX = e.clientX - mouseStartPosition.x;
     const deltaY = e.clientY - mouseStartPosition.y;
     
-    // Calculer la nouvelle position en ajoutant le delta à la position initiale de la carte
+    // Reste du code de handleMouseMove...
     let newX = cardStartPosition.x + deltaX;
     let newY = cardStartPosition.y + deltaY;
     
-    // Obtenir les dimensions du tableau et de la carte
     const boardRect = boardRef.current.getBoundingClientRect();
     const cardElement = document.querySelector(`[data-card-id="${draggingCard}"]`) as HTMLElement;
     const cardHeight = cardElement ? cardElement.offsetHeight : CARD_MIN_HEIGHT;
     
-    // Limiter aux bords du tableau (sans transformer la position)
     newX = Math.max(0, Math.min(newX, boardRect.width - CARD_WIDTH));
     newY = Math.max(0, Math.min(newY, boardRect.height - cardHeight));
     
-    // Mettre à jour la position
     setCurrentPosition({ x: newX, y: newY });
     onMoveCard(draggingCard, { x: newX, y: newY });
   };
-  
-  // Mise à jour similaire de handleGlobalMouseMove
-  useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (!draggingCard || !isDragging || !boardRef.current) return;
-      
-      // Calculer le delta (différence) du mouvement de la souris
-      const deltaX = e.clientX - mouseStartPosition.x;
-      const deltaY = e.clientY - mouseStartPosition.y;
-      
-      // Calculer la nouvelle position en ajoutant le delta à la position initiale de la carte
-      let newX = cardStartPosition.x + deltaX;
-      let newY = cardStartPosition.y + deltaY;
-      
-      // Obtenir les dimensions du tableau et de la carte
-      const boardRect = boardRef.current.getBoundingClientRect();
-      const cardElement = document.querySelector(`[data-card-id="${draggingCard}"]`) as HTMLElement;
-      const cardHeight = cardElement ? cardElement.offsetHeight : CARD_MIN_HEIGHT;
-      
-      // Limiter aux bords du tableau (sans transformer la position)
-      newX = Math.max(0, Math.min(newX, boardRect.width - CARD_WIDTH));
-      newY = Math.max(0, Math.min(newY, boardRect.height - cardHeight));
-      
-      // Mettre à jour la position
-      setCurrentPosition({ x: newX, y: newY });
-      onMoveCard(draggingCard, { x: newX, y: newY });
-    };
+
+  // Modifier la gestion du clic sur une carte
+  const handleCardClick = (cardId: string, e: React.MouseEvent) => {
+    // Ne rien faire si on est en train de déplacer la carte
+    if (!isClick) return;
     
+    // Trouver la carte correspondante
+    const card = cards.find(c => c.id === cardId);
+    if (!card) return;
+    
+    debugLog("Card clicked:", cardId);
+    
+    // Si c'est une carte action, afficher dans une jolie Box modale
+    if (getCardType(card) === 'action') {
+      displayCardInModal(card);
+    } else {
+      // Pour les autres types de cartes, ouvrir ou fermer le panneau latéral
+      setActiveCardId(activeCardId === cardId ? null : cardId);
+    }
+  };
+
+  // Modifier la gestion du mouseup global
+  useEffect(() => {
     const handleGlobalMouseUp = () => {
       if (draggingCard) {
         setDraggingCard(null);
         setIsDragging(false);
         document.body.style.cursor = 'auto';
+        
+        // Si c'était un clic (pas de déplacement significatif), traiter comme un clic
+        if (isClick) {
+          const card = cards.find(c => c.id === draggingCard);
+          if (card && getCardType(card) === 'action') {
+            displayCardInModal(card);
+          }
+        }
       }
+      setIsClick(false);
     };
     
     if (isDragging) {
-      document.addEventListener('mousemove', handleGlobalMouseMove);
       document.addEventListener('mouseup', handleGlobalMouseUp);
     }
     
     return () => {
-      document.removeEventListener('mousemove', handleGlobalMouseMove);
       document.removeEventListener('mouseup', handleGlobalMouseUp);
     };
-  }, [isDragging, draggingCard, mouseStartPosition, cardStartPosition, onMoveCard]);
+  }, [isDragging, draggingCard, isClick, cards]);
 
   // Get domain colors for a card
   const getCardColors = (domain: string) => {
@@ -383,8 +407,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
       return false;
     }
     
-    // Utiliser la liste globale des cartes utilisées
-    const isOnBoard = usedCards.includes(cardId);
+    // Utiliser la liste des cartes actuellement sur le plateau au lieu de usedCards
+    const isOnBoard = cards.some(card => card.id === cardId);
     
     if (debugMode) {
       debugLog("Checking if card ID exists:", cardId);
@@ -470,6 +494,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
     console.log("Type de carte:", getCardType(card));
     console.log("Titre:", getCardTitle(card));
     
+    // Afficher toutes les propriétés de la carte pour déboguer
+    console.log("Toutes les propriétés de la carte dans handleAddCard:");
+    for (const prop in card) {
+      console.log(`${prop}: ${JSON.stringify(card[prop])}`);
+    }
+    
     // Vérifier si la carte est déjà sur le tableau
     if (isCardOnBoard(card.id) && !altKeyPressed) {
       debugLog(`Card ${card.id} is already on the board. Skipping.`);
@@ -489,11 +519,26 @@ const GameBoard: React.FC<GameBoardProps> = ({
     // Générer une position aléatoire pour la nouvelle carte
     const position = getNextAvailablePosition();
     
-    // Créer une copie de la carte avec la nouvelle position
+    // Essayer de récupérer la valeur de différentes façons
+    const cardValue = card.value !== undefined ? card.value : 
+                     typeof card['value'] === 'number' ? card['value'] : 
+                     typeof card['valeur'] === 'number' ? card['valeur'] : undefined;
+    
+    console.log("Valeur récupérée:", cardValue);
+    
+    // Créer une copie de la carte avec la nouvelle position et la valeur explicite
     const newCard = {
       ...card,
-      position
+      position,
+      value: cardValue // Préserver explicitement l'attribut value
     };
+    
+    // Récupérer l'impact direct sur la valeur si présent
+    const valueImpact = cardValue;
+    
+    console.log("Card original:", card);
+    console.log("New Card créée:", newCard);
+    console.log("valueImpact:", valueImpact);
     
     // Ajouter la carte à la liste de toutes les cartes tirées
     if (!allUsedCards.includes(card.id)) {
@@ -503,7 +548,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
     
     // Ajouter la carte au tableau
     if (onSelectCard) {
+      console.log("Avant onSelectCard - newCard:", newCard);
+      console.log("Avant onSelectCard - value:", newCard.value);
+      
       onSelectCard(newCard);
+      
+      console.log("Après onSelectCard");
       
       // Mettre à jour le compteur de cartes utilisées
       if (cardType && cardUsage) {
@@ -524,6 +574,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
       } else if (cardType === 'event' && hasCardConditions(card)) {
         console.log("Event card has conditions, processing them...");
         handleEventCardEffect(card);
+        
+        // Appliquer également l'impact valeur direct pour les cartes événement si présent
+        if (valueImpact !== undefined && onAddValuePoints && typeof onAddValuePoints === 'function') {
+          console.log(`Applying direct value impact for event card: ${valueImpact} points`);
+          try {
+            onAddValuePoints(valueImpact);
+            showCounterAnimation('points', valueImpact);
+          } catch (error) {
+            console.error("Erreur lors de l'application directe des points de valeur pour carte événement:", error);
+          }
+        }
       } else if (cardType === 'quiz') {
         // Pour les cartes quiz, on les affiche simplement
         console.log("Quiz card added to board");
@@ -761,8 +822,29 @@ const GameBoard: React.FC<GameBoardProps> = ({
     
     // Fonction pour gérer la sélection d'une carte
     const handleCardSelection = (card: Card) => {
+      console.log("Card being selected (raw):", card);
+      
+      // Vérifier si la carte a un attribut value dans le JSON original
+      // Afficher toutes les propriétés de la carte pour déboguer
+      console.log("Toutes les propriétés de la carte:");
+      for (const prop in card) {
+        console.log(`${prop}: ${card[prop]}`);
+      }
+      
+      // Créer une copie de la carte avec tous les attributs
+      const selectedCard = {
+        ...card,
+        // Essayer de récupérer la valeur de différentes façons
+        value: card.value !== undefined ? card.value : 
+               typeof card['value'] === 'number' ? card['value'] : 
+               typeof card['valeur'] === 'number' ? card['valeur'] : undefined
+      };
+      
+      console.log("Selected card after copy:", selectedCard);
+      console.log("Selected card value after copy:", selectedCard.value);
+      
       // Pour tous les types de cartes, ajouter directement au tableau
-      handleAddCard(card);
+      handleAddCard(selectedCard);
     };
     
     // Vérifier si une carte est sélectionnée
@@ -937,26 +1019,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
     );
   };
 
-  // Fonction pour gérer le clic sur une carte du tableau
-  const handleCardClick = (cardId: string) => {
-    // Ne pas ouvrir le panneau si on est en train de déplacer la carte
-    if (isDragging || draggingCard) return;
-    
-    // Trouver la carte correspondante
-    const card = cards.find(c => c.id === cardId);
-    if (!card) return;
-    
-    debugLog("Card clicked:", cardId);
-    
-    // Si c'est une carte action, afficher dans une jolie Box modale
-    if (getCardType(card) === 'action') {
-      displayCardInModal(card);
-    } else {
-      // Pour les autres types de cartes, ouvrir ou fermer le panneau latéral
-    setActiveCardId(activeCardId === cardId ? null : cardId);
-    }
-  };
-
   // Utiliser le composant DetailSidePanel importé
   const renderDetailSidePanel = () => {
     return (
@@ -1093,12 +1155,25 @@ const GameBoard: React.FC<GameBoardProps> = ({
       const cardTitle = getCardTitle(eventCard);
       const cardDescription = getCardDescription(eventCard);
       
+      // Récupérer les informations supplémentaires
+      const cardInfo = getCardInfo(eventCard);
+      
       // Créer un message HTML pour afficher le contenu de la carte et le résultat des conditions
       let htmlMessage = `
         <div>
           <h3 style="font-weight: bold; margin-bottom: 8px; font-size: 16px;">${cardTitle}</h3>
           <p style="margin-bottom: 10px;">${cardDescription}</p>
       `;
+      
+      // Ajouter les informations complémentaires si elles existent
+      if (cardInfo) {
+        htmlMessage += `
+          <div style="margin-top: 10px; padding: 8px; background-color: rgba(0,0,0,0.05); border-radius: 6px;">
+            <h4 style="font-weight: bold; margin-bottom: 4px; font-size: 14px;">Informations complémentaires:</h4>
+            <p style="font-size: 13px;">${cardInfo}</p>
+          </div>
+        `;
+      }
       
       // Ajouter le résultat des conditions
       if (effectsToApply) {
@@ -1147,6 +1222,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
               budget: effectsToApply.budget,
               time: effectsToApply.time,
               value: effectsToApply.value,
+              info: cardInfo, // Ajouter l'information complémentaire
               htmlContent: htmlMessage // Stocker le message HTML complet
             }
           };
@@ -1226,6 +1302,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
             ...cards[cardIndex],
             conditionResult: {
               message: "Aucune condition n'a été remplie pour cette carte événement.",
+              info: cardInfo, // Ajouter l'information complémentaire
               htmlContent: htmlMessage
             }
           };
@@ -1513,7 +1590,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
     console.log("Carte ID:", card.id);
     console.log("Type:", getCardType(card));
     console.log("Titre:", getCardTitle(card));
+    console.log("Valeur:", card.value);
+    console.log("Carte complète:", JSON.stringify(card));
     console.log("allUsedCards avant:", allUsedCards);
+    
+    // Créer une copie complète de la carte pour préserver tous les attributs
+    const cardCopy = JSON.parse(JSON.stringify(card));
     
     // Ajouter la carte à la liste de toutes les cartes tirées
     if (!allUsedCards.includes(card.id)) {
@@ -1529,7 +1611,12 @@ const GameBoard: React.FC<GameBoardProps> = ({
     
     // Transmettre la carte au parent si nécessaire
     if (onRandomCardSelected) {
-      onRandomCardSelected(card);
+      console.log("Avant onRandomCardSelected - cardCopy:", cardCopy);
+      console.log("Avant onRandomCardSelected - value:", cardCopy.value);
+      
+      onRandomCardSelected(cardCopy);
+      
+      console.log("Après onRandomCardSelected");
     }
   };
 
@@ -1540,8 +1627,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
     console.log("Titre:", getCardTitle(card));
     console.log("A des conditions:", hasCardConditions(card));
     
+    // Afficher toutes les propriétés de la carte pour déboguer
+    console.log("Toutes les propriétés de la carte dans displayCardInModal:");
+    for (const prop in card) {
+      console.log(`${prop}: ${JSON.stringify(card[prop])}`);
+    }
+    
     // Convertir le coût en nombre si c'est une chaîne
-    const cost = card.coût;
+    const cost = (card as any)['coût'];
     const costValue = typeof cost === 'string' ? 
       parseInt(cost.replace(/[^0-9-]/g, '')) : 
       typeof cost === 'number' ? 
@@ -1549,7 +1642,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         0;
 
     // Convertir le délai en nombre si c'est une chaîne
-    const delay = card.délai;
+    const delay = (card as any)['délai'];
     const delayValue = typeof delay === 'string' ? 
       parseInt(delay.replace(/[^0-9-]/g, '')) : 
       typeof delay === 'number' ? 
@@ -1558,6 +1651,32 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
     // Récupérer les informations supplémentaires
     const cardInfo = getCardInfo(card);
+
+    // Essayer de récupérer la valeur de différentes façons
+    const valueImpact = card.value !== undefined ? card.value : 
+                       typeof card['value'] === 'number' ? card['value'] : 
+                       typeof card['valeur'] === 'number' ? card['valeur'] : undefined;
+    
+    console.log("Card dans displayCardInModal:", card);
+    console.log("valueImpact:", valueImpact);
+    
+    // Appliquer directement l'impact sur la valeur si c'est une carte action sans condition
+    // ou une carte action avec une valeur directe (hors conditions)
+    if (getCardType(card) === 'action' && valueImpact !== undefined && !isCardOnBoard(card.id)) {
+      console.log("=== APPLICATION DIRECTE DE L'IMPACT VALEUR ===");
+      console.log(`Applying direct value impact: ${valueImpact} points`);
+      
+      if (onAddValuePoints && typeof onAddValuePoints === 'function') {
+        try {
+          onAddValuePoints(valueImpact);
+          // Afficher une animation pour l'impact sur la valeur
+          showCounterAnimation('points', valueImpact);
+          console.log(`${valueImpact} points de valeur directement appliqués avec succès`);
+        } catch (error) {
+          console.error("Erreur lors de l'application directe des points de valeur:", error);
+        }
+      }
+    }
 
     // Vérifier si la carte a des conditions et n'est pas déjà sur le tableau
     // Uniquement pour les nouvelles cartes ajoutées (pas les cartes déjà placées)
@@ -1579,7 +1698,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
       correct_answer: card.correct_answer || '',
       comment: card.comment || '',
       conditions: card.conditions || [],
-      info: cardInfo || ''
+      info: cardInfo || '',
+      value: valueImpact
     });
     setShowModal(true);
   };
@@ -1835,7 +1955,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
                     onMouseDown={(e) => handleCardMouseDown(e, card.id)}
                     onMouseEnter={() => setHoveredCard(card)}
                     onMouseLeave={() => setHoveredCard(null)}
-                    onClick={() => handleCardClick(card.id)}
+                    onClick={(e) => {
+                      if (!isDragging) {
+                        handleCardClick(card.id, e);
+                      }
+                    }}
                 >
                     <div className="flex flex-col h-full justify-center items-center">
                         <div className="text-sm font-medium text-center">
@@ -1875,7 +1999,15 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
       {/* Modal pour afficher les détails de la carte */}
       {showModal && modalContent && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={(e) => {
+            // Si on clique sur le fond (pas sur le contenu), fermer la modale
+            if (e.target === e.currentTarget) {
+              setShowModal(false);
+            }
+          }}
+        >
           <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] flex flex-col">
             <div className="p-6 overflow-y-auto">
               <div className="flex justify-between items-start mb-4 sticky top-0 bg-white z-10 pb-2">
@@ -1894,24 +2026,55 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 <div className="bg-gray-50 rounded-lg p-4 mb-4">
                   <ReactMarkdown>{modalContent.description}</ReactMarkdown>
                   
-                  {modalContent.type === 'action' && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {modalContent.cost !== 0 && (
-                        <span className={`px-2 py-1 rounded text-sm ${
-                          modalContent.cost > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
-                        }`}>
-                          Coût: {modalContent.cost > 0 ? '+' : ''}{modalContent.cost}K€
-                        </span>
-                      )}
-                      {modalContent.delay !== 0 && (
-                        <span className={`px-2 py-1 rounded text-sm ${
-                          modalContent.delay > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
-                        }`}>
-                          Délai: {modalContent.delay > 0 ? '+' : ''}{modalContent.delay} semaines
-                        </span>
-                      )}
-                    </div>
-                  )}
+                  {/* Affichage des badges pour tous les types de cartes */}
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {/* Badge de coût (tous types de cartes) */}
+                    {modalContent.cost !== 0 && (
+                      <span className={`px-2 py-1 rounded text-sm ${
+                        modalContent.cost > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                      }`}>
+                        Coût: {modalContent.cost > 0 ? '+' : ''}{modalContent.cost}K€
+                      </span>
+                    )}
+                    {/* Badge de délai (tous types de cartes) */}
+                    {modalContent.delay !== 0 && (
+                      <span className={`px-2 py-1 rounded text-sm ${
+                        modalContent.delay > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                      }`}>
+                        Délai: {modalContent.delay > 0 ? '+' : ''}{modalContent.delay} semaines
+                      </span>
+                    )}
+                    {/* Badge d'impact valeur (tous types de cartes) */}
+                    {((modalContent.value !== undefined && modalContent.value !== 0) || 
+                      (modalContent.conditions && modalContent.conditions.some(condition => 
+                        condition.effects && condition.effects.value !== undefined
+                      ))) && (
+                      <span className={`px-2 py-1 rounded text-sm ${
+                        (modalContent.value !== undefined && modalContent.value < 0) || 
+                        (modalContent.conditions && modalContent.conditions.some(condition => 
+                          condition.effects && condition.effects.value !== undefined && condition.effects.value < 0
+                        ))
+                          ? 'bg-red-100 text-red-800' 
+                          : 'bg-green-100 text-green-800'
+                      }`}>
+                        Valeur: {
+                          (() => {
+                            // D'abord vérifier la valeur directe
+                            if (modalContent.value !== undefined && modalContent.value !== 0) {
+                              return modalContent.value > 0 ? `+${modalContent.value}` : modalContent.value;
+                            }
+                            // Sinon, chercher dans les conditions
+                            const effect = modalContent.conditions?.find(c => c.effects && c.effects.value !== undefined);
+                            if (effect) {
+                              const value = effect.effects.value;
+                              return value > 0 ? `+${value}` : value;
+                            }
+                            return "0"; // Fallback si aucune valeur trouvée
+                          })()
+                        } points
+                      </span>
+                    )}
+                  </div>
                 </div>
                 
                 {modalContent.conditions && modalContent.conditions.length > 0 && (
@@ -1983,7 +2146,20 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 {modalContent.info && (
                   <div className="mt-4 bg-gray-50 rounded-lg p-3 text-sm">
                     <h4 className="font-semibold mb-1">Informations complémentaires</h4>
-                    <ReactMarkdown>{modalContent.info}</ReactMarkdown>
+                    <ReactMarkdown components={markdownComponents}>{modalContent.info}</ReactMarkdown>
+                  </div>
+                )}
+                
+                {/* Affichage spécifique pour les cartes événement */}
+                {modalContent.type === 'event' && (
+                  <div className="mt-4 bg-purple-50 rounded-lg p-3 text-sm">
+                    <h4 className="font-semibold mb-1 text-purple-800">Carte événement</h4>
+                    {modalContent.info && (
+                      <div className="mt-2">
+                        <h5 className="font-medium text-purple-700">Informations complémentaires:</h5>
+                        <ReactMarkdown components={markdownComponents}>{modalContent.info}</ReactMarkdown>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

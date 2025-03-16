@@ -12,22 +12,15 @@ import ReactMarkdown from 'react-markdown';
 // Define types for our game
 export type Card = {
   id: string;
-  type?: string;
-  domaine?: string;
+  type: string;
   domain?: string;
   phase: string | string[];
-  nom?: string;
-  title?: string;
+  title: string;
   description: string;
   info?: string;
-  délai?: string;
-  coût?: string;
-  impact_délai?: string;
-  impact_coût?: string;
-  probabilité?: string;
-  nouveau_impact_délai?: string;
-  nouveau_impact_coût?: string;
-  nouvelle_probabilité?: string;
+  delay?: number;
+  cost?: number;
+  value?: number;
   position?: { x: number; y: number };
   // Propriétés spécifiques aux cartes de type question
   options?: string[];
@@ -374,6 +367,11 @@ const GamePage = () => {
       // Process the cards from the selected JSON file
       const processedCards = Array.isArray(projectCards) 
         ? projectCards.map((card: any, index: number) => {
+            // Log pour déboguer la propriété value
+            if (card.value !== undefined) {
+              console.log(`Card ${card.id || index} has value: ${card.value}`);
+            }
+            
             // Handle different card field formats
             const normalizedCard: Card = {
               id: card.id || `card-${index}`,
@@ -388,6 +386,7 @@ const GamePage = () => {
               info: card.info,
               délai: card.délai,
               coût: card.coût,
+              value: card.value, // Préserver la propriété value
               position: { x: 0, y: 0 },
               // Ajouter les propriétés spécifiques aux cartes de type question
               options: card.options,
@@ -396,6 +395,11 @@ const GamePage = () => {
               // Ajouter les propriétés pour les cartes événements conditionnelles
               conditions: card.conditions,
             };
+            
+            // Log pour vérifier si la propriété value a été préservée
+            if (card.value !== undefined) {
+              console.log(`Normalized card ${normalizedCard.id} has value: ${normalizedCard.value}`);
+            }
             
             return normalizedCard;
           })
@@ -590,6 +594,18 @@ const GamePage = () => {
   // Modifier la fonction handleSelectCard
   const handleSelectCard = (card: Card) => {
     console.log("Card selected:", card);
+    
+    // Log pour déboguer la propriété value
+    if (card.value !== undefined) {
+      console.log(`Selected card ${card.id} has value: ${card.value}`);
+    } else {
+      console.log(`Selected card ${card.id} does NOT have a value property`);
+      // Afficher toutes les propriétés de la carte pour déboguer
+      console.log("Toutes les propriétés de la carte sélectionnée:");
+      for (const prop in card) {
+        console.log(`${prop}: ${JSON.stringify(card[prop])}`);
+      }
+    }
     
     const cardType = card.type?.toLowerCase() || 'action';
     

@@ -24,7 +24,7 @@
         "cardId": "initier-la-charte-projet",
         "present": false,
         "effects": {
-          "value": -10,
+          "value": -5,
           "message": "Concentrer les efforts sur le logo et le site web détourne des ressources de la définition des bases du projet."
         }
       }
@@ -164,7 +164,7 @@
         "effects": {
           "budget": 50,
           "time": 0,
-          "value": 10,
+          "value": 0,
           "message": "Bravo, vous avez déjà la carte 'Identifier les parties prenantes'. Vous recevez une subvention gouvernementale de 50 000 €."
         }
       },
@@ -216,8 +216,8 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-1",
-    "coût": "-5",
+    "délai": -1,
+    "coût": -5,
     "value": 5
   },
   {
@@ -257,7 +257,19 @@
       "Planification"
     ],
     "délai": "-2",
-    "coût": "-10"
+    "coût": "-10",
+    "conditions": [
+      {
+        "cardId": "identifier-evaluer-risque-api-carto",
+        "present": false,
+        "effects": {
+          "budget": 0,
+          "time": 0,
+          "value": -5,
+          "message": "Il faut d'abord identifier un risque pour pouvoir l'atténuer. Vous perdez 5 points de valeur."
+        }
+      }
+    ]
   },
   {
     "id": "panne-api-carto",
@@ -276,7 +288,7 @@
         "effects": {
           "budget": 0,
           "time": 0,
-          "value": 40,
+          "value": 20,
           "message": "Le plan de secours a permis de basculer rapidement vers une solution alternative, minimisant les retards et les impacts négatifs."
         }
       },
@@ -286,7 +298,7 @@
         "effects": {
           "budget": -10,
           "time": -2,
-          "value": -20,
+          "value": -5,
           "message": "L'absence de plan de secours a entraîné des retards importants et une perte de confiance des utilisateurs."
         }
       }
@@ -303,7 +315,19 @@
       "Planification"
     ],
     "délai": "-2",
-    "coût": "-10"
+    "coût": "-10",
+    "conditions": [
+      {
+        "cardId": "identifier-evaluer-risque-partenaire",
+        "present": false,
+        "effects": {
+          "budget": 0,
+          "time": 0,
+          "value": -5,
+          "message": "Il faut d'abord identifier un risque pour pouvoir l'atténuer. Vous perdez 5 points de valeur."
+        }
+      }
+    ]
   },
   {
     "id": "influenceur-ecolo",
@@ -324,7 +348,7 @@
         "effects": {
           "budget": 0,
           "time": 0,
-          "value": 50,
+          "value": 10,
           "message": "Vous aviez déjà planifié la scalabilité de l'infrastructure, permettant au projet de gérer ce succès viral sans trop de difficulté."
         }
       },
@@ -357,7 +381,7 @@
         "effects": {
           "budget": 0,
           "time": 0,
-          "value": 50,
+          "value": 10,
           "message": "Bravo ! Un influenceur a mentionné votre projet sur les réseaux sociaux.\n- En planifiant la scalabilité de votre application vous allez pouvoir absorber l'augmentation soudaine de la visibilité et de l'intérêt pour l'application. Cela vous fait gagner 50 points de valeur."
         }
       }
@@ -470,10 +494,7 @@
     "description": "Définir précisément comment valider et considérer que la fonctionalité 'Recherche de destinations' est terminé. Cela implique d'obtenir l'accord formel des utilisateurs et des parties prenantes.",
     "domain": "Gestion du contenu",
     "info": "Valider formellement garantit que la fonctionnalité répond aux besoins et évite les modifications ultérieures.",
-    "phase": [
-      "Planification",
-      "Exécution"
-    ],
+    "phase": ["Planification"],
     "délai": "-1"
   },
   {
@@ -616,7 +637,7 @@
         "effects": {
           "budget": -15,
           "time": -3,
-          "value": -20,
+          "value": -5,
           "message": "L'absence de déploiement continu a entraîné une interruption prolongée du service et une perte de confiance des utilisateurs."
         }
       }
@@ -649,7 +670,7 @@
         "effects": {
           "budget": -10,
           "time": -2,
-          "value": -15,
+          "value": -5,
           "message": "L'absence de programme de mentorat a entraîné une escalade du conflit et des retards importants dans le développement."
         }
       }
@@ -672,7 +693,7 @@
   "effects": {
   "budget": 0,
   "time": 0,
-  "value": 25,
+  "value": 10,
   "message": "L'audit de sécurité a permis de détecter et de corriger les vulnérabilités, minimisant l'impact de l'attaque."
   }
   },
@@ -682,7 +703,7 @@
   "effects": {
   "budget": -20,
   "time": -4,
-  "value": -30,
+  "value": -10,
   "message": "L'absence d'audit de sécurité a entraîné une fuite de données massives et une perte de confiance des utilisateurs."
   }
   }
@@ -828,38 +849,74 @@
     "domain": "Gestion de la qualité du projet",
     "info": "Un audit interne permet d'identifier les axes d'amélioration et de garantir la qualité du projet.",
     "phase": ["Surveillance et maîtrise"],
-    "délai": "-2",
-    "coût": "-5"
+    "délai": -2,
+    "coût": -5
+  },
+  {
+    "id": "developpement-fonctionnalites-complexes",
+    "type": "action",
+    "title": "Développer de Nouvelles Fonctionnalités (Réalité Augmentée, Intelligence Artificielle)",
+    "description": "Engager une équipe de développeurs pour intégrer des fonctionnalités avancées telles que la réalité augmentée et l'intelligence artificielle dans GreenTrip Finder.",
+    "domain": "Gestion du contenu du projet",
+    "phase": ["Surveillance et maîtrise"],
+    "délai": -5,
+    "coût": -12,
+    "value": -5,
+    "info": "Bien que l'innovation soit importante, développer des fonctionnalités complexes en phase de Surveillance et maîtrise est prématuré si l'application n'est pas stable et performante."
+  },
+  {
+    "id": "campagne-publicite-massive",
+    "type": "action",
+    "title": "Lancer une Campagne de Publicité Massive à l'Échelle Nationale",
+    "description": "Investir massivement dans une campagne publicitaire télévisée et en ligne pour augmenter rapidement le nombre d'utilisateurs de GreenTrip Finder.",
+    "domain": "Gestion des communications du projet",
+    "phase": ["Surveillance et maîtrise"],
+    "délai": -3,
+    "coût": -10,
+    "value": -5,
+    "info": "Bien que la publicité soit importante, une campagne massive en phase de Surveillance et maîtrise est prématurée si l'application n'est pas stable et performante."
+  },
+  {
+    "id": "refonte-complete-interface-utilisateur",
+    "type": "action",
+    "title": "Refonte Complète de l'Interface Utilisateur (UI) de l'Application",
+    "description": "Engager une équipe de designers pour repenser entièrement l'interface utilisateur de GreenTrip Finder, en intégrant les dernières tendances esthétiques et en améliorant l'expérience utilisateur.",
+    "domain": "Gestion de la qualité du projet",
+    "phase": ["Surveillance et maîtrise"],
+    "délai": -4,
+    "coût": -10,
+    "value": -5,
+    "info": "Bien que l'UI soit importante, une refonte complète en phase de Surveillance et maîtrise est prématurée et peut nuire à la stabilité et à la performance de l'application."
   },
   {
     "id": "retard-livraison-composants-cles",
     "type": "event",
     "title": "Retard de Livraison de Composants Clés",
-    "description": "Un fournisseur annonce un retard de plusieurs semaines dans la livraison de composants essentiels pour l'algorithme d'optimisation écologique. Sans plan de gestion des risques, le projet est en danger.",
+    "description": "Un fournisseur annonce un retard de plusieurs semaines dans la livraison de composants essentiels pour l'algorithme d'optimisation écologique.",
     "domain": "Gestion des risques",
-    "info": "Les retards de livraison peuvent avoir un impact majeur sur le calendrier et le budget du projet. Un plan de gestion des risques permet d'anticiper et de gérer ces situations.",
+    "info": "Les retards de livraison peuvent avoir un impact majeur sur le calendrier et le budget du projet. Un suivi régulier des délais et un plan de gestion des risques permettent d'anticiper et de gérer ces situations.",
     "phase": ["Surveillance et maîtrise"],
     "délai": "Variable",
     "coût": "Variable",
     "conditions": [
       {
-        "cardId": "plan-gestion-risques",
+        "cardId": "suivi-delais-taches",
         "present": true,
         "effects": {
           "budget": 0,
           "time": 0,
-          "value": 20,
-          "message": "Le plan de gestion des risques a permis d'identifier des fournisseurs alternatifs et de minimiser l'impact du retard."
+          "value": 10,
+          "message": "Le suivi régulier des délais a permis de détecter le retard plus tôt et de mettre en œuvre des mesures d'atténuation, réduisant ainsi l'impact sur le projet."
         }
       },
       {
-        "cardId": "plan-gestion-risques",
+        "cardId": "suivi-delais-taches",
         "present": false,
         "effects": {
-          "budget": -15,
-          "time": -3,
-          "value": -20,
-          "message": "L'absence de plan de gestion des risques a entraîné des retards importants et des coûts supplémentaires."
+          "budget": 0,
+          "time": 0,
+          "value": -10,
+          "message": "L'absence de suivi des délais et de plan de gestion des risques a entraîné des retards importants et des coûts supplémentaires."
         }
       }
     ]
@@ -957,7 +1014,7 @@
         "effects": {
           "budget": -18,
           "time": -3,
-          "value": -25,
+          "value": -5,
           "message": "L'absence de veille réglementaire a entraîné des difficultés à se conformer à la nouvelle réglementation et des risques de sanctions."
         }
       }
@@ -980,7 +1037,7 @@
         "effects": {
           "budget": 0,
           "time": 0,
-          "value": 17,
+          "value": 20,
           "message": "Le suivi de la satisfaction des utilisateurs a permis d'identifier les problèmes et de mettre en œuvre des améliorations."
         }
       },
@@ -988,9 +1045,9 @@
         "cardId": "suivi-satisfaction-utilisateurs",
         "present": false,
         "effects": {
-          "budget": -11,
+          "budget": -10,
           "time": -2,
-          "value": -17,
+          "value": -5,
           "message": "L'absence de suivi de la satisfaction des utilisateurs a entraîné une perte d'utilisateurs et une mauvaise réputation de l'application."
         }
       }
@@ -1028,6 +1085,30 @@
     "phase": ["Clôture"],
     "délai": "-1",
     "coût": "-2"
+  },
+  {
+    "id": "sondage-massif-futures-fonctionnalites",
+    "type": "action",
+    "title": "Lancer une Campagne de Sondage Massive sur les Futures Fonctionnalités de GreenTrip Finder",
+    "description": "Organiser un sondage en ligne massif auprès des utilisateurs pour recueillir des idées et des suggestions sur les nouvelles fonctionnalités à développer dans les prochaines versions de l'application.",
+    "domain": "Gestion des communications du projet",
+    "phase": ["Clôture"],
+    "délai": -2,
+    "coût": -8,
+    "value": -5,
+    "info": "Bien que les retours des utilisateurs soient importants, lancer une campagne de sondage massive en phase de clôture peut détourner des ressources de la rédaction du rapport final et de la capitalisation des enseignements."
+  },
+  {
+    "id": "etude-marche-nouvelle-application",
+    "type": "action",
+    "title": "Réaliser une Étude de Marché Approfondie pour une Nouvelle Application de Voyage Durable",
+    "description": "Engager une équipe d'experts pour mener une étude de marché approfondie sur les opportunités et les tendances du marché du voyage durable, en vue de développer une nouvelle application.",
+    "domain": "Gestion du contenu du projet",
+    "phase": ["Clôture"],
+    "délai": -2,
+    "coût": -5,
+    "value": -5,
+    "info": "Bien que l'innovation soit importante, réaliser une étude de marché approfondie pour une nouvelle application en phase de clôture peut détourner des ressources de la rédaction du rapport final et de la capitalisation des enseignements."
   },
   {
     "id": "transfert-connaissances-maintenance",
@@ -1068,7 +1149,7 @@
         "effects": {
           "budget": 0,
           "time": 0,
-          "value": 20,
+          "value": 5,
           "message": "L'enquête de satisfaction a permis de recueillir et de valoriser les témoignages positifs."
         }
       },
@@ -1109,9 +1190,9 @@
         "cardId": "cloture-administrative-financiere",
         "present": false,
         "effects": {
-          "budget": -10,
+          "budget": -5,
           "time": -1,
-          "value": -15,
+          "value": -5,
           "message": "L'absence de clôture administrative et financière a entraîné des pénalités de retard et des relations tendues avec le fournisseur."
         }
       }
@@ -1134,7 +1215,7 @@
         "effects": {
           "budget": 0,
           "time": 0,
-          "value": 18,
+          "value": 15,
           "message": "La réunion de retour d'expérience a permis de recueillir et de planifier la mise en œuvre de la nouvelle fonctionnalité."
         }
       },
