@@ -190,8 +190,8 @@
     "phase": [
       "Planification"
     ],
-    "délai": "-1",
-    "coût": "800"
+    "délai": -1,
+    "coût": -5
   },
   {
     "id": "estimer-les-ressources-necessaires",
