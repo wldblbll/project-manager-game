@@ -1,7 +1,7 @@
 {
   "gameSettings": {
     "initialBudget": 100,
-    "initialTime": 24,
+    "initialTime": 54,
     "cardWidth": 180,
     "cardHeight": 60,
     "cardMargin": 20,
@@ -30,7 +30,7 @@
       "order": 2,
       "requiredCards": ["Définir la structure de découpage du travail (WBS)"],
       "cardLimits": {
-        "action": 12,
+        "action": 13,
         "event": 4,
         "quiz": 2
       },

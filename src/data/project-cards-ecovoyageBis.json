@@ -643,6 +643,17 @@
       }
     ]
   },
+  {
+    "id": "deploiement-continu-integration-continue",
+    "type": "action",
+    "title": "Mettre en Place un Système de Mise à Jour Automatique et Rapide de l'Application",
+    "description": "Créer un système qui permet de tester et de mettre à jour l'application GreenTrip Finder de manière automatique et très rapide, sans avoir besoin d'attendre longtemps.",
+    "domain": "Gestion de l'intégration du projet",
+    "phase": ["Exécution"],
+    "délai": -1,
+    "coût": -2,
+    "info": "Ce système permet de corriger rapidement les problèmes, d'ajouter de nouvelles fonctionnalités sans interrompre le service et de réduire les risques de pannes."
+  },
     {
     "id": "conflit-equipe-developpement",
     "type": "event",
@@ -953,6 +964,17 @@
         }
       }
     ]
+  },
+  {
+    "id": "plan-gestion-ressources-humaines",
+    "type": "action",
+    "title": "Élaborer un Plan de Gestion des Ressources Humaines",
+    "description": "Mettre en place un plan pour anticiper les départs potentiels, identifier les compétences clés, et prévoir des solutions de remplacement pour les membres de l'équipe.",
+    "domain": "Gestion des ressources humaines du projet",
+    "phase": ["Planification"],
+    "délai": -2,
+    "coût": -6,
+    "info": "Un plan de gestion des ressources humaines permet de réduire les risques liés aux départs imprévus et d'assurer la continuité du projet."
   },
   {
     "id": "defection-membre-cle-equipe",
