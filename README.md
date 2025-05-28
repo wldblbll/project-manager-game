@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Cards game to learn project management
 
 ## Project info
 
