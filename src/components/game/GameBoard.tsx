@@ -985,6 +985,33 @@ const GameBoard: React.FC<GameBoardProps> = ({
                       const isOnBoard = isCardOnBoard(card.id);
                     const isSelected = isCardSelected(card.id);
                       
+                      // Récupérer les valeurs de coût et délai pour les cartes d'action
+                      const getCostValue = (card: Card) => {
+                        if (card.cost !== undefined) return card.cost;
+                        // Fallback pour les anciennes propriétés françaises si elles existent encore
+                        const frenchCost = (card as any)['coût'];
+                        if (typeof frenchCost === 'string') {
+                          return parseInt(frenchCost.replace(/[^0-9-]/g, '')) || 0;
+                        }
+                        if (typeof frenchCost === 'number') return frenchCost;
+                        return 0;
+                      };
+                      
+                      const getDelayValue = (card: Card) => {
+                        if (card.delay !== undefined) return card.delay;
+                        // Fallback pour les anciennes propriétés françaises si elles existent encore
+                        const frenchDelay = (card as any)['délai'];
+                        if (typeof frenchDelay === 'string') {
+                          return parseInt(frenchDelay.replace(/[^0-9-]/g, '')) || 0;
+                        }
+                        if (typeof frenchDelay === 'number') return frenchDelay;
+                        return 0;
+                      };
+                      
+                      const costValue = getCostValue(card);
+                      const delayValue = getDelayValue(card);
+                      const cardType = getCardType(card);
+                      
                       return (
                       <div
                         key={card.id}
@@ -1001,7 +1028,29 @@ const GameBoard: React.FC<GameBoardProps> = ({
                             {isOnBoard && <span className="ml-2 text-xs">(déjà sur le tableau)</span>}
                           </h5>
                           
-                          {/* Suppression du bouton de sélection pour les cartes action */}
+                          {/* Tags d'impact pour les cartes d'action */}
+                          {cardType === 'action' && (costValue !== 0 || delayValue !== 0) && (
+                            <div className="flex gap-1 ml-2 flex-shrink-0">
+                              {costValue !== 0 && (
+                                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                                  costValue > 0 
+                                    ? 'bg-red-100 text-red-800' 
+                                    : 'bg-green-100 text-green-800'
+                                }`}>
+                                  💰 {costValue > 0 ? '+' : ''}{costValue}
+                                </span>
+                              )}
+                              {delayValue !== 0 && (
+                                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                                  delayValue > 0 
+                                    ? 'bg-red-100 text-red-800' 
+                                    : 'bg-green-100 text-green-800'
+                                }`}>
+                                  ⏱️ {delayValue > 0 ? '+' : ''}{delayValue}
+                                </span>
+                              )}
+                            </div>
+                          )}
                           </div>
                           
                         <div className="text-sm text-gray-600 mt-1 line-clamp-2">
