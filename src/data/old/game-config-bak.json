@@ -1,0 +1,162 @@
+{
+  "gameInfo": {
+    "id": "ecovoyage",
+    "name": "ÉcoVoyage - Gestion de Projet",
+    "description": "Développement d'une application de voyage éco-responsable",
+    "version": "1.0.0",
+    "author": "PM Cards Team"
+  },
+  "gameSettings": {
+    "initialBudget": 100,
+    "initialTime": 54,
+    "cardWidth": 180,
+    "cardHeight": 60,
+    "cardMargin": 20,
+    "cardsPerRow": 6,
+    "boardTopMargin": 100
+  },
+  "phases": [
+    {
+      "name": "Initiation",
+      "order": 1,
+      "requiredCards": ["Initier la charte projet"],
+      "cardLimits": {
+        "action": 5,
+        "event": 2,
+        "quiz": 2
+      },
+      "penalties": {
+        "time": -1,
+        "budget": -2,
+        "value": -5,
+        "message": "La charte du projet n'a pas été définie correctement. Cela entraîne des retards et des coûts supplémentaires."
+      }
+    },
+    {
+      "name": "Planification",
+      "order": 2,
+      "requiredCards": ["Définir la structure de découpage du travail (WBS)"],
+      "cardLimits": {
+        "action": 13,
+        "event": 4,
+        "quiz": 2
+      },
+      "penalties": {
+        "time": -1,
+        "budget": -2,
+        "value": -5,
+        "message": "La structure de découpage (WBS) n'a pas été définie correctement. Cela entraîne des retards et des coûts supplémentaires."
+      }
+    },
+    {
+      "name": "Exécution",
+      "order": 3,
+      "requiredCards": ["Organiser un Atelier de Co-création avec les Utilisateurs"],
+      "cardLimits": {
+        "action": 5,
+        "event": 3,
+        "quiz": 2
+      },
+      "penalties": {
+        "time": -1,
+        "budget": -2,
+        "value": -5,
+        "message": "Des fonctionnalités essentielles n'ont pas été développées, nécessitant des ajustements coûteux."
+      }
+    },
+    {
+      "name": "Surveillance et maîtrise",
+      "order": 4,
+      "requiredCards": ["Contrôler le Respect du Budget et des Dépenses"],
+      "cardLimits": {
+        "action": 9,
+        "event": 3,
+        "quiz": 2
+      },
+      "penalties": {
+        "time": -1,
+        "budget": -2,
+        "value": -5,
+        "message": "Le manque de contrôle qualité a entraîné des défauts qui doivent être corrigés."
+      }
+    },
+    {
+      "name": "Clôture",
+      "order": 5,
+      "requiredCards": ["Effectuer la Clôture Administrative et Financière du Projet"],
+      "cardLimits": {
+        "action": 5,
+        "event": 3,
+        "quiz": 2
+      },
+      "penalties": {
+        "time": -1,
+        "budget": -2,
+        "value": -5,
+        "message": "Le projet n'a pas été formellement clôturé."
+      }
+    }
+  ],
+  "cardValueRules": [
+    {
+      "condition": "default",
+      "points": 10
+    },
+    {
+      "condition": "requiredCard",
+      "points": 20
+    }
+  ],
+  "cards": [
+    {
+      "id": "card-1",
+      "type": "Action",
+      "domain": "Gestion du contenu",
+      "phase": ["Initiation"],
+      "title": "Développer la charte du projet",
+      "description": "Charte du projet ÉcoVoyage :\n- Objectif : Réduire l'empreinte carbone des trajets pour répondre aux enjeux environnementaux en proposant des alternatives de transport écoresponsables\n- Livrables : Application mobile avec recherche de trajets optimisés, suivi en temps réel et gamification\n- Parties prenantes clés : Ministère de l'Écologie, opérateurs de transport, utilisateurs\n- Contraintes : Respect des réglementations RGPD, intégration avec les API des transports existants\n- Critères de succès : Adoption par au moins 100 000 utilisateurs dans la première année, réduction mesurable des émissions de CO2 liées aux déplacements",
+      "cost": 15,
+      "delay": 2,
+      "value": 10
+    },
+    {
+      "id": "card-2",
+      "type": "Action",
+      "domain": "Gestion des parties prenantes",
+      "phase": ["Initiation"],
+      "title": "Identifier les parties prenantes",
+      "description": "Pour le projet ÉcoVoyage, les parties prenantes identifiées incluent :\n- Le Ministère de l'Écologie (sponsor principal et autorité réglementaire)\n- Les opérateurs de transport (fournisseurs de données et partenaires opérationnels)\n- Les utilisateurs finaux (particuliers soucieux de l'environnement et voyageurs réguliers)\n- Les autorités locales des villes pilotes\n- Les associations environnementales (soutien et promotion)\n- L'équipe de développement\n- Les investisseurs potentiels pour les futures phases d'expansion",
+      "cost": 10,
+      "delay": 2,
+      "value": 8
+    },
+    {
+      "id": "card-3",
+      "type": "Event",
+      "domain": "Gestion des risques",
+      "phase": ["Initiation", "Planification"],
+      "title": "Changement de réglementation",
+      "description": "Une nouvelle réglementation environnementale est annoncée, affectant les exigences du projet.",
+      "cost": -5,
+      "delay": 1,
+      "value": 5
+    },
+    {
+      "id": "card-4",
+      "type": "Quiz",
+      "domain": "Gestion de projet",
+      "phase": ["Initiation"],
+      "title": "Qu'est-ce qu'une charte de projet ?",
+      "description": "Testez vos connaissances sur la charte de projet.",
+      "options": [
+        "Un document qui autorise formellement le projet",
+        "Un planning détaillé du projet",
+        "Un budget prévisionnel",
+        "Un rapport de fin de projet"
+      ],
+      "correct_answer": "Un document qui autorise formellement le projet",
+      "comment": "La charte de projet est un document clé qui officialise l'existence du projet et fixe ses objectifs.",
+      "value": 15
+    }
+  ]
+} 

@@ -1,43 +1,67 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { PROJECTS, DEFAULT_PROJECT_ID } from "@/config/projects";
+import { GameManager, UnifiedGameConfig } from "@/config/games";
 import { Card } from "@/pages/GamePage";
 import { getCardTitle, getCardDescription, getCardDomain, getCardType, getCardPhase } from "@/utils/cardHelpers";
 
 const AdminPage = () => {
   const navigate = useNavigate();
-  const [selectedProject, setSelectedProject] = useState<string>(DEFAULT_PROJECT_ID);
+  const [selectedGameId, setSelectedGameId] = useState<string>("");
   const [selectedPhase, setSelectedPhase] = useState<string>("all");
   const [selectedType, setSelectedType] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [cards, setCards] = useState<Card[]>([]);
+  const [availableGames, setAvailableGames] = useState<UnifiedGameConfig[]>([]);
+  const [currentGame, setCurrentGame] = useState<UnifiedGameConfig | null>(null);
   
-  // Charger les cartes en fonction du projet sélectionné
+  // Charger les jeux disponibles au montage
   useEffect(() => {
-    const project = PROJECTS.find(p => p.id === selectedProject);
-    if (project && project.cards) {
-      // Convertir les types si nécessaire pour assurer la compatibilité avec Card
-      const typedCards = project.cards.map(card => {
-        // Si délai est un nombre, convertir en string pour être compatible avec Card
-        if (typeof card.délai === 'number') {
-          return {
-            ...card,
-            délai: String(card.délai)
-          } as Card;
-        }
-        return card as Card;
-      });
-      
-      setCards(typedCards);
-      console.log(`Chargement de ${typedCards.length} cartes pour le projet ${project.name}`);
-    } else {
-      console.warn(`Aucune carte trouvée pour le projet ${selectedProject}`);
-      setCards([]);
+    const games = GameManager.getAllGames();
+    setAvailableGames(games);
+    
+    // Sélectionner le premier jeu par défaut
+    if (games.length > 0) {
+      setSelectedGameId(games[0].gameInfo.id);
     }
-  }, [selectedProject]);
+  }, []);
   
-  // Obtenir toutes les phases uniques
+  // Charger les cartes en fonction du jeu sélectionné
+  useEffect(() => {
+    if (selectedGameId) {
+      const game = GameManager.getGame(selectedGameId);
+      if (game) {
+        setCurrentGame(game);
+                 // Convertir les cartes du jeu vers le format Card attendu
+         const typedCards = game.cards.map(card => ({
+           id: card.id,
+           type: card.type,
+           domain: card.domain,
+           phase: card.phase,
+           title: card.title,
+           description: card.description,
+           cost: card.cost,
+           delay: card.delay,
+           value: card.value,
+           options: card.options,
+           correct_answer: card.correct_answer,
+           comment: card.comment,
+           conditions: card.conditions
+         } as Card));
+        
+        setCards(typedCards);
+        console.log(`Chargement de ${typedCards.length} cartes pour le jeu ${game.gameInfo.name}`);
+      } else {
+        console.warn(`Aucun jeu trouvé avec l'ID ${selectedGameId}`);
+        setCards([]);
+        setCurrentGame(null);
+      }
+    }
+  }, [selectedGameId]);
+  
+  // Obtenir toutes les phases uniques du jeu actuel
   const getUniquePhases = () => {
+    if (!currentGame) return [];
+    
     const phases = new Set<string>();
     
     cards.forEach(card => {
@@ -83,7 +107,7 @@ const AdminPage = () => {
       return true;
     });
   };
-  
+
   const filteredCards = getFilteredCards();
   const uniquePhases = getUniquePhases();
   
@@ -104,18 +128,18 @@ const AdminPage = () => {
       <main className="container mx-auto py-8 px-4">
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            {/* Sélection du projet - Afficher seulement si plusieurs projets */}
-            {PROJECTS.length > 1 && (
+            {/* Sélection du jeu - Afficher seulement si plusieurs jeux */}
+            {availableGames.length > 1 && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Projet</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Jeu</label>
                 <select
-                  value={selectedProject}
-                  onChange={(e) => setSelectedProject(e.target.value)}
+                  value={selectedGameId}
+                  onChange={(e) => setSelectedGameId(e.target.value)}
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 >
-                  {PROJECTS.map((project) => (
-                    <option key={project.id} value={project.id}>
-                      {project.name}
+                  {availableGames.map((game) => (
+                    <option key={game.gameInfo.id} value={game.gameInfo.id}>
+                      {game.gameInfo.name}
                     </option>
                   ))}
                 </select>
@@ -123,7 +147,7 @@ const AdminPage = () => {
             )}
             
             {/* Sélection de la phase */}
-            <div className={PROJECTS.length > 1 ? "" : "md:col-span-2"}>
+            <div className={availableGames.length > 1 ? "" : "md:col-span-2"}>
               <label className="block text-sm font-medium text-gray-700 mb-1">Phase</label>
               <select
                 value={selectedPhase}
@@ -168,6 +192,7 @@ const AdminPage = () => {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold text-gray-800">
               {filteredCards.length} carte{filteredCards.length !== 1 ? 's' : ''} trouvée{filteredCards.length !== 1 ? 's' : ''}
+              {currentGame && ` - ${currentGame.gameInfo.name}`}
             </h2>
           </div>
         </div>
@@ -199,65 +224,91 @@ const AdminPage = () => {
             }
             
             return (
-              <div 
-                key={card.id} 
-                className={`${bgColor} border ${borderColor} rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow`}
+              <div
+                key={card.id}
+                className={`${bgColor} ${borderColor} border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow`}
               >
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-semibold text-gray-900">{getCardTitle(card)}</h3>
-                  <span className={`${badgeColor} text-xs font-medium px-2.5 py-0.5 rounded`}>
+                <div className="flex justify-between items-start mb-3">
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeColor}`}>
                     {cardType}
                   </span>
+                  <span className="text-xs text-gray-500">ID: {card.id}</span>
                 </div>
                 
-                <div className="mb-3">
-                  <span className="text-xs font-medium text-gray-500 mr-2">Phase: {cardPhase}</span>
-                  {cardDomain && (
-                    <span className="text-xs font-medium text-gray-500">Domaine: {cardDomain}</span>
+                <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+                  {getCardTitle(card)}
+                </h3>
+                
+                <p className="text-sm text-gray-600 mb-3 line-clamp-3">
+                  {getCardDescription(card)}
+                </p>
+                
+                <div className="space-y-2 text-xs text-gray-500">
+                  <div className="flex justify-between">
+                    <span>Domaine:</span>
+                    <span className="font-medium">{cardDomain}</span>
+                  </div>
+                  
+                  <div className="flex justify-between">
+                    <span>Phase:</span>
+                    <span className="font-medium">{cardPhase}</span>
+                  </div>
+                  
+                  {card.cost !== undefined && (
+                    <div className="flex justify-between">
+                      <span>Coût:</span>
+                      <span className="font-medium">{card.cost}€</span>
+                    </div>
+                  )}
+                  
+                                     {card.delay !== undefined && (
+                     <div className="flex justify-between">
+                       <span>Délai:</span>
+                       <span className="font-medium">{card.delay} jours</span>
+                     </div>
+                   )}
+                  
+                  {card.value !== undefined && (
+                    <div className="flex justify-between">
+                      <span>Valeur:</span>
+                      <span className="font-medium">{card.value} pts</span>
+                    </div>
                   )}
                 </div>
                 
-                <p className="text-sm text-gray-700 mb-3 line-clamp-3">{getCardDescription(card)}</p>
-                
-                {/* Informations spécifiques au type de carte */}
-                {cardType === "action" && (
-                  <div className="mt-2 text-sm">
-                    {card.coût && <div className="text-gray-600">Coût: {card.coût}</div>}
-                    {card.délai && <div className="text-gray-600">Délai: {card.délai}</div>}
+                {card.options && card.options.length > 0 && (
+                  <div className="mt-3 pt-3 border-t border-gray-200">
+                    <p className="text-xs text-gray-500 mb-1">Options:</p>
+                    <ul className="text-xs text-gray-600 space-y-1">
+                      {card.options.map((option, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="mr-1">•</span>
+                          <span className={card.correct_answer === option ? "font-semibold text-green-600" : ""}>
+                            {option}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
                 
-                {cardType === "event" && (
-                  <div className="mt-2 text-sm">
-                    {card.conditions ? (
-                      <div className="text-purple-600 font-medium">Événement conditionnel</div>
-                    ) : (
-                      <>
-                        {card.coût && <div className="text-gray-600">Impact budget: {card.coût}</div>}
-                        {card.délai && <div className="text-gray-600">Impact délai: {card.délai}</div>}
-                      </>
-                    )}
+                {card.comment && (
+                  <div className="mt-3 pt-3 border-t border-gray-200">
+                    <p className="text-xs text-gray-500 mb-1">Commentaire:</p>
+                    <p className="text-xs text-gray-600">{card.comment}</p>
                   </div>
                 )}
-                
-                {cardType === "quiz" && card.options && (
-                  <div className="mt-2 text-sm">
-                    <div className="text-gray-600">Options: {card.options.length}</div>
-                    {card.correct_answer && (
-                      <div className="text-green-600">Réponse: {card.correct_answer}</div>
-                    )}
-                  </div>
-                )}
-                
-                <div className="mt-3 text-xs text-gray-500">ID: {card.id}</div>
               </div>
             );
           })}
         </div>
         
         {filteredCards.length === 0 && (
-          <div className="bg-white rounded-lg shadow-md p-8 text-center">
-            <p className="text-gray-500">Aucune carte ne correspond à vos critères de recherche.</p>
+          <div className="text-center py-12">
+            <div className="text-gray-400 text-lg mb-2">Aucune carte trouvée</div>
+            <p className="text-gray-500 text-sm">
+              Essayez de modifier vos critères de recherche ou de filtrage.
+            </p>
           </div>
         )}
       </main>

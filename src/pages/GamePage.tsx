@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import GameHeader from "@/components/game/GameHeader";
 import Timeline from "@/components/game/Timeline";
 import GameBoard from "@/components/game/GameBoard";
-import gameConfig from "@/data/game-config.json";
-import { Project, PROJECT_FILES, DEFAULT_PROJECT_ID } from "@/config/projects";
+import GameManager, { UnifiedGameConfig } from "@/config/games";
 import { getCardTitle, getCardDomain, getCardType } from "@/utils/cardHelpers";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ReactMarkdown from 'react-markdown';
@@ -103,6 +102,7 @@ export type GameConfig = {
     condition: string;
     points: number;
   }[];
+  cards: Card[];
 };
 
 // Add this type definition after the GameConfig type
@@ -133,18 +133,6 @@ const colorPairs = [
   { bg: "bg-rose-200", text: "text-rose-900" }
 ];
 
-// Extract settings from game config
-const {
-  gameSettings: {
-    initialBudget: INITIAL_BUDGET,
-    initialTime: INITIAL_TIME,
-    cardWidth: CARD_WIDTH,
-    cardHeight: CARD_HEIGHT,
-    cardMargin: CARD_MARGIN,
-    cardsPerRow: CARDS_PER_ROW
-  }
-} = gameConfig as GameConfig;
-
 // Ajouter cette fonction après la définition des types
 const calculateTotalTurns = (cardLimits: { action: number; event: number; quiz: number }): number => {
   return cardLimits.action + cardLimits.event + cardLimits.quiz;
@@ -154,8 +142,7 @@ const GamePage = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   
-  // State for selected project
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   
@@ -170,10 +157,13 @@ const GamePage = () => {
   const [timeChange, setTimeChange] = useState<number | null>(null);
   const [valueChange, setValueChange] = useState<number | null>(null);
   
-  // Initialize game state
+  // --- NOUVEAU : Charger la config du jeu sélectionné ---
+  const [gameConfig, setGameConfig] = useState<UnifiedGameConfig | null>(null);
+
+  // Initialize game state with default values
   const [gameState, setGameState] = useState<GameState>({
-    budget: INITIAL_BUDGET,
-    time: INITIAL_TIME,
+    budget: 100, // Valeur par défaut, sera mise à jour quand gameConfig est chargé
+    time: 54,    // Valeur par défaut, sera mise à jour quand gameConfig est chargé
     valuePoints: 0,
     currentPhase: "",
     remainingTurns: 0,
@@ -204,60 +194,40 @@ const GamePage = () => {
   // État pour le nom du projet
   const [projectName, setProjectName] = useState<string>("Project Management Game");
 
-  // Load selected project
   useEffect(() => {
     setIsLoading(true);
+    setLoadError(null);
+    const selectedGameId = localStorage.getItem('selectedGameId');
+    if (!selectedGameId) {
+      setLoadError("Aucun jeu sélectionné. Veuillez choisir un jeu.");
+      setTimeout(() => navigate('/'), 1000);
+      return;
+    }
+    const config = GameManager.getGame(selectedGameId);
+    if (!config) {
+      setLoadError("Le jeu sélectionné n'existe pas ou a été supprimé. Veuillez en choisir un autre.");
+      setTimeout(() => navigate('/'), 1000);
+      return;
+    }
+    setGameConfig(config);
     
-    // Fonction pour charger le projet
-    const loadProject = () => {
-      try {
-        // Try to get the selected project from localStorage
-        const storedProject = localStorage.getItem('selectedProject');
-        
-        if (storedProject) {
-          try {
-            const parsedProject = JSON.parse(storedProject) as Project;
-            setSelectedProject(parsedProject);
-            setProjectName(parsedProject.name); // Mettre à jour le nom du projet
-            console.log("Loaded project:", parsedProject.name);
-            setIsLoading(false);
-          } catch (error) {
-            console.error("Error parsing stored project:", error);
-            setLoadError("Erreur lors du chargement du projet. Veuillez réessayer.");
-            // Redirection différée pour éviter les problèmes sur mobile
-            setTimeout(() => {
-              navigate('/');
-            }, 500);
-          }
-        } else {
-          // If no project is selected, redirect to home
-          console.log("No project selected, redirecting to home");
-          setLoadError("Aucun projet sélectionné. Veuillez en choisir un.");
-          // Redirection différée pour éviter les problèmes sur mobile
-          setTimeout(() => {
-            navigate('/');
-          }, 500);
-        }
-      } catch (error) {
-        console.error("Error in loadProject:", error);
-        setLoadError("Une erreur inattendue s'est produite. Veuillez réessayer.");
-        setTimeout(() => {
-          navigate('/');
-        }, 500);
-      }
-    };
+    // Mettre à jour le gameState avec les valeurs de la config
+    setGameState(prev => ({
+      ...prev,
+      budget: config.gameSettings.initialBudget,
+      time: config.gameSettings.initialTime
+    }));
     
-    // Utiliser un délai pour s'assurer que tout est prêt, surtout sur mobile
-    setTimeout(loadProject, 100);
-    
+    setIsLoading(false);
   }, [navigate]);
+
+
 
   // Add function to get current phase's card limits
   const getCurrentPhaseLimits = useCallback(() => {
-    const config = gameConfig as GameConfig;
-    const currentPhaseConfig = config.phases.find(phase => phase.name === gameState.currentPhase);
+    const currentPhaseConfig = gameConfig?.phases.find(phase => phase.name === gameState.currentPhase);
     return currentPhaseConfig?.cardLimits || { action: 0, event: 0, quiz: 0 };
-  }, [gameState.currentPhase]);
+  }, [gameState.currentPhase, gameConfig]);
 
   // Helper function to update card usage and remaining turns
   const updateCardUsageAndTurns = useCallback((cardType: string, currentState: GameState) => {
@@ -303,33 +273,21 @@ const GamePage = () => {
   // Load game configuration
   useEffect(() => {
     try {
-      // Extract configuration from the game config file
-      const config = gameConfig as GameConfig;
-      
       // Sort phases by order
-      const sortedPhases = [...config.phases].sort((a, b) => a.order - b.order);
-      
-      // Extract phase names
+      const sortedPhases = [...gameConfig?.phases].sort((a, b) => a.order - b.order);
       const phaseNames = sortedPhases.map(phase => phase.name);
       setPhases(phaseNames);
-      
-      // Create turns per phase mapping
       const turnsMapping: Record<string, number> = {};
       const requiredCardsMapping: Record<string, string[]> = {};
       const penaltiesMapping: Record<string, { time: number; budget: number; message: string }> = {};
-      
       sortedPhases.forEach(phase => {
-        // Calculer le nombre de tours à partir des limites de cartes
         turnsMapping[phase.name] = calculateTotalTurns(phase.cardLimits);
         requiredCardsMapping[phase.name] = phase.requiredCards;
         penaltiesMapping[phase.name] = phase.penalties;
       });
-      
       setTurnsPerPhase(turnsMapping);
       setRequiredCards(requiredCardsMapping);
       setPhasePenalties(penaltiesMapping);
-      
-      // Initialize game state with the first phase
       if (phaseNames.length > 0) {
         const firstPhase = phaseNames[0];
         setGameState(prev => ({
@@ -339,34 +297,19 @@ const GamePage = () => {
           phases: phaseNames
         }));
       }
-      
-      console.log("Game configuration loaded:", {
-        phases: phaseNames,
-        turnsPerPhase: turnsMapping,
-        requiredCards: requiredCardsMapping
-      });
     } catch (error) {
       console.error("Error loading game configuration:", error);
     }
-  }, []);
+  }, [gameConfig]);
 
-  // Update the card loading effect to use the selected project
+  // Update the card loading effect to use the game config cards
   useEffect(() => {
-    if (!selectedProject) return;
+    if (!gameConfig) return;
 
     try {
-      // Get the project data based on the dataFile property
-      const projectCards = PROJECT_FILES[selectedProject.dataFile];
-      
-      if (!projectCards) {
-        console.error(`No data found for project file: ${selectedProject.dataFile}`);
-        setLoadError(`Impossible de charger les données du projet "${selectedProject.name}". Fichier non trouvé: ${selectedProject.dataFile}`);
-        return;
-      }
-
-      // Process the cards from the selected JSON file
-      const processedCards = Array.isArray(projectCards) 
-        ? projectCards.map((card: any, index: number) => {
+      // Process the cards from the game config
+      const processedCards = Array.isArray(gameConfig.cards) 
+        ? gameConfig.cards.map((card: any, index: number) => {
             // Log pour déboguer la propriété value
             if (card.value !== undefined) {
               console.log(`Card ${card.id || index} has value: ${card.value}`);
@@ -376,23 +319,18 @@ const GamePage = () => {
             const normalizedCard: Card = {
               id: card.id || `card-${index}`,
               type: card.type,
-              // Handle different naming conventions
-              domaine: card.domaine || card.domain,
-              domain: card.domain || card.domaine,
-              phase: card.phase, // Use the original phase format
-              nom: card.nom || card.title,
-              title: card.title || card.nom,
+              domain: card.domain,
+              phase: card.phase,
+              title: card.title,
               description: card.description,
               info: card.info,
-              délai: card.délai,
-              coût: card.coût,
-              value: card.value, // Préserver la propriété value
+              delay: card.delay,
+              cost: card.cost,
+              value: card.value,
               position: { x: 0, y: 0 },
-              // Ajouter les propriétés spécifiques aux cartes de type question
               options: card.options,
               correct_answer: card.correct_answer,
               comment: card.comment,
-              // Ajouter les propriétés pour les cartes événements conditionnelles
               conditions: card.conditions,
             };
             
@@ -408,8 +346,8 @@ const GamePage = () => {
       setAllCards(processedCards);
 
       if (processedCards.length === 0) {
-        console.error("No cards were loaded from the JSON file");
-        setLoadError(`Le fichier du projet "${selectedProject.name}" ne contient aucune carte.`);
+        console.error("No cards were loaded from the game config");
+        setLoadError(`Le jeu "${gameConfig.gameInfo.name}" ne contient aucune carte.`);
         return;
       }
 
@@ -445,27 +383,34 @@ const GamePage = () => {
 
       setCardDecks(decksByDomain);
       
+      // Mettre à jour le nom du projet avec le nom du jeu
+      setProjectName(gameConfig.gameInfo.name);
+      
       console.log("Cards loaded:", processedCards.length);
       console.log("Domains with colors:", colorMapping);
     } catch (error) {
       console.error("Error processing cards:", error);
-      setLoadError(`Une erreur s'est produite lors du traitement des données du projet "${selectedProject.name}". Veuillez réessayer.`);
+      setLoadError(`Une erreur s'est produite lors du traitement des données du jeu "${gameConfig.gameInfo.name}". Veuillez réessayer.`);
     }
-  }, [selectedProject, setLoadError]);
+  }, [gameConfig]);
 
   // Calculate the next available position on the board
   const getNextAvailablePosition = () => {
+    if (!gameConfig) return { x: 20, y: 20 }; // Valeurs par défaut
+    
+    const { cardMargin, cardWidth, cardHeight, cardsPerRow } = gameConfig.gameSettings;
+    
     if (gameState.boardCards.length === 0) {
-      return { x: CARD_MARGIN, y: CARD_MARGIN };
+      return { x: cardMargin, y: cardMargin };
     }
 
     // Calculate the position for the new card based on the grid layout
     const cardIndex = gameState.boardCards.length;
-    const row = Math.floor(cardIndex / CARDS_PER_ROW);
-    const col = cardIndex % CARDS_PER_ROW;
+    const row = Math.floor(cardIndex / cardsPerRow);
+    const col = cardIndex % cardsPerRow;
 
-    const x = CARD_MARGIN + col * (CARD_WIDTH + CARD_MARGIN);
-    const y = CARD_MARGIN + row * (CARD_HEIGHT + CARD_MARGIN);
+    const x = cardMargin + col * (cardWidth + cardMargin);
+    const y = cardMargin + row * (cardHeight + cardMargin);
 
     return { x, y };
   };
@@ -648,16 +593,16 @@ const GamePage = () => {
     // Traiter les impacts sur le budget et le délai pour les cartes action
     if (cardType === 'action') {
       // Impact sur le budget
-      if (card.coût) {
-        const budgetImpact = parseInt(card.coût);
+      if (card.cost) {
+        const budgetImpact = parseInt(card.cost.toString());
         if (!isNaN(budgetImpact)) {
           handleModifyBudget(budgetImpact);
         }
       }
 
       // Impact sur le délai
-      if (card.délai) {
-        const timeImpact = parseFloat(card.délai);
+      if (card.delay) {
+        const timeImpact = parseFloat(card.delay.toString());
         if (!isNaN(timeImpact)) {
           // Convertir les mois en nombre entier (arrondi au supérieur)
           const timeImpactMonths = Math.ceil(timeImpact);
@@ -801,24 +746,18 @@ const GamePage = () => {
 
   // Calculate the value points for a card
   const calculateCardValue = (card: Card): number => {
-    let value = 1; // Base value for any card
-    
-    // Check if this card is required for the current phase
+    let value = 1;
     const isRequiredCard = requiredCards[gameState.currentPhase]?.includes(getCardTitle(card));
     if (isRequiredCard) {
-      value += 2; // Bonus for playing a required card
+      value += 2;
     }
-    
-    // Apply rules from game config
-    const valueRules = (gameConfig as GameConfig).cardValueRules || [];
-    valueRules.forEach(rule => {
+    gameConfig?.cardValueRules.forEach(rule => {
       if (rule.condition === "domain" && getCardDomain(card) === rule.condition) {
         value += rule.points;
       } else if (rule.condition === "type" && card.type === rule.condition) {
         value += rule.points;
       }
     });
-    
     return value;
   };
 
@@ -1004,12 +943,14 @@ const GamePage = () => {
 
   // Fonction pour réinitialiser le jeu
   const resetGame = useCallback(() => {
+    if (!gameConfig) return;
+    
     // Supprimer les données du localStorage
     localStorage.removeItem('projectManagerGameData');
     
     setGameState({
-      budget: INITIAL_BUDGET,
-      time: INITIAL_TIME,
+      budget: gameConfig.gameSettings.initialBudget,
+      time: gameConfig.gameSettings.initialTime,
       valuePoints: 0,
       currentPhase: phases[0] || "",
       remainingTurns: phases[0] ? turnsPerPhase[phases[0]] : 0,
@@ -1033,11 +974,13 @@ const GamePage = () => {
     setValueChange(null);
     
     console.log("Jeu réinitialisé avec succès");
-  }, [phases, turnsPerPhase]);
+  }, [phases, turnsPerPhase, gameConfig]);
 
   // Charger les données sauvegardées au démarrage
   useEffect(() => {
     const loadSavedGameData = () => {
+      if (!gameConfig) return false;
+      
       try {
         const savedData = localStorage.getItem('projectManagerGameData');
         if (savedData) {
@@ -1050,8 +993,8 @@ const GamePage = () => {
             // Mettre à jour l'état du jeu
             setGameState(prevState => ({
               ...prevState,
-              budget: parsedData.gameState.budget || INITIAL_BUDGET,
-              time: parsedData.gameState.time || INITIAL_TIME,
+              budget: parsedData.gameState.budget || gameConfig.gameSettings.initialBudget,
+              time: parsedData.gameState.time || gameConfig.gameSettings.initialTime,
               valuePoints: parsedData.gameState.valuePoints || 0,
               currentPhase: parsedData.currentPhase || phases[0] || "",
               remainingTurns: parsedData.remainingTurns || 0,
@@ -1074,7 +1017,7 @@ const GamePage = () => {
     };
     
     // Charger les données sauvegardées seulement après l'initialisation du jeu
-    if (phases.length > 0 && !isLoading) {
+    if (phases.length > 0 && !isLoading && gameConfig) {
       const dataLoaded = loadSavedGameData();
       
       // Si aucune donnée n'a été chargée, initialiser une nouvelle partie
@@ -1082,9 +1025,9 @@ const GamePage = () => {
         resetGame();
       }
     }
-  }, [phases, isLoading, resetGame]);
+  }, [phases, isLoading, resetGame, gameConfig]);
 
-  // Afficher un écran de chargement ou d'erreur si nécessaire
+  // --- Utiliser la config du jeu ---
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-4">
@@ -1098,8 +1041,7 @@ const GamePage = () => {
       </div>
     );
   }
-  
-  if (loadError) {
+  if (loadError || !gameConfig) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-4">
         <img 
@@ -1108,7 +1050,7 @@ const GamePage = () => {
           className="w-24 h-24 mb-6"
         />
         <h1 className="text-2xl font-bold text-white mb-4">Oups !</h1>
-        <p className="text-white text-center mb-6">{loadError}</p>
+        <p className="text-white text-center mb-6">{loadError || "Erreur de chargement du jeu."}</p>
         <button
           onClick={() => navigate('/')}
           className="bg-white text-indigo-600 px-6 py-3 rounded-full text-lg font-semibold 
@@ -1171,7 +1113,7 @@ const GamePage = () => {
         remainingTurns={gameState.remainingTurns}
         isFullScreen={isFullScreen}
         onToggleFullScreen={handleToggleFullScreen}
-        projectName={selectedProject?.name || "PM Cards"}
+        projectName={projectName}
         onMilestoneStep={handlePhaseMilestone}
         budgetChange={budgetChange}
         timeChange={timeChange}
@@ -1241,7 +1183,7 @@ const GamePage = () => {
             remainingTurns={gameState.remainingTurns}
             isFullScreen={true}
             onToggleFullScreen={handleToggleFullScreen}
-            projectName={selectedProject?.name || "PM Cards"}
+            projectName={projectName}
             onMilestoneStep={handlePhaseMilestone}
             budgetChange={budgetChange}
             timeChange={timeChange}

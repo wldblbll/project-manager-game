@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import { PROJECTS, DEFAULT_PROJECT_ID } from "@/config/projects";
+import { GameManager, UnifiedGameConfig } from "@/config/games";
 import { Card } from "@/pages/GamePage";
 import { getCardTitle, getCardDescription, getCardDomain, getCardType, getCardPhase, getCardOptions, getCardCorrectAnswer, getCardComment, hasCardConditions, getCardConditions } from "@/utils/cardHelpers";
 
@@ -16,36 +16,58 @@ const MarkdownContent = ({ content }: { content: string }) => {
 
 const AllCardsPage = () => {
   const navigate = useNavigate();
-  const [selectedProject, setSelectedProject] = useState<string>(DEFAULT_PROJECT_ID);
+  const [selectedGameId, setSelectedGameId] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [cards, setCards] = useState<Card[]>([]);
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
   const [selectedCard, setSelectedCard] = useState<Card | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [availableGames, setAvailableGames] = useState<UnifiedGameConfig[]>([]);
+  const [currentGame, setCurrentGame] = useState<UnifiedGameConfig | null>(null);
   
-  // Charger les cartes en fonction du projet sélectionné
+  // Charger les jeux disponibles au montage
   useEffect(() => {
-    const project = PROJECTS.find(p => p.id === selectedProject);
-    if (project && project.cards) {
-      // Convertir les types si nécessaire pour assurer la compatibilité avec Card
-      const typedCards = project.cards.map(card => {
-        // Si délai est un nombre, convertir en string pour être compatible avec Card
-        if (typeof card.délai === 'number') {
-          return {
-            ...card,
-            délai: String(card.délai)
-          } as Card;
-        }
-        return card as Card;
-      });
-      
-      setCards(typedCards);
-      console.log(`Chargement de ${typedCards.length} cartes pour le projet ${project.name}`);
-    } else {
-      console.warn(`Aucune carte trouvée pour le projet ${selectedProject}`);
-      setCards([]);
+    const games = GameManager.getAllGames();
+    setAvailableGames(games);
+    
+    // Sélectionner le premier jeu par défaut
+    if (games.length > 0) {
+      setSelectedGameId(games[0].gameInfo.id);
     }
-  }, [selectedProject]);
+  }, []);
+  
+  // Charger les cartes en fonction du jeu sélectionné
+  useEffect(() => {
+    if (selectedGameId) {
+      const game = GameManager.getGame(selectedGameId);
+      if (game) {
+        setCurrentGame(game);
+        // Convertir les cartes du jeu vers le format Card attendu
+        const typedCards = game.cards.map(card => ({
+          id: card.id,
+          type: card.type,
+          domain: card.domain,
+          phase: card.phase,
+          title: card.title,
+          description: card.description,
+          cost: card.cost,
+          delay: card.delay,
+          value: card.value,
+          options: card.options,
+          correct_answer: card.correct_answer,
+          comment: card.comment,
+          conditions: card.conditions
+        } as Card));
+        
+        setCards(typedCards);
+        console.log(`Chargement de ${typedCards.length} cartes pour le jeu ${game.gameInfo.name}`);
+      } else {
+        console.warn(`Aucun jeu trouvé avec l'ID ${selectedGameId}`);
+        setCards([]);
+        setCurrentGame(null);
+      }
+    }
+  }, [selectedGameId]);
   
   // Obtenir toutes les phases uniques
   const getUniquePhases = () => {
@@ -165,29 +187,29 @@ const AllCardsPage = () => {
       <main className="container mx-auto py-8 px-4">
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            {/* Sélection du projet - Afficher seulement si plusieurs projets */}
-            {PROJECTS.length > 1 && (
+            {/* Sélection du jeu - Afficher seulement si plusieurs jeux */}
+            {availableGames.length > 1 && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Projet</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Jeu</label>
                 <select
-                  value={selectedProject}
+                  value={selectedGameId}
                   onChange={(e) => {
-                    setSelectedProject(e.target.value);
-                    setExpandedPhase(null); // Réinitialiser l'expansion des phases lors du changement de projet
+                    setSelectedGameId(e.target.value);
+                    setExpandedPhase(null); // Réinitialiser l'expansion des phases lors du changement de jeu
                   }}
                   className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 >
-                  {PROJECTS.map((project) => (
-                    <option key={project.id} value={project.id}>
-                      {project.name}
+                  {availableGames.map((game) => (
+                    <option key={game.gameInfo.id} value={game.gameInfo.id}>
+                      {game.gameInfo.name}
                     </option>
                   ))}
                 </select>
               </div>
             )}
             
-            {/* Recherche - Si un seul projet, occuper toute la largeur */}
-            <div className={PROJECTS.length > 1 ? "" : "md:col-span-2"}>
+            {/* Recherche - Si un seul jeu, occuper toute la largeur */}
+            <div className={availableGames.length > 1 ? "" : "md:col-span-2"}>
               <label className="block text-sm font-medium text-gray-700 mb-1">Recherche</label>
               <input
                 type="text"
@@ -201,7 +223,8 @@ const AllCardsPage = () => {
           
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold text-gray-800">
-              {cards.length} cartes au total, {getFilteredCards().length} affichées
+              {cards.length} carte{cards.length !== 1 ? 's' : ''} au total
+              {currentGame && ` - ${currentGame.gameInfo.name}`}
             </h2>
           </div>
         </div>
@@ -340,16 +363,16 @@ const AllCardsPage = () => {
               {getCardType(selectedCard) === 'action' && (
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    {selectedCard.coût && (
+                    {selectedCard.cost && (
                       <div className="bg-blue-50 p-4 rounded-lg">
                         <h4 className="text-sm font-semibold text-blue-800 mb-1">Coût</h4>
-                        <p className="text-blue-900 font-medium">{selectedCard.coût}</p>
+                        <p className="text-blue-900 font-medium">{selectedCard.cost}</p>
                       </div>
                     )}
-                    {selectedCard.délai && (
+                    {selectedCard.delay && (
                       <div className="bg-blue-50 p-4 rounded-lg">
                         <h4 className="text-sm font-semibold text-blue-800 mb-1">Délai</h4>
-                        <p className="text-blue-900 font-medium">{selectedCard.délai}</p>
+                        <p className="text-blue-900 font-medium">{selectedCard.delay}</p>
                       </div>
                     )}
                   </div>
@@ -482,16 +505,16 @@ const AllCardsPage = () => {
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {selectedCard.coût && (
+                      {selectedCard.cost && (
                         <div className="bg-purple-50 p-4 rounded-lg">
                           <h4 className="text-sm font-semibold text-purple-800 mb-1">Impact budget</h4>
-                          <p className="text-purple-900 font-medium">{selectedCard.coût}</p>
+                          <p className="text-purple-900 font-medium">{selectedCard.cost}</p>
                         </div>
                       )}
-                      {selectedCard.délai && (
+                      {selectedCard.delay && (
                         <div className="bg-purple-50 p-4 rounded-lg">
                           <h4 className="text-sm font-semibold text-purple-800 mb-1">Impact délai</h4>
-                          <p className="text-purple-900 font-medium">{selectedCard.délai}</p>
+                          <p className="text-purple-900 font-medium">{selectedCard.delay}</p>
                         </div>
                       )}
                     </div>
@@ -652,8 +675,8 @@ const renderCard = (card: Card, type: string, onClick: (card: Card) => void, con
       {/* Informations spécifiques au type de carte */}
       {type === "action" && (
         <div className="mt-2 text-sm">
-          {card.coût && <div className="text-gray-600">Coût: {card.coût}</div>}
-          {card.délai && <div className="text-gray-600">Délai: {card.délai}</div>}
+          {card.cost && <div className="text-gray-600">Coût: {card.cost}</div>}
+          {card.delay && <div className="text-gray-600">Délai: {card.delay}</div>}
         </div>
       )}
       
@@ -663,8 +686,8 @@ const renderCard = (card: Card, type: string, onClick: (card: Card) => void, con
             <div className="text-purple-600 font-medium">Événement conditionnel</div>
           ) : (
             <>
-              {card.coût && <div className="text-gray-600">Impact budget: {card.coût}</div>}
-              {card.délai && <div className="text-gray-600">Impact délai: {card.délai}</div>}
+              {card.cost && <div className="text-gray-600">Impact budget: {card.cost}</div>}
+              {card.delay && <div className="text-gray-600">Impact délai: {card.delay}</div>}
             </>
           )}
         </div>

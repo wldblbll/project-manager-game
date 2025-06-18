@@ -1,22 +1,36 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AnimatedText from './AnimatedText';
-import ProjectSelector from './ProjectSelector';
+import GameLoader from './GameLoader';
+import GameManager from '@/config/games';
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const Hero = () => {
   const navigate = useNavigate();
-  const [showProjectSelector, setShowProjectSelector] = useState(false);
+  const [showGameSelector, setShowGameSelector] = useState(false);
+  const [selectedGameId, setSelectedGameId] = useState<string>('ecovoyage');
   const isMobile = useIsMobile();
   
   // Fonction pour gérer le clic sur le bouton de démarrage
   const handleStartGame = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("Bouton de démarrage cliqué");
     
-    // Toujours afficher le sélecteur de projet quand on clique sur "Commencer à jouer"
-    setShowProjectSelector(true);
+    // Toujours afficher le sélecteur de jeux pour laisser le choix à l'utilisateur
+    setShowGameSelector(true);
+  };
+
+  // Fonction pour gérer la sélection d'un jeu
+  const handleGameSelected = (gameId: string) => {
+    setSelectedGameId(gameId);
+    localStorage.setItem('selectedGameId', gameId);
+    
+    // Sauvegarder les jeux personnalisés
+    GameManager.saveCustomGamesToStorage();
+    
+    // Fermer le sélecteur et naviguer vers le jeu
+    setShowGameSelector(false);
+    navigate('/game');
   };
   
   return (
@@ -58,15 +72,15 @@ const Hero = () => {
       </div>
       
       {/* Project Selector Modal */}
-      <Dialog open={showProjectSelector} onOpenChange={setShowProjectSelector}>
-        <DialogContent className="sm:max-w-[800px] p-0">
-          <DialogHeader className="p-6 pb-0">
-            <DialogTitle className="text-2xl font-bold text-center">Sélection du projet</DialogTitle>
+      <Dialog open={showGameSelector} onOpenChange={setShowGameSelector}>
+        <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader className="flex-shrink-0 p-6 pb-0">
+            <DialogTitle className="text-2xl font-bold text-center">Sélection du jeu</DialogTitle>
           </DialogHeader>
-          <div className="p-6">
-            <ProjectSelector 
-              onClose={() => setShowProjectSelector(false)}
-              standalone={true}
+          <div className="flex-1 overflow-y-auto p-6 modal-scroll">
+            <GameLoader 
+              onGameSelected={handleGameSelected}
+              selectedGameId={selectedGameId}
             />
           </div>
         </DialogContent>
