@@ -299,7 +299,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
     setCurrentPosition({ x: newX, y: newY });
     onMoveCard(draggingCard, { x: newX, y: newY });
   };
-
+  
   // Modifier la gestion du clic sur une carte
   const handleCardClick = (cardId: string, e: React.MouseEvent) => {
     // Ne rien faire si on est en train de déplacer la carte
@@ -1097,7 +1097,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           // Vérifier chaque sous-condition
           for (const check of condition.checks) {
             if (check.cardId && check.present !== undefined) {
-              const cardPresent = boardCardIds.includes(check.cardId);
+            const cardPresent = boardCardIds.includes(check.cardId);
               const result = (cardPresent === check.present);
               
               // Trouver le titre de la carte pour l'explication
@@ -1106,10 +1106,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 : `Carte #${check.cardId}`;
                 
               checkResults.push({
-                cardId: check.cardId,
+              cardId: check.cardId,
                 title: cardTitle,
-                expected: check.present,
-                actual: cardPresent,
+              expected: check.present,
+              actual: cardPresent,
                 result
               });
               
@@ -1913,18 +1913,18 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
                 {/* Bouton pour passer à l'étape jalon */}
                 {remainingTurns === 0 && onMilestoneStep && (
-                  <button
+                <button
                     onClick={onMilestoneStep}
                     className="pulse-attention-button px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg 
                              text-sm font-medium transition-all duration-200 flex items-center shadow-md"
-                  >
+                >
                     <span className="mr-2">✨</span>
                     Passer à la prochaine phase projet
-                  </button>
-                )}
+                </button>
+              )}
                 
-                </div>
-                </div>
+            </div>
+          </div>
         </div>
         
         {/* Board area - Updated to keep it white */}
@@ -1935,26 +1935,26 @@ const GameBoard: React.FC<GameBoardProps> = ({
           {cards.map((card) => {
             const colors = getCardColors(getCardDomain(card) || "");
             return (
-                <div
-                    key={card.id}
-                    data-card-id={card.id}
+              <div
+                key={card.id}
+                data-card-id={card.id}
                     className={`absolute p-3 rounded-xl shadow-lg transition-all cursor-move backdrop-blur-sm
                               ${colors.bg} ${colors.text} 
                               ${activeCardId === card.id ? 'ring-2 ring-white' : ''}
                               hover:shadow-xl transform hover:scale-105`}
-                    style={{
-                        width: `${CARD_WIDTH}px`,
+                style={{
+                  width: `${CARD_WIDTH}px`,
                         minHeight: `${CARD_MIN_HEIGHT}px`,
                         height: 'auto',
-                        left: card.position?.x || 0,
-                        top: card.position?.y || 0,
-                        zIndex: draggingCard === card.id ? 10 : 1,
-                        transform: draggingCard === card.id ? 'scale(1.05)' : 'scale(1)',
+                  left: card.position?.x || 0,
+                  top: card.position?.y || 0,
+                  zIndex: draggingCard === card.id ? 10 : 1,
+                  transform: draggingCard === card.id ? 'scale(1.05)' : 'scale(1)',
                         transition: draggingCard === card.id ? 'none' : 'all 0.2s ease-in-out'
-                    }}
-                    onMouseDown={(e) => handleCardMouseDown(e, card.id)}
-                    onMouseEnter={() => setHoveredCard(card)}
-                    onMouseLeave={() => setHoveredCard(null)}
+                }}
+                onMouseDown={(e) => handleCardMouseDown(e, card.id)}
+                onMouseEnter={() => setHoveredCard(card)}
+                onMouseLeave={() => setHoveredCard(null)}
                     onClick={(e) => {
                       if (!isDragging) {
                         handleCardClick(card.id, e);
@@ -1963,10 +1963,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
                 >
                     <div className="flex flex-col h-full justify-center items-center">
                         <div className="text-sm font-medium text-center">
-                            {getCardTitle(card)}
-                        </div>
-                    </div>
+                  {getCardTitle(card)}
                 </div>
+                    </div>
+              </div>
             );
           })}
           
@@ -2091,7 +2091,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                         )}
 
                         {condition.operator && condition.checks && (
-                          <div className="text-sm">
+                  <div className="text-sm">
                             <p className="text-blue-800">
                               Requiert {condition.operator === 'AND' ? 'toutes' : 'au moins une'} :
                             </p>
@@ -2105,7 +2105,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                                 </p>
                               ))}
                             </div>
-                          </div>
+                  </div>
                         )}
 
                         {condition.effects && (
@@ -2134,20 +2134,20 @@ const GameBoard: React.FC<GameBoardProps> = ({
                                 }`}>
                                   Valeur: {condition.effects.value > 0 ? '+' : ''}{condition.effects.value} points
                                 </span>
-                              )}
-                            </div>
+                )}
+              </div>
                           </div>
                         )}
                       </div>
                     ))}
-                  </div>
-                )}
-
+            </div>
+          )}
+          
                 {modalContent.info && (
                   <div className="mt-4 bg-gray-50 rounded-lg p-3 text-sm">
                     <h4 className="font-semibold mb-1">Informations complémentaires</h4>
                     <ReactMarkdown components={markdownComponents}>{modalContent.info}</ReactMarkdown>
-                  </div>
+              </div>
                 )}
                 
                 {/* Affichage spécifique pour les cartes événement */}
@@ -2160,11 +2160,11 @@ const GameBoard: React.FC<GameBoardProps> = ({
                         <ReactMarkdown components={markdownComponents}>{modalContent.info}</ReactMarkdown>
                       </div>
                     )}
-                  </div>
-                )}
-              </div>
             </div>
-            
+          )}
+        </div>
+      </div>
+
             <div className="bg-gray-50 px-6 py-3 flex justify-end">
               <button
                 onClick={() => setShowModal(false)}
