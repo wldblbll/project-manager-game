@@ -758,23 +758,7 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
                       </RadioGroup>
                     </FormControl>
 
-                    {!showResult ? (
-                      <Button 
-                        variant="contained" 
-                        onClick={handleSubmitAnswer}
-                        disabled={!selectedAnswer}
-                        sx={{ 
-                          mt: 3,
-                          bgcolor: '#3b82f6',
-                          '&:hover': {
-                            bgcolor: '#2563eb'
-                          }
-                        }}
-                        fullWidth
-                      >
-                        Valider ma réponse
-                      </Button>
-                    ) : (
+                    {showResult && (
                       <>
                         <Box sx={{ 
                           mt: 3, 
@@ -839,16 +823,49 @@ const RandomCardWheel: React.FC<RandomCardWheelProps> = ({
                 justifyContent: 'flex-end',
                 flexShrink: 0
               }}>
-                <Button 
-                  variant="outlined" 
-                  onClick={handleClose} 
-                  sx={{ 
-                    borderRadius: '20px',
-                    px: 3
-                  }}
-                >
-                  Fermer
-                </Button>
+                {getCardType(selectedCard) === 'quiz' ? (
+                  // Pour les quiz : afficher le bouton "Valider" ou rien si déjà validé
+                  !showResult ? (
+                    <Button 
+                      variant="contained" 
+                      onClick={handleSubmitAnswer}
+                      disabled={!selectedAnswer}
+                      sx={{ 
+                        bgcolor: '#3b82f6',
+                        '&:hover': {
+                          bgcolor: '#2563eb'
+                        },
+                        borderRadius: '20px',
+                        px: 3
+                      }}
+                    >
+                      Valider ma réponse
+                    </Button>
+                  ) : (
+                    <Button 
+                      variant="outlined" 
+                      onClick={handleClose} 
+                      sx={{ 
+                        borderRadius: '20px',
+                        px: 3
+                      }}
+                    >
+                      Fermer
+                    </Button>
+                  )
+                ) : (
+                  // Pour les autres types de cartes : afficher le bouton "Fermer"
+                  <Button 
+                    variant="outlined" 
+                    onClick={handleClose} 
+                    sx={{ 
+                      borderRadius: '20px',
+                      px: 3
+                    }}
+                  >
+                    Fermer
+                  </Button>
+                )}
               </Box>
             </>
           )}
