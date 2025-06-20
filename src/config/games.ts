@@ -1,4 +1,5 @@
 import defaultGameConfig from "@/data/game-config.json";
+//import riskManagementConfig from "@/data/game-config-risk-management.json";
 
 // Types pour la configuration unifiée des jeux
 export type GameInfo = {
@@ -77,9 +78,10 @@ export class GameManager {
   private static games: Map<string, UnifiedGameConfig> = new Map();
   private static customGames: Map<string, UnifiedGameConfig> = new Map();
 
-  // Initialiser avec le jeu par défaut
+  // Initialiser avec les jeux par défaut
   static initialize() {
     this.games.set(DEFAULT_GAME_CONFIG.gameInfo.id, DEFAULT_GAME_CONFIG);
+    //this.games.set(riskManagementConfig.gameInfo.id, riskManagementConfig as UnifiedGameConfig);
   }
 
   // Ajouter un jeu personnalisé

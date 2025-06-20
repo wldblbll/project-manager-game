@@ -78,6 +78,11 @@ interface ModalContent {
   conditions: any[];
   info?: string;
   value?: number; // Ajouter l'attribut value pour l'impact sur la valeur
+  conditionResult?: {
+    effectsToApply: any;
+    conditionDescription: string;
+    appliedCondition: any;
+  } | null; // Résultat de l'évaluation des conditions
 }
 
 // Ajouter cette définition après la déclaration de MarkdownContent
@@ -612,6 +617,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       // Variable pour stocker les effets à appliquer
       let effectsToApply = null;
       let conditionDescription = "";
+      let appliedCondition = null; // Nouvelle variable pour stocker la condition appliquée
       
       // Parcourir les conditions
       for (const condition of getCardConditions(actionCard)) {
@@ -693,22 +699,22 @@ const GameBoard: React.FC<GameBoardProps> = ({
         // Si la condition est remplie, stocker les effets à appliquer
         if (conditionMet && condition.effects) {
           effectsToApply = condition.effects;
+          appliedCondition = condition; // Stocker la condition appliquée
           console.log("Effets à appliquer:", effectsToApply);
           break; // On a trouvé une condition qui s'applique, on arrête la recherche
         }
       }
       
-      // Appliquer les effets ou afficher le message par défaut
-      if (effectsToApply) {
-        // Traiter les effets et mettre à jour la carte
-        tempDisplayCardDetails(actionCard, effectsToApply, conditionDescription);
-      } else {
-        // Si aucune condition n'est remplie, ne rien faire de spécial
-        console.log("Aucune condition n'a été remplie pour cette carte action.");
-      }
+      // Retourner les résultats pour utilisation dans displayCardInModal
+      return {
+        effectsToApply,
+        conditionDescription,
+        appliedCondition
+      };
     } else {
       // Si la carte n'a pas de conditions, afficher un message d'erreur
       console.error("La carte action n'a pas de conditions mais handleActionCardConditions a été appelé");
+      return null;
     }
   };
   
@@ -1727,11 +1733,31 @@ const GameBoard: React.FC<GameBoardProps> = ({
       }
     }
 
+    // Variables pour stocker les informations de condition
+    let conditionResult = null;
+    let finalConditions = [];
+
     // Vérifier si la carte a des conditions et n'est pas déjà sur le tableau
     // Uniquement pour les nouvelles cartes ajoutées (pas les cartes déjà placées)
     if (hasCardConditions(card) && !isCardOnBoard(card.id)) {
       console.log("Processing conditions for new card in displayCardInModal");
-      handleActionCardConditions(card);
+      conditionResult = handleActionCardConditions(card);
+      
+      // Si une condition s'applique, utiliser seulement celle-ci pour l'affichage
+      if (conditionResult && conditionResult.appliedCondition) {
+        finalConditions = [conditionResult.appliedCondition];
+        
+        // Appliquer les effets
+        if (conditionResult.effectsToApply) {
+          tempDisplayCardDetails(card, conditionResult.effectsToApply, conditionResult.conditionDescription);
+        }
+      }
+    } else if (hasCardConditions(card)) {
+      // Pour les cartes déjà sur le plateau, afficher toutes les conditions pour information
+      finalConditions = card.conditions || [];
+    } else {
+      // Pas de conditions
+      finalConditions = [];
     }
 
     // Mettre à jour les compteurs
@@ -1746,9 +1772,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
       options: card.options || [],
       correct_answer: card.correct_answer || '',
       comment: card.comment || '',
-      conditions: card.conditions || [],
+      conditions: finalConditions, // Utiliser les conditions filtrées
       info: cardInfo || '',
-      value: valueImpact
+      value: valueImpact,
+      conditionResult: conditionResult // Ajouter le résultat de la condition pour l'affichage
     });
     setShowModal(true);
   };
@@ -2126,8 +2153,60 @@ const GameBoard: React.FC<GameBoardProps> = ({
                   </div>
                 </div>
                 
-                {modalContent.conditions && modalContent.conditions.length > 0 && (
+                                {/* Affichage des conditions pour les cartes d'action */}
+                {modalContent.type === 'action' && modalContent.conditionResult && modalContent.conditionResult.appliedCondition && (
+                  <div className="mt-4">
+                    <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                      <h4 className="font-semibold text-green-800 mb-2">✅ Condition appliquée</h4>
+                      
+                      {/* Message de la condition */}
+                      {modalContent.conditionResult.conditionDescription && (
+                        <p className="text-green-700 mb-3 text-sm">
+                          {modalContent.conditionResult.conditionDescription}
+                        </p>
+                      )}
+
+                      {/* Message personnalisé de l'effet */}
+                      {modalContent.conditionResult.effectsToApply?.message && (
+                        <p className="text-green-800 mb-3 font-medium">
+                          {modalContent.conditionResult.effectsToApply.message}
+                        </p>
+                      )}
+
+                      {/* Badges des effets appliqués */}
+                      {modalContent.conditionResult.effectsToApply && (
+                        <div className="flex flex-wrap gap-2">
+                          {modalContent.conditionResult.effectsToApply.budget !== undefined && (
+                            <span className={`px-2 py-1 rounded text-sm ${
+                              modalContent.conditionResult.effectsToApply.budget > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                            }`}>
+                              Budget: {modalContent.conditionResult.effectsToApply.budget > 0 ? '+' : ''}{modalContent.conditionResult.effectsToApply.budget}K€
+                            </span>
+                          )}
+                          {modalContent.conditionResult.effectsToApply.time !== undefined && (
+                            <span className={`px-2 py-1 rounded text-sm ${
+                              modalContent.conditionResult.effectsToApply.time > 0 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                            }`}>
+                              Délai: {modalContent.conditionResult.effectsToApply.time > 0 ? '+' : ''}{modalContent.conditionResult.effectsToApply.time} jours
+                            </span>
+                          )}
+                          {modalContent.conditionResult.effectsToApply.value !== undefined && (
+                            <span className={`px-2 py-1 rounded text-sm ${
+                              modalContent.conditionResult.effectsToApply.value > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                            }`}>
+                              Valeur: {modalContent.conditionResult.effectsToApply.value > 0 ? '+' : ''}{modalContent.conditionResult.effectsToApply.value} points
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Affichage des conditions pour les autres types de cartes (affichage complet pour information) */}
+                {modalContent.type !== 'action' && modalContent.conditions && modalContent.conditions.length > 0 && (
                   <div className="mt-4 space-y-3">
+                    <h4 className="font-semibold text-gray-800">Conditions possibles</h4>
                     {modalContent.conditions.map((condition, index) => (
                       <div key={index} className="bg-blue-50 rounded-lg p-3">
                         {condition.cardId && (
@@ -2140,7 +2219,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                         )}
 
                         {condition.operator && condition.checks && (
-                  <div className="text-sm">
+                          <div className="text-sm">
                             <p className="text-blue-800">
                               Requiert {condition.operator === 'AND' ? 'toutes' : 'au moins une'} :
                             </p>
@@ -2154,7 +2233,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
                                 </p>
                               ))}
                             </div>
-                  </div>
+                          </div>
                         )}
 
                         {condition.effects && (
@@ -2183,14 +2262,14 @@ const GameBoard: React.FC<GameBoardProps> = ({
                                 }`}>
                                   Valeur: {condition.effects.value > 0 ? '+' : ''}{condition.effects.value} points
                                 </span>
-                )}
-              </div>
+                              )}
+                            </div>
                           </div>
                         )}
                       </div>
                     ))}
-            </div>
-          )}
+                  </div>
+                )}
           
                 {modalContent.info && (
                   <div className="mt-4 bg-gray-50 rounded-lg p-3 text-sm">

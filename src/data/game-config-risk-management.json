@@ -1,0 +1,629 @@
+{
+  "gameInfo": {
+    "id": "risk-management-project",
+    "name": "Projet Gestion des Risques",
+    "description": "Un projet simple de développement d'une application mobile avec un focus sur la gestion des risques. Idéal pour apprendre les bases de la gestion de projet et l'importance de l'anticipation des risques.",
+    "version": "1.0.0",
+    "author": "PM Cards Team"
+  },
+  "gameSettings": {
+    "initialBudget": 80,
+    "initialTime": 36,
+    "cardWidth": 180,
+    "cardHeight": 60,
+    "cardMargin": 20,
+    "cardsPerRow": 6,
+    "boardTopMargin": 100
+  },
+  "phases": [
+    {
+      "name": "Initiation",
+      "order": 1,
+      "requiredCards": ["definir-objectifs-projet"],
+      "cardLimits": {
+        "action": 3,
+        "event": 1,
+        "quiz": 1
+      },
+      "penalties": {
+        "time": -2,
+        "budget": -5,
+        "value": -10,
+        "message": "Sans objectifs clairs, le projet manque de direction et accumule les retards."
+      }
+    },
+    {
+      "name": "Planification",
+      "order": 2,
+      "requiredCards": ["identifier-risques-principaux"],
+      "cardLimits": {
+        "action": 5,
+        "event": 2,
+        "quiz": 1
+      },
+      "penalties": {
+        "time": -3,
+        "budget": -8,
+        "value": -15,
+        "message": "L'absence d'identification des risques expose le projet à des problèmes majeurs."
+      }
+    },
+    {
+      "name": "Exécution",
+      "order": 3,
+      "requiredCards": ["developper-prototype"],
+      "cardLimits": {
+        "action": 4,
+        "event": 3,
+        "quiz": 1
+      },
+      "penalties": {
+        "time": -2,
+        "budget": -6,
+        "value": -12,
+        "message": "Sans prototype, il est difficile de valider les concepts et d'avancer efficacement."
+      }
+    },
+    {
+      "name": "Surveillance",
+      "order": 4,
+      "requiredCards": ["monitorer-risques"],
+      "cardLimits": {
+        "action": 3,
+        "event": 2,
+        "quiz": 1
+      },
+      "penalties": {
+        "time": -2,
+        "budget": -5,
+        "value": -10,
+        "message": "Sans surveillance des risques, les problèmes s'accumulent et deviennent critiques."
+      }
+    },
+    {
+      "name": "Clôture",
+      "order": 5,
+      "requiredCards": ["documenter-lecons-apprises"],
+      "cardLimits": {
+        "action": 2,
+        "event": 1,
+        "quiz": 1
+      },
+      "penalties": {
+        "time": -1,
+        "budget": -3,
+        "value": -8,
+        "message": "Sans documentation des leçons apprises, les erreurs se répéteront dans les futurs projets."
+      }
+    }
+  ],
+  "cardValueRules": [
+    {
+      "condition": "default",
+      "points": 8
+    },
+    {
+      "condition": "requiredCard",
+      "points": 15
+    }
+  ],
+  "cards": [
+    {
+      "id": "definir-objectifs-projet",
+      "type": "action",
+      "title": "Définir les Objectifs du Projet",
+      "description": "Établir clairement les objectifs SMART du projet : développer une application mobile de gestion de tâches en 6 mois avec un budget de 80k€, visant 1000 utilisateurs actifs.",
+      "domain": "Gestion de l'intégration",
+      "phase": ["Initiation"],
+      "cost": -3,
+      "delay": -1,
+      "value": 10,
+      "info": "Des objectifs clairs sont la base de tout projet réussi. Ils permettent d'aligner toutes les parties prenantes et de mesurer le succès."
+    },
+    {
+      "id": "identifier-parties-prenantes",
+      "type": "action",
+      "title": "Identifier les Parties Prenantes",
+      "description": "Cartographier toutes les parties prenantes : équipe de développement, utilisateurs finaux, sponsor du projet, équipe marketing, et services IT.",
+      "domain": "Gestion des parties prenantes",
+      "phase": ["Initiation"],
+      "cost": -2,
+      "delay": -1,
+      "value": 8,
+      "info": "Une bonne identification des parties prenantes évite les surprises et les conflits plus tard dans le projet."
+    },
+    {
+      "id": "creer-equipe-sans-competences",
+      "type": "action",
+      "title": "Créer une Équipe sans Vérifier les Compétences",
+      "description": "Constituer rapidement une équipe sans évaluer les compétences nécessaires pour le développement mobile.",
+      "domain": "Gestion des ressources",
+      "phase": ["Initiation"],
+      "cost": -5,
+      "delay": 0,
+      "value": -10,
+      "info": "Constituer une équipe sans vérifier les compétences est un risque majeur qui peut compromettre tout le projet."
+    },
+    {
+      "id": "identifier-risques-principaux",
+      "type": "action",
+      "title": "Identifier les Risques Principaux",
+      "description": "Analyser et documenter les risques majeurs : compétences techniques insuffisantes, retards de livraison, dépassement de budget, et problèmes de qualité.",
+      "domain": "Gestion des risques",
+      "phase": ["Planification"],
+      "cost": -4,
+      "delay": -2,
+      "value": 12,
+      "info": "L'identification précoce des risques permet de les anticiper et de préparer des stratégies d'atténuation."
+    },
+    {
+      "id": "evaluer-probabilite-impact",
+      "type": "action",
+      "title": "Évaluer Probabilité et Impact des Risques",
+      "description": "Analyser chaque risque identifié en termes de probabilité d'occurrence (faible/moyenne/élevée) et d'impact sur le projet (mineur/modéré/majeur).",
+      "domain": "Gestion des risques",
+      "phase": ["Planification"],
+      "cost": -3,
+      "delay": -1,
+      "value": 10,
+      "conditions": [
+        {
+          "cardId": "identifier-risques-principaux",
+          "present": true,
+          "effects": {
+            "value": 15,
+            "message": "L'évaluation des risques est plus efficace car ils ont été correctement identifiés au préalable."
+          }
+        },
+        {
+          "cardId": "identifier-risques-principaux",
+          "present": false,
+          "effects": {
+            "value": 3,
+            "message": "L'évaluation est superficielle car les risques n'ont pas été correctement identifiés."
+          }
+        }
+      ],
+      "info": "L'évaluation quantitative des risques permet de prioriser les efforts de gestion des risques."
+    },
+    {
+      "id": "planifier-sans-risques",
+      "type": "action",
+      "title": "Planifier sans Considérer les Risques",
+      "description": "Établir un planning optimiste sans tenir compte des risques identifiés ni prévoir de marges de sécurité.",
+      "domain": "Gestion du délai",
+      "phase": ["Planification"],
+      "cost": 0,
+      "delay": 2,
+      "value": -8,
+      "info": "Un planning qui ignore les risques est voué à l'échec. Il est essentiel d'intégrer des marges de sécurité."
+    },
+    {
+      "id": "creer-plan-attenuation",
+      "type": "action",
+      "title": "Créer un Plan d'Atténuation des Risques",
+      "description": "Développer des stratégies spécifiques pour réduire la probabilité et l'impact de chaque risque majeur identifié.",
+      "domain": "Gestion des risques",
+      "phase": ["Planification"],
+      "cost": -5,
+      "delay": -2,
+      "value": 15,
+      "conditions": [
+        {
+          "operator": "AND",
+          "checks": [
+            {
+              "cardId": "identifier-risques-principaux",
+              "present": true
+            },
+            {
+              "cardId": "evaluer-probabilite-impact",
+              "present": true
+            }
+          ],
+          "effects": {
+            "value": 25,
+            "budget": 2,
+            "message": "Le plan d'atténuation est très efficace car basé sur une analyse complète des risques."
+          }
+        },
+        {
+          "cardId": "identifier-risques-principaux",
+          "present": false,
+          "effects": {
+            "value": 5,
+            "message": "Le plan d'atténuation est limité car les risques n'ont pas été correctement identifiés."
+          }
+        }
+      ],
+      "info": "Un bon plan d'atténuation transforme les risques de menaces en opportunités d'amélioration."
+    },
+    {
+      "id": "developper-prototype",
+      "type": "action",
+      "title": "Développer un Prototype Fonctionnel",
+      "description": "Créer un prototype de l'application mobile avec les fonctionnalités de base pour valider les concepts et recueillir les premiers retours utilisateurs.",
+      "domain": "Gestion du contenu",
+      "phase": ["Exécution"],
+      "cost": -8,
+      "delay": -3,
+      "value": 18,
+      "info": "Un prototype permet de valider les concepts tôt et de réduire les risques de développement."
+    },
+    {
+      "id": "former-equipe-competences",
+      "type": "action",
+      "title": "Former l'Équipe aux Compétences Manquantes",
+      "description": "Organiser des formations ciblées pour combler les lacunes de compétences identifiées dans l'équipe de développement.",
+      "domain": "Gestion des ressources",
+      "phase": ["Exécution"],
+      "cost": -6,
+      "delay": -1,
+      "value": 12,
+      "conditions": [
+        {
+          "cardId": "creer-equipe-sans-competences",
+          "present": true,
+          "effects": {
+            "value": 20,
+            "time": 2,
+            "message": "La formation compense les lacunes initiales de l'équipe et améliore significativement les performances."
+          }
+        },
+        {
+          "cardId": "creer-equipe-sans-competences",
+          "present": false,
+          "effects": {
+            "value": 8,
+            "message": "La formation renforce une équipe déjà compétente."
+          }
+        }
+      ],
+      "info": "Investir dans la formation de l'équipe est toujours rentable à long terme."
+    },
+    {
+      "id": "ignorer-feedback-utilisateurs",
+      "type": "action",
+      "title": "Ignorer les Retours des Utilisateurs",
+      "description": "Continuer le développement sans tenir compte des retours utilisateurs sur le prototype, en supposant que l'équipe sait mieux.",
+      "domain": "Gestion de la qualité",
+      "phase": ["Exécution"],
+      "cost": 0,
+      "delay": 0,
+      "value": -15,
+      "info": "Ignorer les utilisateurs est l'une des principales causes d'échec des projets. Leurs retours sont précieux."
+    },
+    {
+      "id": "monitorer-risques",
+      "type": "action",
+      "title": "Monitorer les Risques Activement",
+      "description": "Mettre en place un système de surveillance continue des risques avec des indicateurs d'alerte précoce et des revues hebdomadaires.",
+      "domain": "Gestion des risques",
+      "phase": ["Surveillance"],
+      "cost": -3,
+      "delay": -1,
+      "value": 14,
+      "info": "Le monitoring actif des risques permet de détecter les problèmes avant qu'ils ne deviennent critiques."
+    },
+    {
+      "id": "tester-application-qualite",
+      "type": "action",
+      "title": "Effectuer des Tests de Qualité Complets",
+      "description": "Réaliser une batterie complète de tests : fonctionnels, performance, sécurité, et compatibilité sur différents appareils.",
+      "domain": "Gestion de la qualité",
+      "phase": ["Surveillance"],
+      "cost": -4,
+      "delay": -2,
+      "value": 16,
+      "info": "Des tests complets garantissent la qualité du produit final et réduisent les risques post-livraison."
+    },
+    {
+      "id": "livrer-sans-tests",
+      "type": "action",
+      "title": "Livrer sans Tests Suffisants",
+      "description": "Accélérer la livraison en réduisant la phase de tests pour respecter les délais, au risque de livrer des bugs.",
+      "domain": "Gestion de la qualité",
+      "phase": ["Surveillance"],
+      "cost": 2,
+      "delay": 1,
+      "value": -12,
+      "info": "Livrer sans tests suffisants peut sembler économiser du temps, mais génère souvent plus de problèmes."
+    },
+    {
+      "id": "documenter-lecons-apprises",
+      "type": "action",
+      "title": "Documenter les Leçons Apprises",
+      "description": "Organiser une rétrospective complète pour documenter ce qui a bien fonctionné, les problèmes rencontrés, et les améliorations pour les futurs projets.",
+      "domain": "Gestion de l'intégration",
+      "phase": ["Clôture"],
+      "cost": -2,
+      "delay": -1,
+      "value": 12,
+      "info": "La documentation des leçons apprises est un investissement pour l'amélioration continue."
+    },
+    {
+      "id": "celebrer-succes-equipe",
+      "type": "action",
+      "title": "Célébrer le Succès avec l'Équipe",
+      "description": "Organiser un événement pour reconnaître le travail de l'équipe et célébrer les réussites du projet.",
+      "domain": "Gestion des ressources",
+      "phase": ["Clôture"],
+      "cost": -3,
+      "delay": 0,
+      "value": 8,
+      "info": "Reconnaître le travail de l'équipe renforce la motivation et la cohésion pour les futurs projets."
+    },
+
+    {
+      "id": "crise-competences-techniques",
+      "type": "event",
+      "title": "Crise de Compétences Techniques",
+      "description": "L'équipe découvre qu'elle manque de compétences critiques pour le développement mobile, notamment en architecture et sécurité.",
+      "domain": "Gestion des ressources",
+      "phase": ["Planification", "Exécution"],
+      "conditions": [
+        {
+          "cardId": "former-equipe-competences",
+          "present": true,
+          "effects": {
+            "budget": 0,
+            "time": 0,
+            "value": 10,
+            "message": "La formation préventive de l'équipe permet de surmonter facilement cette crise de compétences."
+          }
+        },
+        {
+          "cardId": "former-equipe-competences",
+          "present": false,
+          "effects": {
+            "budget": -8,
+            "time": -3,
+            "value": -10,
+            "message": "L'absence de formation préventive force à recruter des consultants externes coûteux."
+          }
+        }
+      ],
+      "info": "Les crises de compétences sont fréquentes dans les projets techniques. La formation préventive est la meilleure protection."
+    },
+    {
+      "id": "retard-livraison-critique",
+      "type": "event",
+      "title": "Retard de Livraison Critique",
+      "description": "Le projet accuse un retard important qui menace le respect de la date de livraison promise au client.",
+      "domain": "Gestion du délai",
+      "phase": ["Exécution", "Surveillance"],
+      "conditions": [
+        {
+          "cardId": "creer-plan-attenuation",
+          "present": true,
+          "effects": {
+            "budget": -2,
+            "time": 1,
+            "value": 5,
+            "message": "Le plan d'atténuation des risques permet de gérer le retard avec des solutions préparées."
+          }
+        },
+        {
+          "cardId": "planifier-sans-risques",
+          "present": true,
+          "effects": {
+            "budget": -6,
+            "time": -4,
+            "value": -15,
+            "message": "Le planning optimiste sans marges de sécurité aggrave considérablement l'impact du retard."
+          }
+        },
+        {
+          "default": true,
+          "effects": {
+            "budget": -4,
+            "time": -2,
+            "value": -8,
+            "message": "Le retard impact le projet mais des solutions peuvent encore être trouvées."
+          }
+        }
+      ],
+      "info": "Les retards sont inévitables dans les projets. Ce qui compte, c'est d'avoir préparé des solutions."
+    },
+    {
+      "id": "bug-critique-production",
+      "type": "event",
+      "title": "Bug Critique en Production",
+      "description": "Un bug majeur est découvert après la mise en production, affectant l'expérience utilisateur et la réputation du projet.",
+      "domain": "Gestion de la qualité",
+      "phase": ["Surveillance", "Clôture"],
+      "conditions": [
+        {
+          "cardId": "tester-application-qualite",
+          "present": true,
+          "effects": {
+            "budget": -1,
+            "time": 0,
+            "value": 2,
+            "message": "Les tests complets ont permis de détecter et corriger la plupart des bugs. L'impact est minimal."
+          }
+        },
+        {
+          "cardId": "livrer-sans-tests",
+          "present": true,
+          "effects": {
+            "budget": -10,
+            "time": -3,
+            "value": -20,
+            "message": "L'absence de tests suffisants a permis au bug critique de passer en production."
+          }
+        },
+        {
+          "default": true,
+          "effects": {
+            "budget": -5,
+            "time": -2,
+            "value": -10,
+            "message": "Le bug en production nécessite une correction d'urgence et impacte la confiance des utilisateurs."
+          }
+        }
+      ],
+      "info": "Les bugs en production sont coûteux à corriger et nuisent à la réputation. La prévention par les tests est essentielle."
+    },
+    {
+      "id": "feedback-positif-inattendu",
+      "type": "event",
+      "title": "Retour Utilisateur Très Positif",
+      "description": "Les utilisateurs donnent des retours exceptionnellement positifs sur l'application, dépassant toutes les attentes.",
+      "domain": "Gestion de la qualité",
+      "phase": ["Surveillance", "Clôture"],
+      "conditions": [
+        {
+          "operator": "AND",
+          "checks": [
+            {
+              "cardId": "developper-prototype",
+              "present": true
+            },
+            {
+              "cardId": "tester-application-qualite",
+              "present": true
+            }
+          ],
+          "effects": {
+            "budget": 5,
+            "time": 0,
+            "value": 25,
+            "message": "Le prototype et les tests de qualité ont permis de créer une application exceptionnelle."
+          }
+        },
+        {
+          "cardId": "ignorer-feedback-utilisateurs",
+          "present": true,
+          "effects": {
+            "budget": 0,
+            "time": 0,
+            "value": 5,
+            "message": "Malgré l'ignorance des retours, l'application rencontre un succès inattendu."
+          }
+        },
+        {
+          "default": true,
+          "effects": {
+            "budget": 2,
+            "time": 0,
+            "value": 15,
+            "message": "Les retours positifs boostent la confiance et ouvrent de nouvelles opportunités."
+          }
+        }
+      ],
+      "info": "Les retours positifs récompensent les efforts de qualité et peuvent transformer un projet en succès retentissant."
+    },
+    {
+      "id": "opportunite-nouveau-client",
+      "type": "event",
+      "title": "Opportunité avec un Nouveau Client",
+      "description": "Un nouveau client potentiel s'intéresse au projet et propose un contrat pour une version adaptée de l'application.",
+      "domain": "Gestion des parties prenantes",
+      "phase": ["Surveillance", "Clôture"],
+      "conditions": [
+        {
+          "cardId": "documenter-lecons-apprises",
+          "present": true,
+          "effects": {
+            "budget": 8,
+            "time": 0,
+            "value": 20,
+            "message": "La documentation des leçons apprises facilite la proposition pour le nouveau client."
+          }
+        },
+        {
+          "default": true,
+          "effects": {
+            "budget": 3,
+            "time": 0,
+            "value": 10,
+            "message": "L'opportunité est prometteuse mais nécessitera des efforts supplémentaires pour être concrétisée."
+          }
+        }
+      ],
+      "info": "Les succès attirent de nouvelles opportunités. Une bonne documentation facilite la réplication du succès."
+    },
+
+    {
+      "id": "quiz-identification-risques",
+      "type": "quiz",
+      "title": "Quelle est la première étape de la gestion des risques dans un projet ?",
+      "description": "Cette question teste votre compréhension du processus de gestion des risques et de l'importance de l'identification précoce.",
+      "domain": "Gestion des risques",
+      "phase": ["Planification"],
+      "options": [
+        "A. Évaluer l'impact des risques sur le budget",
+        "B. Identifier et documenter tous les risques potentiels",
+        "C. Créer immédiatement un plan d'atténuation",
+        "D. Assigner des responsables pour chaque risque"
+      ],
+      "correct_answer": "B",
+      "comment": "L'identification est la première étape cruciale. On ne peut pas gérer ce qu'on ne connaît pas. Il faut d'abord identifier tous les risques avant de les évaluer ou de créer des plans d'atténuation."
+    },
+    {
+      "id": "quiz-matrice-risques",
+      "type": "quiz",
+      "title": "Comment prioriser les risques dans une matrice probabilité/impact ?",
+      "description": "Cette question évalue votre compréhension de l'évaluation et de la priorisation des risques en gestion de projet.",
+      "domain": "Gestion des risques",
+      "phase": ["Planification"],
+      "options": [
+        "A. Traiter d'abord les risques les plus probables",
+        "B. Se concentrer uniquement sur les risques à fort impact",
+        "C. Prioriser les risques à forte probabilité ET fort impact",
+        "D. Traiter tous les risques de manière égale"
+      ],
+      "correct_answer": "C",
+      "comment": "La matrice probabilité/impact permet de prioriser les risques. Ceux qui combinent forte probabilité et fort impact doivent être traités en priorité car ils représentent la plus grande menace pour le projet."
+    },
+    {
+      "id": "quiz-strategies-reponse-risques",
+      "type": "quiz",
+      "title": "Quelles sont les quatre stratégies principales de réponse aux risques ?",
+      "description": "Cette question teste votre connaissance des différentes approches pour gérer les risques identifiés dans un projet.",
+      "domain": "Gestion des risques",
+      "phase": ["Planification", "Exécution"],
+      "options": [
+        "A. Éviter, Transférer, Atténuer, Accepter",
+        "B. Identifier, Évaluer, Planifier, Monitorer",
+        "C. Prévenir, Corriger, Améliorer, Contrôler",
+        "D. Analyser, Documenter, Communiquer, Réviser"
+      ],
+      "correct_answer": "A",
+      "comment": "Les quatre stratégies de réponse aux risques sont : Éviter (éliminer le risque), Transférer (déléguer à un tiers), Atténuer (réduire probabilité/impact), et Accepter (assumer le risque). Chaque stratégie est appropriée selon le contexte."
+    },
+    {
+      "id": "quiz-monitoring-risques",
+      "type": "quiz",
+      "title": "Pourquoi est-il important de monitorer les risques tout au long du projet ?",
+      "description": "Cette question évalue votre compréhension de l'importance du suivi continu des risques pendant l'exécution du projet.",
+      "domain": "Gestion des risques",
+      "phase": ["Surveillance"],
+      "options": [
+        "A. Pour respecter les procédures de l'entreprise",
+        "B. Pour détecter de nouveaux risques et l'évolution des risques existants",
+        "C. Pour rassurer les parties prenantes sur la gestion du projet",
+        "D. Pour documenter le travail réalisé par l'équipe projet"
+      ],
+      "correct_answer": "B",
+      "comment": "Le monitoring permet de détecter l'apparition de nouveaux risques et l'évolution des risques existants. Les projets sont dynamiques et les risques évoluent constamment, nécessitant une surveillance continue."
+    },
+    {
+      "id": "quiz-lecons-apprises-risques",
+      "type": "quiz",
+      "title": "Comment les leçons apprises en gestion des risques bénéficient aux futurs projets ?",
+      "description": "Cette question teste votre compréhension de l'importance de capitaliser sur l'expérience acquise en gestion des risques.",
+      "domain": "Gestion des risques",
+      "phase": ["Clôture"],
+      "options": [
+        "A. Elles permettent d'éviter de refaire les mêmes erreurs",
+        "B. Elles aident à identifier plus rapidement les risques similaires",
+        "C. Elles améliorent les processus de gestion des risques",
+        "D. Toutes les réponses ci-dessus"
+      ],
+      "correct_answer": "D",
+      "comment": "Les leçons apprises en gestion des risques sont précieuses car elles permettent d'éviter les erreurs passées, d'identifier plus rapidement les risques similaires, et d'améliorer continuellement les processus. C'est un investissement pour l'avenir."
+    }
+  ]
+} 
