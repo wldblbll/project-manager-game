@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AnimatedText from './AnimatedText';
 import GameLoader from './GameLoader';
 import GameManager from '@/config/games';
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from '@/contexts/AuthContext';
+import { AuthComponent } from './auth/AuthComponent';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const { session } = useAuth();
   const [showGameSelector, setShowGameSelector] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
   const [selectedGameId, setSelectedGameId] = useState<string>('ecovoyage');
   const isMobile = useIsMobile();
+
+  // Effet pour fermer la modal d'auth et ouvrir le sélecteur de jeu après connexion
+  useEffect(() => {
+    if (session && showAuth) {
+      setShowAuth(false);
+      // Petit délai pour une meilleure UX
+      setTimeout(() => {
+        setShowGameSelector(true);
+      }, 300);
+    }
+  }, [session, showAuth]);
   
   // Fonction pour gérer le clic sur le bouton de démarrage
   const handleStartGame = (e: React.MouseEvent) => {
     e.preventDefault();
     
-    // Toujours afficher le sélecteur de jeux pour laisser le choix à l'utilisateur
+    // Vérifier si l'utilisateur est connecté
+    if (!session) {
+      setShowAuth(true);
+      return;
+    }
+    
+    // Si connecté, afficher le sélecteur de jeux
     setShowGameSelector(true);
   };
 
@@ -82,6 +103,15 @@ const Hero = () => {
               onGameSelected={handleGameSelected}
               selectedGameId={selectedGameId}
             />
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Authentication Modal */}
+      <Dialog open={showAuth} onOpenChange={setShowAuth}>
+        <DialogContent className="sm:max-w-[600px] p-0 gap-0 border-0 bg-transparent shadow-none">
+          <div className="relative">
+            <AuthComponent redirectTo={window.location.href} />
           </div>
         </DialogContent>
       </Dialog>

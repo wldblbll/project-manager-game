@@ -6,6 +6,8 @@ import GameBoard from "@/components/game/GameBoard";
 import GameManager, { UnifiedGameConfig } from "@/config/games";
 import { getCardTitle, getCardDomain, getCardType } from "@/utils/cardHelpers";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import ReactMarkdown from 'react-markdown';
 
 // Define types for our game
@@ -1071,40 +1073,83 @@ const GamePage = () => {
   // If in full-screen mode, only show the board
   if (isFullScreen) {
     return (
-      <>
-        <GameBoard 
-          cards={gameState.boardCards} 
-          onMoveCard={handleMoveCard}
-          isFullScreen={true}
-          onToggleFullScreen={handleToggleFullScreen}
-          domainColors={domainColors}
-          allCards={allCards}
-          onSelectCard={handleSelectCard}
-          currentPhase={gameState.currentPhase}
-          onAddValuePoints={handleAddValuePoints}
-          onModifyBudget={handleModifyBudget}
-          onModifyTime={handleModifyTime}
-          cardLimits={getCurrentPhaseLimits()}
-          cardUsage={gameState.cardUsage}
-          onRandomCardSelected={handleRandomCardSelected}
-          onMilestoneStep={handlePhaseMilestone}
-          remainingTurns={gameState.remainingTurns}
-          onResetGame={resetGame}
-          gameState={{
-            budget: gameState.budget,
-            time: gameState.time,
-            valuePoints: gameState.valuePoints,
-            phase: gameState.currentPhase
-          }}
-        />
-        <MilestoneDialog />
-      </>
+      <ProtectedRoute fallback={
+        <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-4">
+          <img 
+            src="/logo.png" 
+            alt="PM Cards Logo" 
+            className="w-24 h-24 mb-6"
+          />
+          <h1 className="text-2xl font-bold text-white mb-4">Connexion requise</h1>
+          <p className="text-white/80 text-center mb-6">
+            Veuillez vous connecter pour accéder au jeu de cartes
+          </p>
+          <button
+            onClick={() => navigate('/')}
+            className="bg-white text-indigo-600 px-6 py-3 rounded-full text-lg font-semibold 
+                     shadow-lg hover:shadow-xl transform transition-all duration-300 
+                     hover:scale-105 hover:bg-indigo-50"
+          >
+            Retour à l'accueil
+          </button>
+        </div>
+      }>
+        <>
+          <GameBoard 
+            cards={gameState.boardCards} 
+            onMoveCard={handleMoveCard}
+            isFullScreen={true}
+            onToggleFullScreen={handleToggleFullScreen}
+            domainColors={domainColors}
+            allCards={allCards}
+            onSelectCard={handleSelectCard}
+            currentPhase={gameState.currentPhase}
+            onAddValuePoints={handleAddValuePoints}
+            onModifyBudget={handleModifyBudget}
+            onModifyTime={handleModifyTime}
+            cardLimits={getCurrentPhaseLimits()}
+            cardUsage={gameState.cardUsage}
+            onRandomCardSelected={handleRandomCardSelected}
+            onMilestoneStep={handlePhaseMilestone}
+            remainingTurns={gameState.remainingTurns}
+            onResetGame={resetGame}
+            gameState={{
+              budget: gameState.budget,
+              time: gameState.time,
+              valuePoints: gameState.valuePoints,
+              phase: gameState.currentPhase
+            }}
+          />
+          <MilestoneDialog />
+        </>
+      </ProtectedRoute>
     );
   }
 
   // Normal view with all components
   return (
-    <div className="h-screen flex flex-col">
+    <ProtectedRoute fallback={
+      <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center justify-center p-4">
+        <img 
+          src="/logo.png" 
+          alt="PM Cards Logo" 
+          className="w-24 h-24 mb-6"
+        />
+        <h1 className="text-2xl font-bold text-white mb-4">Connexion requise</h1>
+        <p className="text-white/80 text-center mb-6">
+          Veuillez vous connecter pour accéder au jeu de cartes
+        </p>
+        <button
+          onClick={() => navigate('/')}
+          className="bg-white text-indigo-600 px-6 py-3 rounded-full text-lg font-semibold 
+                   shadow-lg hover:shadow-xl transform transition-all duration-300 
+                   hover:scale-105 hover:bg-indigo-50"
+        >
+          Retour à l'accueil
+        </button>
+      </div>
+    }>
+      <div className="h-screen flex flex-col">
       <GameHeader 
         budget={gameState.budget} 
         time={gameState.time} 
@@ -1219,6 +1264,7 @@ const GamePage = () => {
         </div>
       )}
     </div>
+    </ProtectedRoute>
   );
 };
 
